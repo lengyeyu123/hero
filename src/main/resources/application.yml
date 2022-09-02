@@ -1,0 +1,120 @@
+# 项目相关配置
+hero:
+  # 上传文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
+  # profile: D:/qlib/uploadPath
+  uploadFilePathWinPrefix: D:/han/hero/upload/
+  uploadFilePathLinuxPrefix: /usr/local/hero/upload/
+  # 下载文件  若下载文件需要生成 则存放到此文件夹下
+  downloadFilePathWinPrefix: D:/han/hero/download/
+  downloadFilePathLinuxPrefix: /usr/local/hero/download/
+
+# 开发环境配置
+# server配置
+server:
+  port: 9999
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # 连接数满后的排队数，默认为100
+    accept-count: 1000
+    threads:
+      # tomcat最大线程数，默认为200
+      max: 800
+      # tomcat启动初始化的线程数，默认值10
+      min-spare: 100
+    # 若客户端支持长连接则设置长连接提高服务器性能 100 若不支持则禁用(nginx不支持禁用掉 1)
+    # max-keep-alive-requests: 1
+    # 保持长连接 超时时间5s
+    keep-alive-timeout: 5
+
+# Spring配置
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    locale: zh
+    # 常用，全局设置pojo或被@JsonInclude注解的属性的序列化方式
+    default-property-inclusion: ALWAYS #不为空的属性才会序列化,具体属性可看JsonInclude.Include
+    # 常规默认,枚举类SerializationFeature中的枚举属性为key，值为boolean设置jackson序列化特性,具体key请看SerializationFeature源码
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false # 返回的java.util.date转换成timestamp
+      FAIL_ON_EMPTY_BEANS: true # 对象为空时是否报错，默认true
+    # 枚举类DeserializationFeature中的枚举属性为key，值为boolean设置jackson反序列化特性,具体key请看DeserializationFeature源码
+    deserialization:
+      # 常用,json中含pojo不存在属性时是否失败报错,默认true
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    # 枚举类MapperFeature中的枚举属性为key，值为boolean设置jackson ObjectMapper特性
+    # ObjectMapper在jackson中负责json的读写、json与pojo的互转、json tree的互转,具体特性请看MapperFeature,常规默认即可
+    mapper:
+      # 使用getter取代setter探测属性，如类中含getName()但不包含name属性与setName()，传输的vo json格式模板中依旧含name属性
+      USE_GETTERS_AS_SETTERS: true #默认false
+    # 枚举类JsonParser.Feature枚举类中的枚举属性为key，值为boolean设置jackson JsonParser特性
+    # JsonParser在jackson中负责json内容的读取,具体特性请看JsonParser.Feature，一般无需设置默认即可
+    parser:
+      ALLOW_SINGLE_QUOTES: true # 是否允许出现单引号,默认false
+    # 枚举类JsonGenerator.Feature枚举类中的枚举属性为key，值为boolean设置jackson JsonGenerator特性，一般无需设置默认即可
+    # JsonGenerator在jackson中负责编写json内容,具体特性请看JsonGenerator.Feature
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size: 2MB
+      # 设置总上传的文件大小
+      max-request-size: 10MB
+      enabled: true
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+  # 数据源配置
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    # https://www.cnblogs.com/zhuwenjoyce/p/12469793.html
+    # 这个参数 true 表示无条件信任server端返回的任何根证书 trustServerCertificate=true
+    url: jdbc:sqlserver://localhost:1433;SelectMethod=cursor;DatabaseName=hero;trustServerCertificate=true
+    username: jkwsyjxt
+    password: jkwsyjxt
+  # flyway 数据库迁移工具
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    clean-on-validation-error: false
+    baseline-on-migrate: true
+
+# Mybatis配置
+mybatis:
+  # 是否执行MyBatis xml配置文件的状态检查，
+  check-config-location: true
+  # mybatis-config.xml文件的位置
+  config-location: classpath:mybatis/mybatis-config.xml
+  # Mapper对应的xml路径
+  mapper-locations: classpath:mybatis/project/*.xml
+  # 谁知别名历经，可以避免写全限定类名
+  type-aliases-package: com.han.hero.project.domain
+
+# PageHelper分页插件
+pagehelper:
+  helperDialect: sqlServer
+  supportMethodsArguments: true
+  params: count=countSql
+
+# token配置
+token:
+  atConfig:
+    header: accessToken
+    secret: 14oiry*&jd
+    # 令牌有效期(默认1天 )（单位分钟）
+    expireTime: 1400
+  rtConfig:
+    header: refreshToken
+    secret: urn&*$^@@((#)
+    # 有效期 默认7天 （单位分钟）
+    expireTime: 10080

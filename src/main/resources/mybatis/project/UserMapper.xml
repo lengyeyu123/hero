@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.han.hero.project.mapper.UserMapper">
+    <insert id="insertUser">
+        insert into h_user (username, password)
+        values (#{userName}, #{password})
+    </insert>
+
+
+    <select id="selectById" resultType="com.han.hero.project.domain.User">
+        select *
+        from h_user
+        where userId = #{id}
+    </select>
+    <select id="selectByUserName" resultType="com.han.hero.project.domain.User">
+        select *
+        from h_user
+        where userName = #{userName}
+    </select>
+    <select id="getUserPermissions" resultType="com.han.hero.project.domain.Menu">
+        SELECT h_menu.*
+        FROM h_user,
+             h_user_role,
+             h_role_menu,
+             h_menu
+        WHERE h_user.userId = 1
+          AND h_user.userId = h_user_role.userId
+          AND h_user_role.roleId = h_role_menu.roleId
+          AND h_role_menu.menuId = h_menu.menuId
+    </select>
+    <select id="countByUserName" resultType="java.lang.Integer">
+        select count(userId)
+        from h_user
+        where userName = #{userName}
+    </select>
+
+
+</mapper>
