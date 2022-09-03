@@ -10,6 +10,7 @@ import com.han.hero.project.service.UserService;
 import com.han.hero.project.vo.req.RegisterLoginReqVo;
 import com.han.hero.project.vo.resp.LoginRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +32,9 @@ public class AuthController {
 
     @Autowired
     private TokenProperties tokenProperties;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
 
     @PostMapping("/register")
@@ -66,12 +70,13 @@ public class AuthController {
         }
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('sys:role:list')")
     @GetMapping("/getUserInfo")
     public R<User> getUserInfo(Principal principal) {
         String name = principal.getName();
-        System.out.println(name);
-        return R.ok(new User());
+        User user = userService.selectByUserName(name);
+        redisTemplate.opsForValue().set(name, user);
+        return R.ok(user);
     }
 
 

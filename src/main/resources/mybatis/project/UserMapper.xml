@@ -25,7 +25,7 @@
              h_user_role,
              h_role_menu,
              h_menu
-        WHERE h_user.userId = 1
+        WHERE h_user.userId = #{userId}
           AND h_user.userId = h_user_role.userId
           AND h_user_role.roleId = h_role_menu.roleId
           AND h_role_menu.menuId = h_menu.menuId
