@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.han.hero.project.mapper.RoleMapper">
+
+
+    <select id="selectByUserId" resultType="com.han.hero.project.domain.Role">
+        select h_role.*
+        from h_role,
+             h_user_role
+        where h_user_role.userId = #{userId}
+          and h_user_role.roleId = h_role.roleId
+    </select>
+</mapper>

@@ -3,9 +3,11 @@ package com.han.hero.framework.security;
 import com.han.hero.common.enums.ResultStatus;
 import com.han.hero.common.exception.ServiceException;
 import com.han.hero.project.domain.Menu;
+import com.han.hero.project.domain.Role;
 import com.han.hero.project.domain.User;
+import com.han.hero.project.mapper.MenuMapper;
+import com.han.hero.project.mapper.RoleMapper;
 import com.han.hero.project.mapper.UserMapper;
-import com.han.hero.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -26,7 +27,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private UserMapper userMapper;
 
     @Autowired
-    private UserService userService;
+    private RoleMapper roleMapper;
+
+    @Autowired
+    private MenuMapper menuMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -39,8 +43,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
             log.info("用户名错误未查询到用户");
             throw new ServiceException(ResultStatus.ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
         }
-        Set<Menu> permissions = userService.getUserPermissions(user.getUserId());
-        return new LoginUser(user, permissions.stream().map(Menu::getPerms).collect(Collectors.toSet()));
+
+        List<Role> roles = roleMapper.selectByUserId(user.getUserId());
+        List<Menu> menus = menuMapper.getRoleMenuByRoles(roles);
+        return new LoginUser(user, roles, menus);
     }
 
 

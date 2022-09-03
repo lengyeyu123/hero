@@ -70,7 +70,11 @@ public class AuthController {
         }
     }
 
-    @PreAuthorize("hasAuthority('sys:role:list')")
+    // 三种注释都可以
+//    @PreAuthorize("hasAuthority('sys:role:list')")
+//    @PreAuthorize("hasRole('super')")
+//    @PreAuthorize("hasRole('ROLE_super')")
+    @PreAuthorize("hasRole('super')")
     @GetMapping("/getUserInfo")
     public R<User> getUserInfo(Principal principal) {
         String name = principal.getName();

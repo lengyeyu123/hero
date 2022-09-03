@@ -4,7 +4,6 @@ import com.han.hero.common.exception.ServiceException;
 import com.han.hero.common.web.domain.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,17 +19,24 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // 401 403 异常不处理 直接抛出由 spring security 处理
-    @ExceptionHandler(AuthenticationException.class)
-    public void handleAuthenticationException(AuthenticationException authenticationException) {
-        log.info("未认证", authenticationException);
-        throw authenticationException;
-    }
+    // 401 403
+    // 由于 认证过滤器 与 授权过滤器位置不同 401不会被捕获 而403会被捕获 直接向上抛出异常由spring security处理即可
 
     @ExceptionHandler(AccessDeniedException.class)
     public void handleAccessDeniedException(AccessDeniedException accessDeniedException) {
         log.info("未授权", accessDeniedException);
         throw accessDeniedException;
+    }
+
+    /**
+     * 未知异常
+     */
+    @ExceptionHandler(Throwable.class)
+    public R<?> handleException(Throwable e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}',发生未知异常", requestURI);
+        log.error(e.getMessage(), e);
+        return R.fail(e);
     }
 
     /**
@@ -74,15 +80,5 @@ public class GlobalExceptionHandler {
         return R.fail(e);
     }
 
-    /**
-     * 未知异常
-     */
-    @ExceptionHandler(Exception.class)
-    public R<?> handleException(Exception e, HttpServletRequest request) {
-        String requestURI = request.getRequestURI();
-        log.error("请求地址'{}',发生未知异常", requestURI);
-        log.error(e.getMessage(), e);
-        return R.fail(e);
-    }
 
 }

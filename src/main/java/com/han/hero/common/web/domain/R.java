@@ -48,7 +48,7 @@ public class R<T> {
         return r;
     }
 
-    public static <T> R<T> fail(Exception exception) {
+    public static <T> R<T> fail(Throwable exception) {
         R<T> r = new R<>();
         r.setCode(ResultStatus.SERVER_ERROR.getCode());
         r.setMessage(ResultStatus.SERVER_ERROR.getMessage());
