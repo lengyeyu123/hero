@@ -5,6 +5,7 @@ import com.han.hero.common.exception.ServiceException;
 import com.han.hero.common.util.JwtUtil;
 import com.han.hero.common.web.domain.R;
 import com.han.hero.framework.config.properties.TokenProperties;
+import com.han.hero.framework.security.SecurityUtil;
 import com.han.hero.project.domain.User;
 import com.han.hero.project.service.UserService;
 import com.han.hero.project.vo.req.RegisterLoginReqVo;
@@ -16,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,10 +76,10 @@ public class AuthController {
 //    @PreAuthorize("hasRole('ROLE_super')")
     @PreAuthorize("hasRole('super')")
     @GetMapping("/getUserInfo")
-    public R<User> getUserInfo(Principal principal) {
-        String name = principal.getName();
-        User user = userService.selectByUserName(name);
-        redisTemplate.opsForValue().set(name, user);
+    public R<User> getUserInfo() {
+        String userName = SecurityUtil.getUserName();
+        User user = userService.selectByUserName(userName);
+        redisTemplate.opsForValue().set(userName, user);
         return R.ok(user);
     }
 
