@@ -1,6 +1,5 @@
 package com.han.hero.project.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.han.hero.common.web.domain.R;
 import com.han.hero.project.service.RoleService;
 import com.han.hero.project.vo.req.RoleListReqVo;
@@ -29,7 +28,7 @@ public class RoleController {
     @PreAuthorize("hasAnyRole('ROLE_super', 'ROLE_admin')")
     @PostMapping("/list")
     public R<?> list(@RequestBody RoleListReqVo vo) {
-        return R.ok(new PageInfo<>(roleService.list(vo)));
+        return R.ok(roleService.pageList(vo));
     }
 
 

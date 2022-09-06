@@ -2,6 +2,7 @@ package com.han.hero.project.service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.han.hero.project.domain.Role;
 import com.han.hero.project.mapper.RoleMapper;
 import com.han.hero.project.vo.req.RoleListReqVo;
@@ -16,11 +17,15 @@ public class RoleService {
     @Autowired
     private RoleMapper roleMapper;
 
-
     public List<Role> list(RoleListReqVo vo) {
         Page<Object> page = PageHelper.startPage(vo);
         page.setOrderBy("orderNum");
         return roleMapper.list(vo);
     }
 
+    public PageInfo<?> pageList(RoleListReqVo vo) {
+        return PageHelper.startPage(vo)
+                .setOrderBy("orderNum")
+                .doSelectPageInfo(() -> roleMapper.list(vo));
+    }
 }
