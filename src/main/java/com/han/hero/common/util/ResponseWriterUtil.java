@@ -22,5 +22,13 @@ public class ResponseWriterUtil {
         response.getWriter().flush();
     }
 
+    @SneakyThrows
+    public static void write(HttpServletResponse response, String json) {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().write(json);
+    }
+
 
 }

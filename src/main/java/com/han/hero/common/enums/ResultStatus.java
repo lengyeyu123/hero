@@ -14,7 +14,7 @@ public enum ResultStatus {
     // FORBIDDEN(4030, "未授权");
 
     // ------ token
-    TOKE_EXPIRED(9999, "令牌过期"),
+    TOKEN_EXPIRED(9999, "令牌过期"),
 
     // ------- 账户
     ACCOUNT_DISABLED(5001, "账户以被禁用"),

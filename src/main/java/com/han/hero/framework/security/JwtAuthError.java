@@ -23,8 +23,6 @@ public class JwtAuthError implements AuthenticationEntryPoint, AccessDeniedHandl
      * @param request       that resulted in an <code>AuthenticationException</code>
      * @param response      so that the user agent can begin authentication
      * @param authException that caused the invocation
-     * @throws IOException
-     * @throws ServletException
      */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
@@ -38,8 +36,6 @@ public class JwtAuthError implements AuthenticationEntryPoint, AccessDeniedHandl
      * @param request               that resulted in an <code>AccessDeniedException</code>
      * @param response              so that the user agent can be advised of the failure
      * @param accessDeniedException that caused the invocation
-     * @throws IOException
-     * @throws ServletException
      */
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {

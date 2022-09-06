@@ -1,6 +1,10 @@
 package com.han.hero.framework.security;
 
+import com.han.hero.common.enums.ResultStatus;
+import com.han.hero.common.util.JsonUtil;
 import com.han.hero.common.util.JwtUtil;
+import com.han.hero.common.util.ResponseWriterUtil;
+import com.han.hero.common.web.domain.R;
 import com.han.hero.framework.config.properties.TokenProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -36,13 +40,24 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         TokenProperties.TokenConfig atConfig = tokenProperties.getAtConfig();
         String header = request.getHeader(atConfig.getHeader());
         if (StringUtils.isNotBlank(header)) {
-            Claims claims = null;
+            Claims claims;
+            R<?> r = new R<>();
             try {
                 claims = JwtUtil.parseJwt(header, atConfig.getSecret());
             } catch (ExpiredJwtException expiredJwtException) {
                 log.error("token过期", expiredJwtException);
+                r.setCode(ResultStatus.TOKEN_EXPIRED.getCode());
+                r.setMessage(ResultStatus.TOKEN_EXPIRED.getMessage());
+                ResponseWriterUtil.write(response, JsonUtil.toJson(r));
+                // TODO 这个return的含义？？ 没搞懂
+                return;
             } catch (Exception exception) {
                 log.error("token解析发生异常", exception);
+                r.setCode(ResultStatus.SERVER_ERROR.getCode());
+                r.setMessage(ResultStatus.SERVER_ERROR.getMessage());
+                r.setDefaultMsg(exception.getMessage());
+                ResponseWriterUtil.write(response, JsonUtil.toJson(r));
+                return;
             }
             if (claims != null) {
                 String userName = (String) claims.get("userName");

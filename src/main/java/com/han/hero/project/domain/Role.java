@@ -1,11 +1,8 @@
 package com.han.hero.project.domain;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
+import com.han.hero.framework.web.BaseDomain;
 
-@Data
-@Accessors(chain = true)
-public class Role {
+public class Role extends BaseDomain {
 
     /**
      * 角色Id
@@ -27,5 +24,35 @@ public class Role {
      */
     private Integer state;
 
+    public Integer getRoleId() {
+        return roleId;
+    }
 
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public Integer getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
 }

@@ -1,9 +1,11 @@
 package com.han.hero.project.controller;
 
+import com.han.hero.common.enums.BusinessType;
 import com.han.hero.common.enums.ResultStatus;
 import com.han.hero.common.exception.ServiceException;
 import com.han.hero.common.util.JwtUtil;
 import com.han.hero.common.web.domain.R;
+import com.han.hero.framework.annotation.Log;
 import com.han.hero.framework.config.properties.TokenProperties;
 import com.han.hero.framework.security.SecurityUtil;
 import com.han.hero.project.domain.User;
@@ -40,8 +42,8 @@ public class AuthController {
     @PostMapping("/register")
     public R<?> register(@RequestBody @Validated RegisterLoginReqVo vo) {
         User user = new User();
-        user.setUserName(vo.getUserName())
-                .setPassword(passwordEncoder.encode(vo.getPassword()));
+        user.setUserName(vo.getUserName());
+        user.setPassword(passwordEncoder.encode(vo.getPassword()));
         if (userService.validateUserName(vo.getUserName())) {
             userService.insertUser(user);
         } else {
@@ -74,6 +76,7 @@ public class AuthController {
 //    @PreAuthorize("hasAuthority('sys:role:list')")
 //    @PreAuthorize("hasRole('super')")
 //    @PreAuthorize("hasRole('ROLE_super')")
+    @Log(title = "认证", businessType = BusinessType.OTHER)
     @PreAuthorize("hasRole('super')")
     @GetMapping("/getUserInfo")
     public R<User> getUserInfo() {

@@ -1,11 +1,8 @@
 package com.han.hero.project.domain;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
+import com.han.hero.framework.web.BaseDomain;
 
-@Data
-@Accessors(chain = true)
-public class Post {
+public class Post extends BaseDomain {
 
     /**
      * 岗位ID
@@ -32,4 +29,43 @@ public class Post {
      */
     private Integer state;
 
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+    public String getPostName() {
+        return postName;
+    }
+
+    public void setPostName(String postName) {
+        this.postName = postName;
+    }
+
+    public Integer getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
 }
