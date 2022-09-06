@@ -7,7 +7,7 @@ spring boot spring security + jwt rbac 后台接口
 1. 集成Spring Security🎉🎉
 2. flyway运行前，检查是否创建数据库，若未创建数据库则创建数据库
 3. 多数据源 flyway 支持 多数据源切换
-4. 管理员操作 记录日志
+4. 管理员操作 记录日志 🎉🎉
 5. redis 集成🎉🎉
 6. redis 工具类封装 🎉🎉
 7. 用户登录jwt存储到redis -> 在线踢人功能
