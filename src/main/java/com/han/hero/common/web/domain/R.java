@@ -39,6 +39,13 @@ public class R<T> {
         return r;
     }
 
+    public static <T> R<T> fail(ResultStatus resultStatus) {
+        R<T> r = new R<>();
+        r.setCode(resultStatus.getCode());
+        r.setMessage(resultStatus.getMessage());
+        return r;
+    }
+
     public static <T> R<T> fail(ServiceException exception) {
         R<T> r = new R<>();
         r.setCode(exception.getStatus().getCode());

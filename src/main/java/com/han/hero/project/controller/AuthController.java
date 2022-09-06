@@ -59,6 +59,9 @@ public class AuthController {
             throw new ServiceException(ResultStatus.ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
         } else {
             if (passwordEncoder.matches(vo.getPassword(), user.getPassword())) {
+                if (user.getState() == 0) {
+                    return R.fail(ResultStatus.ACCOUNT_DISABLED);
+                }
                 // 登录成功
                 Map<String, Object> claims = new HashMap<>();
                 claims.put("userName", user.getUserName());

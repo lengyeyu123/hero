@@ -12,4 +12,12 @@
         where h_user_role.userId = #{userId}
           and h_user_role.roleId = h_role.roleId
     </select>
+    <select id="list" resultType="com.han.hero.project.domain.Role">
+        select * from h_role
+        <where>
+            <if test="roleName != null and roleName != ''">
+                and roleName like CONCAT('%', #{roleName}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>
