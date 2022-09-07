@@ -12,8 +12,129 @@
  Target Server Version : 15002095 (15.00.2095)
  File Encoding         : 65001
 
- Date: 02/09/2022 17:07:27
+ Date: 06/09/2022 18:00:51
 */
+
+
+-- ----------------------------
+-- Table structure for flyway_schema_history
+-- ----------------------------
+IF EXISTS(SELECT *
+          FROM sys.all_objects
+          WHERE object_id = OBJECT_ID(N'[dbo].[flyway_schema_history]')
+            AND type IN ('U'))
+    DROP TABLE [dbo].[flyway_schema_history]
+GO
+
+CREATE TABLE [dbo].[flyway_schema_history]
+(
+    [installed_rank] int                                      NOT NULL,
+    [version]        nvarchar(50) COLLATE Chinese_PRC_CI_AS   NULL,
+    [description]    nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+    [type]           nvarchar(20) COLLATE Chinese_PRC_CI_AS   NOT NULL,
+    [script]         nvarchar(1000) COLLATE Chinese_PRC_CI_AS NOT NULL,
+    [checksum]       int                                      NULL,
+    [installed_by]   nvarchar(100) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+    [installed_on]   datetime DEFAULT getdate()               NOT NULL,
+    [execution_time] int                                      NOT NULL,
+    [success]        bit                                      NOT NULL
+)
+GO
+
+ALTER TABLE [dbo].[flyway_schema_history]
+    SET (LOCK_ESCALATION = TABLE)
+GO
+
+
+-- ----------------------------
+-- Records of flyway_schema_history
+-- ----------------------------
+INSERT INTO [dbo].[flyway_schema_history] ([installed_rank], [version], [description], [type], [script], [checksum],
+                                           [installed_by], [installed_on], [execution_time], [success])
+VALUES (N'1', N'1.0.0.20220902', N'init', N'SQL', N'V1.0.0_20220902__init.sql', N'-1745969698', N'jkwsyjxt',
+        N'2022-09-03 08:59:14.350', N'114', N'1')
+GO
+
+
+-- ----------------------------
+-- Table structure for h_dict_data
+-- ----------------------------
+IF EXISTS(SELECT *
+          FROM sys.all_objects
+          WHERE object_id = OBJECT_ID(N'[dbo].[h_dict_data]')
+            AND type IN ('U'))
+    DROP TABLE [dbo].[h_dict_data]
+GO
+
+CREATE TABLE [dbo].[h_dict_data]
+(
+    [dict_code]    int IDENTITY (1,1)                      NOT NULL,
+    [orderNum]     int                                     NULL,
+    [dictLabel]    nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
+    [dictValue]    nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
+    [dictType]     nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
+    [defaultState] int DEFAULT 0                           NULL,
+    [state]        int DEFAULT 1                           NULL,
+    [createBy]     int                                     NULL,
+    [createTime]   datetime2(7)                            NULL,
+    [updateBy]     int                                     NULL,
+    [updateTime]   datetime2(7)                            NULL,
+    [remark]       nchar(10) COLLATE Chinese_PRC_CI_AS     NULL
+)
+GO
+
+ALTER TABLE [dbo].[h_dict_data]
+    SET (LOCK_ESCALATION = TABLE)
+GO
+
+
+-- ----------------------------
+-- Records of h_dict_data
+-- ----------------------------
+SET IDENTITY_INSERT [dbo].[h_dict_data] ON
+GO
+
+SET IDENTITY_INSERT [dbo].[h_dict_data] OFF
+GO
+
+
+-- ----------------------------
+-- Table structure for h_dict_type
+-- ----------------------------
+IF EXISTS(SELECT *
+          FROM sys.all_objects
+          WHERE object_id = OBJECT_ID(N'[dbo].[h_dict_type]')
+            AND type IN ('U'))
+    DROP TABLE [dbo].[h_dict_type]
+GO
+
+CREATE TABLE [dbo].[h_dict_type]
+(
+    [dictId]     int IDENTITY (1,1)                      NOT NULL,
+    [dictName]   nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
+    [dictType]   nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
+    [state]      int DEFAULT 1                           NULL,
+    [createBy]   int                                     NULL,
+    [createTime] datetime2(7)                            NULL,
+    [updateBy]   int                                     NULL,
+    [updateTime] datetime2(7)                            NULL,
+    [remark]     nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
+)
+GO
+
+ALTER TABLE [dbo].[h_dict_type]
+    SET (LOCK_ESCALATION = TABLE)
+GO
+
+
+-- ----------------------------
+-- Records of h_dict_type
+-- ----------------------------
+SET IDENTITY_INSERT [dbo].[h_dict_type] ON
+GO
+
+SET IDENTITY_INSERT [dbo].[h_dict_type] OFF
+GO
 
 
 -- ----------------------------
@@ -38,12 +159,44 @@ CREATE TABLE [dbo].[h_menu]
     [menuType]   nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
     [state]      int DEFAULT 1                          NULL,
     [perms]      nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
-    [icon]       nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL
+    [icon]       nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
+    [createBy]   int                                    NULL,
+    [createTime] datetime2(7)                           NULL,
+    [updateBy]   int                                    NULL,
+    [updateTime] datetime2(7)                           NULL
 )
 GO
 
 ALTER TABLE [dbo].[h_menu]
     SET (LOCK_ESCALATION = TABLE)
+GO
+
+EXEC sp_addextendedproperty
+     'MS_Description', N'GET:/post/list 请求路径',
+     'SCHEMA', N'dbo',
+     'TABLE', N'h_menu',
+     'COLUMN', N'path'
+GO
+
+EXEC sp_addextendedproperty
+     'MS_Description', N'路由组件',
+     'SCHEMA', N'dbo',
+     'TABLE', N'h_menu',
+     'COLUMN', N'component'
+GO
+
+EXEC sp_addextendedproperty
+     'MS_Description', N'菜单类型 (M目录 C菜单 F按钮)',
+     'SCHEMA', N'dbo',
+     'TABLE', N'h_menu',
+     'COLUMN', N'menuType'
+GO
+
+EXEC sp_addextendedproperty
+     'MS_Description', N'权限字符 *:*:*拥有所有权限 super',
+     'SCHEMA', N'dbo',
+     'TABLE', N'h_menu',
+     'COLUMN', N'perms'
 GO
 
 
@@ -54,16 +207,88 @@ SET IDENTITY_INSERT [dbo].[h_menu] ON
 GO
 
 INSERT INTO [dbo].[h_menu] ([menuId], [menuName], [parentId], [parentName], [orderNum], [path], [component], [menuType],
-                            [state], [perms], [icon])
-VALUES (N'1', N'用户列表', N'0', N'', N'1', NULL, NULL, NULL, N'1', N'sys:user:list', NULL)
+                            [state], [perms], [icon], [createBy], [createTime], [updateBy], [updateTime])
+VALUES (N'1', N'用户列表', N'0', N'', N'1', NULL, NULL, NULL, N'1', N'sys:user:list', NULL, NULL, NULL, NULL, NULL)
 GO
 
 INSERT INTO [dbo].[h_menu] ([menuId], [menuName], [parentId], [parentName], [orderNum], [path], [component], [menuType],
-                            [state], [perms], [icon])
-VALUES (N'2', N'角色列表', N'0', NULL, N'2', NULL, NULL, NULL, N'1', N'sys:role:list', NULL)
+                            [state], [perms], [icon], [createBy], [createTime], [updateBy], [updateTime])
+VALUES (N'2', N'角色列表', N'0', NULL, N'2', NULL, NULL, NULL, N'1', N'sys:role:list', NULL, NULL, NULL, NULL, NULL)
 GO
 
 SET IDENTITY_INSERT [dbo].[h_menu] OFF
+GO
+
+
+-- ----------------------------
+-- Table structure for h_oper_log
+-- ----------------------------
+IF EXISTS(SELECT *
+          FROM sys.all_objects
+          WHERE object_id = OBJECT_ID(N'[dbo].[h_oper_log]')
+            AND type IN ('U'))
+    DROP TABLE [dbo].[h_oper_log]
+GO
+
+CREATE TABLE [dbo].[h_oper_log]
+(
+    [operId]        int IDENTITY (1,1)                       NOT NULL,
+    [title]         nvarchar(50) COLLATE Chinese_PRC_CI_AS   NULL,
+    [businessType]  int                                      NULL,
+    [method]        nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
+    [requestMethod] nvarchar(10) COLLATE Chinese_PRC_CI_AS   NULL,
+    [operName]      nvarchar(50) COLLATE Chinese_PRC_CI_AS   NULL,
+    [deptName]      nvarchar(50) COLLATE Chinese_PRC_CI_AS   NULL,
+    [operUrl]       nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+    [operIp]        nvarchar(128) COLLATE Chinese_PRC_CI_AS  NULL,
+    [operLocation]  nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+    [operParam]     nvarchar(2000) COLLATE Chinese_PRC_CI_AS NULL,
+    [jsonResult]    nvarchar(2000) COLLATE Chinese_PRC_CI_AS NULL,
+    [state]         int DEFAULT 1                            NULL,
+    [errorMsg]      nvarchar(2000) COLLATE Chinese_PRC_CI_AS NULL,
+    [operTime]      datetime2(7)                             NULL
+)
+GO
+
+ALTER TABLE [dbo].[h_oper_log]
+    SET (LOCK_ESCALATION = TABLE)
+GO
+
+
+-- ----------------------------
+-- Records of h_oper_log
+-- ----------------------------
+SET IDENTITY_INSERT [dbo].[h_oper_log] ON
+GO
+
+INSERT INTO [dbo].[h_oper_log] ([operId], [title], [businessType], [method], [requestMethod], [operName], [deptName],
+                                [operUrl], [operIp], [operLocation], [operParam], [jsonResult], [state], [errorMsg],
+                                [operTime])
+VALUES (N'1', N'认证', N'0', N'com.han.hero.project.controller.AuthController.getUserInfo()', NULL, N'zhangsan', NULL,
+        N'/auth/getUserInfo', N'0:0:0:0:0:0:0:1', NULL, N'{}',
+        N'{"code":2000,"message":"成功","defaultMsg":null,"data":{"userId":3,"userName":"zhangsan","password":"$2a$10$oVMNNsg3uFKtwpA5xAjwSe/3ivp/IQncBydyKrNM6i4RGz.Ia3wLq","state":1}}',
+        N'1', NULL, N'2022-09-05 17:41:34.5100000')
+GO
+
+INSERT INTO [dbo].[h_oper_log] ([operId], [title], [businessType], [method], [requestMethod], [operName], [deptName],
+                                [operUrl], [operIp], [operLocation], [operParam], [jsonResult], [state], [errorMsg],
+                                [operTime])
+VALUES (N'2', N'认证', N'0', N'com.han.hero.project.controller.AuthController.getUserInfo()', N'GET', N'zhangsan', NULL,
+        N'/auth/getUserInfo', N'0:0:0:0:0:0:0:1', NULL, N'{}',
+        N'{"code":2000,"message":"成功","defaultMsg":null,"data":{"userId":3,"userName":"zhangsan","password":"$2a$10$oVMNNsg3uFKtwpA5xAjwSe/3ivp/IQncBydyKrNM6i4RGz.Ia3wLq","state":1}}',
+        N'1', NULL, N'2022-09-05 18:00:33.1266667')
+GO
+
+INSERT INTO [dbo].[h_oper_log] ([operId], [title], [businessType], [method], [requestMethod], [operName], [deptName],
+                                [operUrl], [operIp], [operLocation], [operParam], [jsonResult], [state], [errorMsg],
+                                [operTime])
+VALUES (N'1002', N'认证', N'0', N'com.han.hero.project.controller.AuthController.getUserInfo()', N'GET', N'zhangsan',
+        NULL, N'/auth/getUserInfo', N'0:0:0:0:0:0:0:1', NULL, N'{}',
+        N'{"code":2000,"message":"成功","defaultMsg":null,"data":{"userId":3,"userName":"zhangsan","password":"$2a$10$oVMNNsg3uFKtwpA5xAjwSe/3ivp/IQncBydyKrNM6i4RGz.Ia3wLq","state":1}}',
+        N'1', NULL, N'2022-09-06 16:51:04.3200000')
+GO
+
+SET IDENTITY_INSERT [dbo].[h_oper_log] OFF
 GO
 
 
@@ -79,11 +304,15 @@ GO
 
 CREATE TABLE [dbo].[h_post]
 (
-    [postId]   int IDENTITY (1,1)                     NOT NULL,
-    [postCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
-    [postName] nchar(10) COLLATE Chinese_PRC_CI_AS    NULL,
-    [orderNum] int                                    NULL,
-    [state]    int DEFAULT 1                          NULL
+    [postId]     int IDENTITY (1,1)                     NOT NULL,
+    [postCode]   nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
+    [postName]   nchar(10) COLLATE Chinese_PRC_CI_AS    NULL,
+    [orderNum]   int                                    NULL,
+    [state]      int DEFAULT 1                          NULL,
+    [createBy]   int                                    NULL,
+    [createTime] datetime2(7)                           NULL,
+    [updateBy]   int                                    NULL,
+    [updateTime] datetime2(7)                           NULL
 )
 GO
 
@@ -114,10 +343,14 @@ GO
 
 CREATE TABLE [dbo].[h_role]
 (
-    [roleId]   int IDENTITY (1,1)                     NOT NULL,
-    [roleName] nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
-    [orderNum] int                                    NULL,
-    [state]    int DEFAULT 1                          NULL
+    [roleId]     int IDENTITY (1,1)                     NOT NULL,
+    [roleName]   nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
+    [orderNum]   int                                    NULL,
+    [state]      int DEFAULT 1                          NULL,
+    [createBy]   int                                    NULL,
+    [createTime] datetime2(7)                           NULL,
+    [updateBy]   int                                    NULL,
+    [updateTime] datetime2(7)                           NULL
 )
 GO
 
@@ -132,8 +365,9 @@ GO
 SET IDENTITY_INSERT [dbo].[h_role] ON
 GO
 
-INSERT INTO [dbo].[h_role] ([roleId], [roleName], [orderNum], [state])
-VALUES (N'1', N'super', N'1', N'1')
+INSERT INTO [dbo].[h_role] ([roleId], [roleName], [orderNum], [state], [createBy], [createTime], [updateBy],
+                            [updateTime])
+VALUES (N'1', N'super', N'1', N'1', NULL, NULL, NULL, NULL)
 GO
 
 SET IDENTITY_INSERT [dbo].[h_role] OFF
@@ -182,10 +416,14 @@ GO
 
 CREATE TABLE [dbo].[h_user]
 (
-    [userId]   int IDENTITY (1,1)                      NOT NULL,
-    [userName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
-    [password] nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
-    [state]    int DEFAULT 1                           NULL
+    [userId]     int IDENTITY (1,1)                      NOT NULL,
+    [userName]   nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+    [password]   nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
+    [state]      int DEFAULT 1                           NULL,
+    [createBy]   int                                     NULL,
+    [createTime] datetime2(7)                            NULL,
+    [updateBy]   int                                     NULL,
+    [updateTime] datetime2(7)                            NULL
 )
 GO
 
@@ -200,8 +438,10 @@ GO
 SET IDENTITY_INSERT [dbo].[h_user] ON
 GO
 
-INSERT INTO [dbo].[h_user] ([userId], [userName], [password], [state])
-VALUES (N'3', N'zhangsan', N'$2a$10$oVMNNsg3uFKtwpA5xAjwSe/3ivp/IQncBydyKrNM6i4RGz.Ia3wLq', N'1')
+INSERT INTO [dbo].[h_user] ([userId], [userName], [password], [state], [createBy], [createTime], [updateBy],
+                            [updateTime])
+VALUES (N'3', N'zhangsan', N'$2a$10$oVMNNsg3uFKtwpA5xAjwSe/3ivp/IQncBydyKrNM6i4RGz.Ia3wLq', N'1', NULL, NULL, NULL,
+        NULL)
 GO
 
 SET IDENTITY_INSERT [dbo].[h_user] OFF
@@ -265,6 +505,60 @@ GO
 
 
 -- ----------------------------
+-- Indexes structure for table flyway_schema_history
+-- ----------------------------
+CREATE NONCLUSTERED INDEX [flyway_schema_history_s_idx]
+    ON [dbo].[flyway_schema_history] (
+                                      [success] ASC
+        )
+GO
+
+
+-- ----------------------------
+-- Primary Key structure for table flyway_schema_history
+-- ----------------------------
+ALTER TABLE [dbo].[flyway_schema_history]
+    ADD CONSTRAINT [flyway_schema_history_pk] PRIMARY KEY CLUSTERED ([installed_rank])
+        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+        ON [PRIMARY]
+GO
+
+
+-- ----------------------------
+-- Auto increment value for h_dict_data
+-- ----------------------------
+DBCC CHECKIDENT ('[dbo].[h_dict_data]', RESEED, 1)
+GO
+
+
+-- ----------------------------
+-- Primary Key structure for table h_dict_data
+-- ----------------------------
+ALTER TABLE [dbo].[h_dict_data]
+    ADD CONSTRAINT [PK_h_dict_data] PRIMARY KEY CLUSTERED ([dict_code])
+        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+        ON [PRIMARY]
+GO
+
+
+-- ----------------------------
+-- Auto increment value for h_dict_type
+-- ----------------------------
+DBCC CHECKIDENT ('[dbo].[h_dict_type]', RESEED, 1)
+GO
+
+
+-- ----------------------------
+-- Primary Key structure for table h_dict_type
+-- ----------------------------
+ALTER TABLE [dbo].[h_dict_type]
+    ADD CONSTRAINT [PK_h_dict_type] PRIMARY KEY CLUSTERED ([dictId])
+        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+        ON [PRIMARY]
+GO
+
+
+-- ----------------------------
 -- Auto increment value for h_menu
 -- ----------------------------
 DBCC CHECKIDENT ('[dbo].[h_menu]', RESEED, 2)
@@ -276,6 +570,23 @@ GO
 -- ----------------------------
 ALTER TABLE [dbo].[h_menu]
     ADD CONSTRAINT [PK_h_menu] PRIMARY KEY CLUSTERED ([menuId])
+        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+        ON [PRIMARY]
+GO
+
+
+-- ----------------------------
+-- Auto increment value for h_oper_log
+-- ----------------------------
+DBCC CHECKIDENT ('[dbo].[h_oper_log]', RESEED, 1002)
+GO
+
+
+-- ----------------------------
+-- Primary Key structure for table h_oper_log
+-- ----------------------------
+ALTER TABLE [dbo].[h_oper_log]
+    ADD CONSTRAINT [PK_h_oper_log] PRIMARY KEY CLUSTERED ([operId])
         WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
         ON [PRIMARY]
 GO

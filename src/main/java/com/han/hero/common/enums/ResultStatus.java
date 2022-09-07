@@ -24,7 +24,10 @@ public enum ResultStatus {
     ACCOUNT_USER_NAME_REPEAT(5003, "用户名已被占用"),
 
     // ------ 上传文件内容 或提交表单内容
-    CONTENT_UN_SAFE(5102, "内容不安全");
+    CONTENT_UN_SAFE(5102, "内容不安全"),
+
+    // ------ 一般业务异常 59
+    DATA_HAS_USED(5901, "数据以被使用，请移除使用数据后删除");
 
     private final Integer code;
 
