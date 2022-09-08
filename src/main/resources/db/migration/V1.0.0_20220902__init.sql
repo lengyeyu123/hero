@@ -12,48 +12,8 @@
  Target Server Version : 15002095 (15.00.2095)
  File Encoding         : 65001
 
- Date: 06/09/2022 18:00:51
+ Date: 07/09/2022 15:47:56
 */
-
-
--- ----------------------------
--- Table structure for flyway_schema_history
--- ----------------------------
-IF EXISTS(SELECT *
-          FROM sys.all_objects
-          WHERE object_id = OBJECT_ID(N'[dbo].[flyway_schema_history]')
-            AND type IN ('U'))
-    DROP TABLE [dbo].[flyway_schema_history]
-GO
-
-CREATE TABLE [dbo].[flyway_schema_history]
-(
-    [installed_rank] int                                      NOT NULL,
-    [version]        nvarchar(50) COLLATE Chinese_PRC_CI_AS   NULL,
-    [description]    nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
-    [type]           nvarchar(20) COLLATE Chinese_PRC_CI_AS   NOT NULL,
-    [script]         nvarchar(1000) COLLATE Chinese_PRC_CI_AS NOT NULL,
-    [checksum]       int                                      NULL,
-    [installed_by]   nvarchar(100) COLLATE Chinese_PRC_CI_AS  NOT NULL,
-    [installed_on]   datetime DEFAULT getdate()               NOT NULL,
-    [execution_time] int                                      NOT NULL,
-    [success]        bit                                      NOT NULL
-)
-GO
-
-ALTER TABLE [dbo].[flyway_schema_history]
-    SET (LOCK_ESCALATION = TABLE)
-GO
-
-
--- ----------------------------
--- Records of flyway_schema_history
--- ----------------------------
-INSERT INTO [dbo].[flyway_schema_history] ([installed_rank], [version], [description], [type], [script], [checksum],
-                                           [installed_by], [installed_on], [execution_time], [success])
-VALUES (N'1', N'1.0.0.20220902', N'init', N'SQL', N'V1.0.0_20220902__init.sql', N'-1745969698', N'jkwsyjxt',
-        N'2022-09-03 08:59:14.350', N'114', N'1')
-GO
 
 
 -- ----------------------------
@@ -68,7 +28,7 @@ GO
 
 CREATE TABLE [dbo].[h_dict_data]
 (
-    [dict_code]    int IDENTITY (1,1)                      NOT NULL,
+    [dictCode]     int IDENTITY (1,1)                      NOT NULL,
     [orderNum]     int                                     NULL,
     [dictLabel]    nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
     [dictValue]    nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
@@ -505,26 +465,6 @@ GO
 
 
 -- ----------------------------
--- Indexes structure for table flyway_schema_history
--- ----------------------------
-CREATE NONCLUSTERED INDEX [flyway_schema_history_s_idx]
-    ON [dbo].[flyway_schema_history] (
-                                      [success] ASC
-        )
-GO
-
-
--- ----------------------------
--- Primary Key structure for table flyway_schema_history
--- ----------------------------
-ALTER TABLE [dbo].[flyway_schema_history]
-    ADD CONSTRAINT [flyway_schema_history_pk] PRIMARY KEY CLUSTERED ([installed_rank])
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
-
--- ----------------------------
 -- Auto increment value for h_dict_data
 -- ----------------------------
 DBCC CHECKIDENT ('[dbo].[h_dict_data]', RESEED, 1)
@@ -535,7 +475,7 @@ GO
 -- Primary Key structure for table h_dict_data
 -- ----------------------------
 ALTER TABLE [dbo].[h_dict_data]
-    ADD CONSTRAINT [PK_h_dict_data] PRIMARY KEY CLUSTERED ([dict_code])
+    ADD CONSTRAINT [PK_h_dict_data] PRIMARY KEY CLUSTERED ([dictCode])
         WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
         ON [PRIMARY]
 GO
