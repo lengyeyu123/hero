@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ResultStatus {
 
-    OK(2000, "成功"),
+    OK(200, "成功"),
 
     SERVER_ERROR(5000, "服务器内部错误"),
 

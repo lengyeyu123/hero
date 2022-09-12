@@ -15,4 +15,6 @@ public class TypeAddReqVo {
 
     private String remark;
 
+    private Integer state;
+
 }

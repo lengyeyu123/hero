@@ -12,7 +12,7 @@ spring boot spring security + jwt rbac 后台接口
 6. redis 工具类封装 🎉🎉
 7. 用户登录jwt存储到redis -> 在线踢人功能
 8. 定时任务
-9. 其他
+9. 正确配置cors 解决跨域问题 🎉🎉
 
 ## 项目启动
 
