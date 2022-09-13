@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-@EnableWebSecurity(debug = true)
+// 不清楚这个注解的作用
+@EnableWebSecurity
 @SpringBootApplication
 @ServletComponentScan
 @MapperScan("com.han.hero.project.**.mapper")
