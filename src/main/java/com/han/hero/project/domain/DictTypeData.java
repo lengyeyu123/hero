@@ -67,11 +67,11 @@ public class DictTypeData extends BaseDomain {
         this.defaultState = defaultState;
     }
 
-    public Integer getState() {
-        return state.getCode();
+    public StateEnums getState() {
+        return state;
     }
 
-    public void setState(Integer stateCode) {
-        this.state = StateEnums.get(stateCode);
+    public void setState(StateEnums state) {
+        this.state = state;
     }
 }

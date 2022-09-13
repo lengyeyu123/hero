@@ -15,9 +15,7 @@
         <setting name="logImpl" value="SLF4J"/>
         <!-- 使用驼峰命名法转换字段 -->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="defaultEnumTypeHandler" value="com.han.hero.framework.config.AutoGenericEnumTypeHandler"/>
     </settings>
-    <!--    <typeHandlers>-->
-    <!--        <typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="com.han.hero.common.enums.StateEnums"/>-->
-    <!--    </typeHandlers>-->
 
 </configuration>

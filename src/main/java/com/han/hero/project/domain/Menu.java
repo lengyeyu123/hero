@@ -132,12 +132,12 @@ public class Menu extends BaseDomain {
         this.menuType = menuType;
     }
 
-    public Integer getState() {
-        return state.getCode();
+    public StateEnums getState() {
+        return state;
     }
 
-    public void setState(Integer stateCode) {
-        this.state = StateEnums.get(stateCode);
+    public void setState(StateEnums state) {
+        this.state = state;
     }
 
     public String getPerms() {

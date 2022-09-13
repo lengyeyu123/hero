@@ -71,7 +71,7 @@ public class LogAspect {
 
             // ======数据库日志======
             OperLog operLog = new OperLog();
-            operLog.setState(StateEnums.ENABLED.ordinal());
+            operLog.setState(StateEnums.ENABLED);
             operLog.setOperIp(ServletUtil.getClientIP(ServletUtil.getRequest()));
             operLog.setOperUrl(ServletUtil.getRequest().getRequestURI());
             if (loginUser != null) {
@@ -79,7 +79,7 @@ public class LogAspect {
             }
 
             if (e != null) {
-                operLog.setState(StateEnums.DISABLED.ordinal());
+                operLog.setState(StateEnums.DISABLED);
                 operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
             // 设置方法名
@@ -108,7 +108,7 @@ public class LogAspect {
      */
     private void getControllerMethodDescription(JoinPoint joinPoint, Log logg, OperLog operLog, Object jsonResult) throws Exception {
         // 设置action动作
-        operLog.setBusinessType(logg.businessType().ordinal());
+        operLog.setBusinessType(logg.businessType());
         // 设置标题
         operLog.setTitle(logg.title());
         // 是否需要保存request，参数和值

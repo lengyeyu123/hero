@@ -1,5 +1,6 @@
 package com.han.hero.project.domain;
 
+import com.han.hero.common.enums.BusinessType;
 import com.han.hero.common.enums.StateEnums;
 import com.han.hero.framework.web.BaseDomain;
 
@@ -23,7 +24,7 @@ public class OperLog extends BaseDomain {
     /**
      * 业务类型 0=其它,1=新增,2=修改,3=删除,4=授权,5=导出,6=导入,7=强退,8=生成代码,9=清空数据
      */
-    private Integer businessType;
+    private BusinessType businessType;
 
     /**
      * 业务类型数组
@@ -106,11 +107,11 @@ public class OperLog extends BaseDomain {
         this.title = title;
     }
 
-    public Integer getBusinessType() {
+    public BusinessType getBusinessType() {
         return businessType;
     }
 
-    public void setBusinessType(Integer businessType) {
+    public void setBusinessType(BusinessType businessType) {
         this.businessType = businessType;
     }
 
@@ -194,12 +195,12 @@ public class OperLog extends BaseDomain {
         this.jsonResult = jsonResult;
     }
 
-    public Integer getState() {
-        return state.getCode();
+    public StateEnums getState() {
+        return state;
     }
 
-    public void setState(Integer stateCode) {
-        this.state = StateEnums.get(stateCode);
+    public void setState(StateEnums state) {
+        this.state = state;
     }
 
     public String getErrorMsg() {

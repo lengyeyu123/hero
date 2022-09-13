@@ -1,5 +1,6 @@
 package com.han.hero.project.controller;
 
+import com.han.hero.common.enums.BusinessType;
 import com.han.hero.common.web.domain.R;
 import com.han.hero.framework.annotation.Log;
 import com.han.hero.project.service.DictService;
@@ -28,7 +29,7 @@ public class DictController {
     }
 
     @PreAuthorize("hasRole('super')")
-    @Log(title = "新增字典类型")
+    @Log(title = "新增字典类型", businessType = BusinessType.INSERT)
     @PostMapping("/type/add")
     public R<?> typeAdd(@RequestBody @Validated TypeAddReqVo vo) {
         dictService.typeAdd(vo);
@@ -36,7 +37,7 @@ public class DictController {
     }
 
     @PreAuthorize("hasRole('super')")
-    @Log(title = "修改字典类型")
+    @Log(title = "修改字典类型", businessType = BusinessType.UPDATE)
     @PostMapping("/type/update")
     public R<?> typeUpdate(@RequestBody TypeUpdateReqVo vo) {
         dictService.typeUpdate(vo);
@@ -44,7 +45,7 @@ public class DictController {
     }
 
     @PreAuthorize("hasRole('super')")
-    @Log(title = "删除字典类型")
+    @Log(title = "删除字典类型", businessType = BusinessType.DELETE)
     @GetMapping("/type/del")
     public R<?> typeDel(@RequestParam Integer dictId) {
         dictService.typeDel(dictId);
@@ -57,7 +58,7 @@ public class DictController {
     }
 
     @PreAuthorize("hasRole('super')")
-    @Log(title = "新增字典数据")
+    @Log(title = "新增字典数据", businessType = BusinessType.INSERT)
     @PostMapping("/data/add")
     public R<?> dataAdd(@RequestBody @Validated DataAddReqVo vo) {
         dictService.dataAdd(vo);
@@ -65,7 +66,7 @@ public class DictController {
     }
 
     @PreAuthorize("hasRole('super')")
-    @Log(title = "删除字典数据")
+    @Log(title = "删除字典数据", businessType = BusinessType.DELETE)
     @GetMapping("/data/del")
     public R<?> dataDel(@RequestParam Integer dictCode) {
         dictService.dataDel(dictCode);
@@ -73,7 +74,7 @@ public class DictController {
     }
 
     @PreAuthorize("hasRole('super')")
-    @Log(title = "修改字典数据")
+    @Log(title = "修改字典数据", businessType = BusinessType.UPDATE)
     @PostMapping("/data/update")
     public R<?> dataUpdate(@RequestBody @Validated DataUpdateReqVo vo) {
         dictService.dataUpdate(vo);

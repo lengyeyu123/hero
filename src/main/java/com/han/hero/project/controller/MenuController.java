@@ -1,5 +1,6 @@
 package com.han.hero.project.controller;
 
+import com.han.hero.common.enums.BusinessType;
 import com.han.hero.common.web.domain.R;
 import com.han.hero.framework.annotation.Log;
 import com.han.hero.project.service.MenuService;
@@ -22,7 +23,7 @@ public class MenuController {
      * 新增菜单
      */
     @PreAuthorize("hasAnyRole('super', 'admin')")
-    @Log(title = "新增菜单")
+    @Log(title = "新增菜单", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     public R<?> add(@RequestBody @Validated MenuAddReqVo vo) {
         menuService.add(vo);
@@ -33,7 +34,7 @@ public class MenuController {
      * 修改菜单信息
      */
     @PreAuthorize("hasAnyRole('super', 'admin')")
-    @Log(title = "修改菜单")
+    @Log(title = "修改菜单", businessType = BusinessType.UPDATE)
     @PostMapping("/update")
     public R<?> update(@RequestBody @Validated MenuUpdateReqVo vo) {
         menuService.update(vo);
@@ -44,7 +45,7 @@ public class MenuController {
      * 删除菜单
      */
     @PreAuthorize("hasAnyRole('super', 'admin')")
-    @Log(title = "删除菜单")
+    @Log(title = "删除菜单", businessType = BusinessType.DELETE)
     @GetMapping("/{menuId}/del")
     public R<?> del(@PathVariable("menuId") Integer menuId) {
         menuService.del(menuId);

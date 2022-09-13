@@ -49,11 +49,11 @@ public class Role extends BaseDomain {
         this.orderNum = orderNum;
     }
 
-    public Integer getState() {
-        return state.getCode();
+    public StateEnums getState() {
+        return state;
     }
 
-    public void setState(Integer stateCode) {
-        this.state = StateEnums.get(stateCode);
+    public void setState(StateEnums state) {
+        this.state = state;
     }
 }

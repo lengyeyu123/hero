@@ -1,5 +1,6 @@
 package com.han.hero.project.controller;
 
+import com.han.hero.common.enums.BusinessType;
 import com.han.hero.common.web.domain.R;
 import com.han.hero.framework.annotation.Log;
 import com.han.hero.project.service.RoleService;
@@ -31,7 +32,7 @@ public class RoleController {
     }
 
     @PreAuthorize("hasAnyRole('super', 'admin')")
-    @Log(title = "新增角色")
+    @Log(title = "新增角色", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     public R<?> add(@RequestBody @Validated RoleAddReqVo vo) {
         roleService.add(vo);
@@ -39,7 +40,7 @@ public class RoleController {
     }
 
     @PreAuthorize("hasAnyRole('super', 'admin')")
-    @Log(title = "修改角色")
+    @Log(title = "修改角色", businessType = BusinessType.UPDATE)
     @PostMapping("/update")
     public R<?> update(@RequestBody @Validated RoleUpdateReqVo vo) {
         roleService.update(vo);
@@ -47,7 +48,7 @@ public class RoleController {
     }
 
     @PreAuthorize("hasAnyRole('super', 'admin')")
-    @Log(title = "删除角色")
+    @Log(title = "删除角色", businessType = BusinessType.DELETE)
     @GetMapping("/{roleId}/del")
     public R<?> del(@PathVariable("roleId") Integer roleId) {
         roleService.del(roleId);
