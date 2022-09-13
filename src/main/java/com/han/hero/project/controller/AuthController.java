@@ -5,16 +5,17 @@ import com.han.hero.common.enums.ResultStatus;
 import com.han.hero.common.enums.StateEnums;
 import com.han.hero.common.exception.ServiceException;
 import com.han.hero.common.util.JwtUtil;
+import com.han.hero.common.util.RedisUtil;
 import com.han.hero.common.web.domain.R;
 import com.han.hero.framework.annotation.Log;
 import com.han.hero.framework.config.properties.TokenProperties;
+import com.han.hero.framework.security.LoginUser;
 import com.han.hero.framework.security.SecurityUtil;
 import com.han.hero.project.domain.User;
 import com.han.hero.project.service.UserService;
 import com.han.hero.project.vo.req.RegisterLoginReqVo;
 import com.han.hero.project.vo.resp.LoginRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
@@ -37,8 +38,7 @@ public class AuthController {
     private TokenProperties tokenProperties;
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
-
+    private RedisUtil redisUtil;
 
     @PostMapping("/register")
     public R<?> register(@RequestBody @Validated RegisterLoginReqVo vo) {
@@ -77,17 +77,16 @@ public class AuthController {
     }
 
     // 三种注释都可以
-//    @PreAuthorize("hasAuthority('sys:role:list')")
-//    @PreAuthorize("hasRole('super')")
-//    @PreAuthorize("hasRole('super')")
+    // @PreAuthorize("hasAuthority('sys:role:list')")
+    // @PreAuthorize("hasRole('super')")
+    // @PreAuthorize("hasRole('super')")
     @Log(title = "认证", businessType = BusinessType.OTHER)
     @PreAuthorize("hasRole('super')")
     @GetMapping("/getUserInfo")
-    public R<User> getUserInfo() {
-        String userName = SecurityUtil.getUserName();
-        User user = userService.selectByUserName(userName);
-        redisTemplate.opsForValue().set(userName, user);
-        return R.ok(user);
+    public R<LoginUser> getUserInfo() {
+        LoginUser loginUser = SecurityUtil.getLoginUser();
+        redisUtil.set(loginUser.getUsername(), loginUser);
+        return R.ok(loginUser);
     }
 
 
