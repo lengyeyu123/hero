@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.han.hero.common.enums.StateEnums;
 import com.han.hero.common.util.JsonUtil;
 import com.han.hero.common.util.ServletUtil;
 import com.han.hero.framework.annotation.Log;
@@ -70,7 +71,7 @@ public class LogAspect {
 
             // ======数据库日志======
             OperLog operLog = new OperLog();
-            operLog.setState(1);
+            operLog.setState(StateEnums.ENABLED.ordinal());
             operLog.setOperIp(ServletUtil.getClientIP(ServletUtil.getRequest()));
             operLog.setOperUrl(ServletUtil.getRequest().getRequestURI());
             if (loginUser != null) {
@@ -78,7 +79,7 @@ public class LogAspect {
             }
 
             if (e != null) {
-                operLog.setState(0);
+                operLog.setState(StateEnums.DISABLED.ordinal());
                 operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
             // 设置方法名

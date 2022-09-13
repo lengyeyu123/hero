@@ -1,5 +1,6 @@
 package com.han.hero.project.domain;
 
+import com.han.hero.common.enums.StateEnums;
 import com.han.hero.framework.web.BaseDomain;
 
 public class DictType extends BaseDomain {
@@ -10,7 +11,7 @@ public class DictType extends BaseDomain {
 
     private String dictType;
 
-    private Integer state;
+    private StateEnums state;
 
     public Integer getDictId() {
         return dictId;
@@ -37,10 +38,10 @@ public class DictType extends BaseDomain {
     }
 
     public Integer getState() {
-        return state;
+        return state.getCode();
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setState(Integer stateCode) {
+        this.state = StateEnums.get(stateCode);
     }
 }

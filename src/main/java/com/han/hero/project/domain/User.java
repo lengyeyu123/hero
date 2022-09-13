@@ -1,5 +1,6 @@
 package com.han.hero.project.domain;
 
+import com.han.hero.common.enums.StateEnums;
 import com.han.hero.framework.web.BaseDomain;
 
 public class User extends BaseDomain {
@@ -22,7 +23,7 @@ public class User extends BaseDomain {
     /**
      * 用户状态 0禁用 1正常
      */
-    private Integer state;
+    private StateEnums state;
 
     public Integer getUserId() {
         return userId;
@@ -49,10 +50,10 @@ public class User extends BaseDomain {
     }
 
     public Integer getState() {
-        return state;
+        return state.getCode();
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setState(Integer stateCode) {
+        this.state = StateEnums.get(stateCode);
     }
 }

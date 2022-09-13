@@ -1,5 +1,6 @@
 package com.han.hero.project.domain;
 
+import com.han.hero.common.enums.StateEnums;
 import com.han.hero.framework.web.BaseDomain;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class Menu extends BaseDomain {
     /**
      * 状态 0禁用 1正常
      */
-    private Integer state;
+    private StateEnums state;
 
     /**
      * 权限字符串
@@ -132,11 +133,11 @@ public class Menu extends BaseDomain {
     }
 
     public Integer getState() {
-        return state;
+        return state.getCode();
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setState(Integer stateCode) {
+        this.state = StateEnums.get(stateCode);
     }
 
     public String getPerms() {

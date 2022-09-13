@@ -6,8 +6,8 @@
 
     <!-- ===========dictType===========  -->
     <insert id="typeAdd">
-        insert into h_dict_type (dictName, dictType, createBy, createTime, remark)
-        values (#{dictName}, #{dictType}, #{createBy}, getDate(), #{remark})
+        insert into h_dict_type (dictName, dictType, createBy, createTime, remark <if test="state != null">,state</if>)
+        values (#{dictName}, #{dictType}, #{createBy}, getDate(), #{remark}, <if test="state != null">#{state}</if>)
     </insert>
 
     <update id="typeUpdate">

@@ -31,11 +31,11 @@ public enum ResultStatus {
 
     private final Integer code;
 
-    private final String message;
+    private final String msg;
 
-    ResultStatus(Integer code, String message) {
+    ResultStatus(Integer code, String msg) {
         this.code = code;
-        this.message = message;
+        this.msg = msg;
     }
 
 }

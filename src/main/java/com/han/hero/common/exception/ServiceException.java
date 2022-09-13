@@ -18,7 +18,7 @@ public class ServiceException extends RuntimeException {
 
     public ServiceException(ResultStatus status) {
         this.status = status;
-        this.defaultMsg = status.getMessage();
+        this.defaultMsg = status.getMsg();
     }
 
     public ServiceException(ResultStatus status, String defaultMsg) {

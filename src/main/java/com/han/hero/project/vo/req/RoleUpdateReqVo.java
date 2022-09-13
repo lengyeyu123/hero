@@ -1,5 +1,6 @@
 package com.han.hero.project.vo.req;
 
+import com.han.hero.common.enums.StateEnums;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,7 @@ public class RoleUpdateReqVo {
 
     private Integer orderNum;
 
-    private Integer state;
+    private StateEnums state;
 
     private String remark;
 

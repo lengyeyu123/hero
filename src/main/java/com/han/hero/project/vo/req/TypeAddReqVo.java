@@ -1,5 +1,6 @@
 package com.han.hero.project.vo.req;
 
+import com.han.hero.common.enums.StateEnums;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,6 @@ public class TypeAddReqVo {
 
     private String remark;
 
-    private Integer state;
+    private StateEnums state;
 
 }

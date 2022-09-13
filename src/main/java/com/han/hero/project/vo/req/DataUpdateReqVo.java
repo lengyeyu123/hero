@@ -1,5 +1,6 @@
 package com.han.hero.project.vo.req;
 
+import com.han.hero.common.enums.StateEnums;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -20,7 +21,7 @@ public class DataUpdateReqVo {
 
     private Integer defaultState;
 
-    private Integer state;
+    private StateEnums state;
 
     private Integer updateBy;
 

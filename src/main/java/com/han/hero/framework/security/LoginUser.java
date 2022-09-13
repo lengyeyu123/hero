@@ -1,5 +1,6 @@
 package com.han.hero.framework.security;
 
+import com.han.hero.common.enums.StateEnums;
 import com.han.hero.project.domain.Menu;
 import com.han.hero.project.domain.Role;
 import com.han.hero.project.domain.User;
@@ -67,6 +68,6 @@ public class LoginUser implements UserDetails {
         if (user.getState() == null) {
             return false;
         }
-        return user.getState() == 1;
+        return user.getState().equals(StateEnums.ENABLED);
     }
 }
