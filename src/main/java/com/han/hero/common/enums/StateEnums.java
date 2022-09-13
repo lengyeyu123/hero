@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 
 public enum StateEnums implements BaseEnum {
+
     ENABLED(1, "正常"),
+
     DISABLED(0, "禁用"),
     ;
 
