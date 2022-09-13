@@ -27,7 +27,7 @@ public enum ResultStatus {
     CONTENT_UN_SAFE(5102, "内容不安全"),
 
     // ------ 一般业务异常 59
-    DATA_HAS_USED(5901, "数据以被使用，请移除使用数据后删除");
+    DATA_HAS_USED(5901, "数据已被使用，请删除关联数据后进行删除");
 
     private final Integer code;
 

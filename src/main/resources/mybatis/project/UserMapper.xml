@@ -35,6 +35,11 @@
         from h_user
         where userName = #{userName}
     </select>
+    <select id="selectUserRoleByRoleId" resultType="com.han.hero.project.domain.UserRole">
+        select *
+        from h_user_role
+        where roleId = #{roleId}
+    </select>
 
 
 </mapper>

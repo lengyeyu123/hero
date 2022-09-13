@@ -3,12 +3,103 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.han.hero.project.mapper.MenuMapper">
-
+    <insert id="add">
+        insert into h_menu (menuName, parentId, parentName, orderNum, path, component, menuType, perms, icon, createBy,
+        createTime <if test="state != null">, state</if>)
+        values (#{menuName}, #{parentId}, #{parentName}, #{orderNum}, #{path}, #{component}, #{menuType}, #{perms},
+        #{icon}, #{createBy}, getDate()
+        <if test="state != null">,state</if>);
+    </insert>
+    <update id="update">
+        update h_menu
+        <set>
+            <if test="menuName != null and menu != ''">
+                menuName = #{menuName},
+            </if>
+            <if test="parentId != null">
+                parentId = #{parentId},
+            </if>
+            <if test="parentName != null and parentName != ''">
+                parentName = #{parentName},
+            </if>
+            <if test="orderNum != null">
+                orderNum = #{orderNum},
+            </if>
+            <if test="path != null and path != ''">
+                path = #{path},
+            </if>
+            <if test="component != null and component != ''">
+                component = #{component},
+            </if>
+            <if test="menuType != null and menuType != ''">
+                menuType = #{menuType},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="perms != null and perms != ''">
+                perms = #{perms},
+            </if>
+            <if test="icon != null and icon != ''">
+                icon = #{icon},
+            </if>
+            updateBy = #{updateBy},
+            updateTime = getDate()
+        </set>
+        where
+        menuId = #{menuId}
+    </update>
+    <delete id="del">
+        delete
+        from h_menu
+        where menuId = #{menuId}
+    </delete>
 
     <select id="getRoleMenuByRoles" resultType="com.han.hero.project.domain.Menu">
         select h_menu.* from h_menu,h_role_menu where h_menu.menuId = h_role_menu.menuId and h_role_menu.roleId in
         <foreach collection="roles" item="role" index="index" separator="," open="(" close=")">
             #{role.roleId}
         </foreach>
+    </select>
+    <select id="selectRoleMenuByRoleId" resultType="com.han.hero.project.domain.RoleMenu">
+        select *
+        from h_role_menu
+        where roleId = #{roleId}
+    </select>
+    <select id="selectByMenuId" resultType="com.han.hero.project.domain.Menu">
+        select *
+        from h_menu
+        where menuId = #{menuId}
+    </select>
+    <select id="selectByParentMenuId" resultType="com.han.hero.project.domain.Menu">
+        select *
+        from h_menu
+        where parentId = #{menuId}
+    </select>
+    <select id="list" resultType="com.han.hero.project.domain.Menu">
+        select * from h_menu
+        <where>
+            <if test="menuName != null and menuName != ''">
+                and menuName like CONCAT ('%', #{menuName}, '%')
+            </if>
+            <if test="parentName != null and parentName != ''">
+                and parentName like CONCAT ('%', #{parentName}, '%')
+            </if>
+            <if test="path != null and path != ''">
+                and path like CONCAT ('%', #{path}, '%')
+            </if>
+            <if test="component != null and component != ''">
+                and component like CONCAT ('%', #{component}, '%')
+            </if>
+            <if test="menuType != null and menuType != ''">
+                and menuType like CONCAT ('%', #{menuType}, '%')
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+            <if test="perms != null and perms != ''">
+                and perms like CONCAT ('%', #{perms}, '%')
+            </if>
+        </where>
     </select>
 </mapper>

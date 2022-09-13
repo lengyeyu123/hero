@@ -10,4 +10,10 @@ public interface RoleMapper {
     List<Role> selectByUserId(Integer userId);
 
     List<Role> list(RoleListReqVo vo);
+
+    void add(Role role);
+
+    void update(Role role);
+
+    void del(Integer roleId);
 }

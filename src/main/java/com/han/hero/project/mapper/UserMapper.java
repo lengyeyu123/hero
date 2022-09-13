@@ -3,7 +3,9 @@ package com.han.hero.project.mapper;
 
 import com.han.hero.project.domain.Menu;
 import com.han.hero.project.domain.User;
+import com.han.hero.project.domain.UserRole;
 
+import java.util.List;
 import java.util.Set;
 
 public interface UserMapper {
@@ -17,4 +19,6 @@ public interface UserMapper {
     void insertUser(User user);
 
     Integer countByUserName(String userName);
+
+    List<UserRole> selectUserRoleByRoleId(Integer roleId);
 }

@@ -78,7 +78,7 @@ public class AuthController {
     // 三种注释都可以
 //    @PreAuthorize("hasAuthority('sys:role:list')")
 //    @PreAuthorize("hasRole('super')")
-//    @PreAuthorize("hasRole('ROLE_super')")
+//    @PreAuthorize("hasRole('super')")
     @Log(title = "认证", businessType = BusinessType.OTHER)
     @PreAuthorize("hasRole('super')")
     @GetMapping("/getUserInfo")

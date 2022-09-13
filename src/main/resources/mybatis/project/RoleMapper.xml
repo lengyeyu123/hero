@@ -4,6 +4,33 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.han.hero.project.mapper.RoleMapper">
 
+    <insert id="add">
+        insert into h_role (roleName, orderNum, createBy, createTime)
+        values (#{roleName}, #{orderNum}, #{createBy}, getDate())
+    </insert>
+    <update id="update">
+        update h_role
+        <set>
+            <if test="roleName != null and roleName != ''">
+                roleName = #{roleName},
+            </if>
+            <if test="orderNum != null">
+                orderNum = #{orderNum},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            updateBy = #{updateBy},
+            updateTime = getDate()
+        </set>
+        where roleId = #{roleId}
+    </update>
+    <delete id="del">
+        delete
+        from h_role
+        where roleId = #{roleId}
+    </delete>
+
 
     <select id="selectByUserId" resultType="com.han.hero.project.domain.Role">
         select h_role.*
