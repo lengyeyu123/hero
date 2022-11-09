@@ -1,6 +1,6 @@
 package com.han.hero.project.domain;
 
-import com.han.hero.common.enums.StateEnums;
+import com.han.hero.common.enums.DelFlagEnums;
 import com.han.hero.framework.web.BaseDomain;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class Menu extends BaseDomain {
     /**
      * 状态 0禁用 1正常
      */
-    private StateEnums state;
+    private DelFlagEnums delFlag;
 
     /**
      * 权限字符串
@@ -132,12 +132,12 @@ public class Menu extends BaseDomain {
         this.menuType = menuType;
     }
 
-    public StateEnums getState() {
-        return state;
+    public DelFlagEnums getDelFlag() {
+        return delFlag;
     }
 
-    public void setState(StateEnums state) {
-        this.state = state;
+    public void setDelFlag(DelFlagEnums delFlag) {
+        this.delFlag = delFlag;
     }
 
     public String getPerms() {

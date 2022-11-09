@@ -2,6 +2,14 @@ package com.han.hero.common.enums;
 
 import lombok.Getter;
 
+/**
+ * 通用错误码 5000
+ * 登录认证权限 6000
+ * 基础信息 7000 (院系 专业 班级 教师 学生……)
+ * 考试设置 8000
+ * 阅卷 9000
+ * 统计信息 2000
+ */
 @Getter
 public enum ResultStatus {
 

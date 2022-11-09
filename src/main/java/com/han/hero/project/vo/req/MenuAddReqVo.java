@@ -1,6 +1,6 @@
 package com.han.hero.project.vo.req;
 
-import com.han.hero.common.enums.StateEnums;
+import com.han.hero.common.enums.DelFlagEnums;
 import lombok.Data;
 
 @Data
@@ -18,7 +18,7 @@ public class MenuAddReqVo {
 
     private String menuType;
 
-    private StateEnums state;
+    private DelFlagEnums state;
 
     private String perms;
 

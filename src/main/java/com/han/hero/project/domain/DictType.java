@@ -1,17 +1,29 @@
 package com.han.hero.project.domain;
 
-import com.han.hero.common.enums.StateEnums;
+import com.han.hero.common.enums.DelFlagEnums;
 import com.han.hero.framework.web.BaseDomain;
 
 public class DictType extends BaseDomain {
 
+    /**
+     * 字典ID
+     */
     private Integer dictId;
 
+    /**
+     * 字典名称
+     */
     private String dictName;
 
+    /**
+     * 字典类型
+     */
     private String dictType;
 
-    private StateEnums state;
+    /**
+     * 删除标记 0被删除 1正常
+     */
+    private DelFlagEnums delFlag;
 
     public Integer getDictId() {
         return dictId;
@@ -37,11 +49,11 @@ public class DictType extends BaseDomain {
         this.dictType = dictType;
     }
 
-    public StateEnums getState() {
-        return state;
+    public DelFlagEnums getDelFlag() {
+        return delFlag;
     }
 
-    public void setState(StateEnums state) {
-        this.state = state;
+    public void setDelFlag(DelFlagEnums delFlag) {
+        this.delFlag = delFlag;
     }
 }

@@ -1,6 +1,6 @@
 package com.han.hero.project.domain;
 
-import com.han.hero.common.enums.StateEnums;
+import com.han.hero.common.enums.DelFlagEnums;
 import com.han.hero.framework.web.BaseDomain;
 
 public class Role extends BaseDomain {
@@ -23,7 +23,7 @@ public class Role extends BaseDomain {
     /**
      * 角色状态 0禁用 1正常
      */
-    private StateEnums state;
+    private DelFlagEnums delFlag;
 
     public Integer getRoleId() {
         return roleId;
@@ -49,11 +49,11 @@ public class Role extends BaseDomain {
         this.orderNum = orderNum;
     }
 
-    public StateEnums getState() {
-        return state;
+    public DelFlagEnums getDelFlag() {
+        return delFlag;
     }
 
-    public void setState(StateEnums state) {
-        this.state = state;
+    public void setDelFlag(DelFlagEnums delFlag) {
+        this.delFlag = delFlag;
     }
 }

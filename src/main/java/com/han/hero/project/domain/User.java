@@ -1,6 +1,6 @@
 package com.han.hero.project.domain;
 
-import com.han.hero.common.enums.StateEnums;
+import com.han.hero.common.enums.DelFlagEnums;
 import com.han.hero.framework.web.BaseDomain;
 
 public class User extends BaseDomain {
@@ -21,9 +21,9 @@ public class User extends BaseDomain {
     private String password;
 
     /**
-     * 用户状态 0禁用 1正常
+     * 删除状态 0已删除 1正常
      */
-    private StateEnums state;
+    private DelFlagEnums delFlag;
 
     public Integer getUserId() {
         return userId;
@@ -49,11 +49,11 @@ public class User extends BaseDomain {
         this.password = password;
     }
 
-    public StateEnums getState() {
-        return state;
+    public DelFlagEnums getDelFlag() {
+        return delFlag;
     }
 
-    public void setState(StateEnums state) {
-        this.state = state;
+    public void setDelFlag(DelFlagEnums delFlag) {
+        this.delFlag = delFlag;
     }
 }

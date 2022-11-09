@@ -26,7 +26,7 @@ public class PostService {
         post.setPostCode(vo.getPostCode());
         post.setPostName(vo.getPostName());
         post.setOrderNum(vo.getOrderNum());
-        post.setState(vo.getState());
+        post.setDelFlag(vo.getState());
         post.setCreateBy(SecurityUtil.getUserId());
         postMapper.add(post);
     }
@@ -37,7 +37,7 @@ public class PostService {
         post.setPostCode(vo.getPostCode());
         post.setPostName(vo.getPostName());
         post.setOrderNum(vo.getOrderNum());
-        post.setState(vo.getState());
+        post.setDelFlag(vo.getState());
         post.setUpdateBy(SecurityUtil.getUserId());
         postMapper.update(post);
     }

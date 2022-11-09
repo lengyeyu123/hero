@@ -36,7 +36,7 @@ public class MenuService {
         menu.setPath(vo.getPath());
         menu.setComponent(vo.getComponent());
         menu.setMenuType(vo.getMenuType());
-        menu.setState(vo.getState());
+        menu.setDelFlag(vo.getState());
         menu.setPerms(vo.getPerms());
         menu.setIcon(vo.getIcon());
         menu.setCreateBy(SecurityUtil.getUserId());
@@ -67,7 +67,7 @@ public class MenuService {
         menu.setPath(vo.getPath());
         menu.setComponent(vo.getComponent());
         menu.setMenuType(vo.getMenuType());
-        menu.setState(vo.getState());
+        menu.setDelFlag(vo.getState());
         menu.setPerms(vo.getPerms());
         menu.setIcon(vo.getIcon());
         menu.setUpdateBy(SecurityUtil.getUserId());

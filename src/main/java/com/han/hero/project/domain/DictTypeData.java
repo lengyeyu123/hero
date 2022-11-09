@@ -1,6 +1,6 @@
 package com.han.hero.project.domain;
 
-import com.han.hero.common.enums.StateEnums;
+import com.han.hero.common.enums.DelFlagEnums;
 import com.han.hero.framework.web.BaseDomain;
 
 public class DictTypeData extends BaseDomain {
@@ -17,7 +17,7 @@ public class DictTypeData extends BaseDomain {
 
     private Integer defaultState;
 
-    private StateEnums state;
+    private DelFlagEnums delFlag;
 
     public Integer getDictCode() {
         return dictCode;
@@ -67,11 +67,11 @@ public class DictTypeData extends BaseDomain {
         this.defaultState = defaultState;
     }
 
-    public StateEnums getState() {
-        return state;
+    public DelFlagEnums getDelFlag() {
+        return delFlag;
     }
 
-    public void setState(StateEnums state) {
-        this.state = state;
+    public void setDelFlag(DelFlagEnums delFlag) {
+        this.delFlag = delFlag;
     }
 }

@@ -1,8 +1,8 @@
 package com.han.hero.project.controller;
 
 import com.han.hero.common.enums.BusinessType;
+import com.han.hero.common.enums.DelFlagEnums;
 import com.han.hero.common.enums.ResultStatus;
-import com.han.hero.common.enums.StateEnums;
 import com.han.hero.common.exception.ServiceException;
 import com.han.hero.common.util.JwtUtil;
 import com.han.hero.common.util.RedisUtil;
@@ -62,7 +62,7 @@ public class AuthController {
             throw new ServiceException(ResultStatus.ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
         } else {
             if (passwordEncoder.matches(vo.getPassword(), user.getPassword())) {
-                if (user.getState() == StateEnums.DISABLED) {
+                if (user.getDelFlag() == DelFlagEnums.Del) {
                     return R.fail(ResultStatus.ACCOUNT_DISABLED);
                 }
                 // 登录成功

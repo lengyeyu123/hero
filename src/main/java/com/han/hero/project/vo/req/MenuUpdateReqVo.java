@@ -1,6 +1,6 @@
 package com.han.hero.project.vo.req;
 
-import com.han.hero.common.enums.StateEnums;
+import com.han.hero.common.enums.DelFlagEnums;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -23,7 +23,7 @@ public class MenuUpdateReqVo {
 
     private String menuType;
 
-    private StateEnums state;
+    private DelFlagEnums state;
 
     private String perms;
 

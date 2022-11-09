@@ -1,6 +1,6 @@
 package com.han.hero.framework.security;
 
-import com.han.hero.common.enums.StateEnums;
+import com.han.hero.common.enums.DelFlagEnums;
 import com.han.hero.project.domain.Menu;
 import com.han.hero.project.domain.Role;
 import com.han.hero.project.domain.User;
@@ -65,9 +65,9 @@ public class LoginUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if (user.getState() == null) {
+        if (user.getDelFlag() == null) {
             return false;
         }
-        return user.getState().equals(StateEnums.ENABLED);
+        return user.getDelFlag().equals(DelFlagEnums.NORMAL);
     }
 }

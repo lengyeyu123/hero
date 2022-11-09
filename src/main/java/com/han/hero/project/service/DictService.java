@@ -32,7 +32,7 @@ public class DictService {
         dictType.setDictName(vo.getDictName());
         dictType.setDictType(vo.getDictType());
         dictType.setRemark(vo.getRemark());
-        dictType.setState(vo.getState());
+        dictType.setDelFlag(vo.getState());
         dictType.setCreateBy(SecurityUtil.getUserId());
         dictMapper.typeAdd(dictType);
     }
@@ -56,7 +56,7 @@ public class DictService {
         update.setDictId(vo.getDictId());
         update.setDictName(vo.getDictName());
         update.setDictType(vo.getDictType());
-        update.setState(vo.getState());
+        update.setDelFlag(vo.getState());
         update.setUpdateBy(userId);
         update.setRemark(vo.getRemark());
         dictMapper.typeUpdate(update);
@@ -102,7 +102,7 @@ public class DictService {
         dictTypeData.setDictValue(vo.getDictValue());
         dictTypeData.setDictType(vo.getDictType());
         dictTypeData.setDefaultState(vo.getDefaultState());
-        dictTypeData.setState(vo.getState());
+        dictTypeData.setDelFlag(vo.getState());
         dictTypeData.setRemark(vo.getRemark());
         dictTypeData.setUpdateBy(SecurityUtil.getUserId());
         dictMapper.dataUpdate(dictTypeData);

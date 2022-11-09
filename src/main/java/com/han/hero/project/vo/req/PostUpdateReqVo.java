@@ -1,6 +1,6 @@
 package com.han.hero.project.vo.req;
 
-import com.han.hero.common.enums.StateEnums;
+import com.han.hero.common.enums.DelFlagEnums;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -17,6 +17,6 @@ public class PostUpdateReqVo {
 
     private Integer orderNum;
 
-    private StateEnums state;
+    private DelFlagEnums state;
 
 }
