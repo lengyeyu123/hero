@@ -71,18 +71,18 @@ public class AuthController {
 
                 String accessToken = JwtUtil.generateJwt(tokenProperties.getAtConfig(), claims);
                 String refreshToken = JwtUtil.generateJwt(tokenProperties.getRtConfig(), claims);
-                LoginRespVO respVO = new LoginRespVO();
-                respVO.setToken(accessToken);
-                respVO.setUserId(user.getUserId());
-                respVO.setUsername(user.getUserName());
-                respVO.setRealName(user.getUserName());
-                respVO.setDesc(user.getRemark());
-                respVO.setHomePath("/dashboard/analysis");
+                LoginRespVO responseVo = new LoginRespVO();
+                responseVo.setToken(accessToken);
+                responseVo.setUserId(user.getUserId());
+                responseVo.setUsername(user.getUserName());
+                responseVo.setRealName(user.getUserName());
+                responseVo.setDesc(user.getRemark());
+                responseVo.setHomePath("/dashboard/analysis");
                 Map<String, String> roleMap = new HashMap<>();
                 roleMap.put("roleName", "Super Admin");
                 roleMap.put("value", "super");
-                respVO.getRoles().add(roleMap);
-                return R.ok(respVO);
+                responseVo.getRoles().add(roleMap);
+                return R.ok(responseVo);
             } else {
                 throw new ServiceException(ResultStatus.ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
             }

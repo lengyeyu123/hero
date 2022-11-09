@@ -2,433 +2,284 @@
  Navicat Premium Data Transfer
 
  Source Server         : localhost
- Source Server Type    : SQL Server
- Source Server Version : 15002095 (15.00.2095)
- Source Host           : localhost:1433
- Source Catalog        : hero
- Source Schema         : dbo
+ Source Server Type    : MySQL
+ Source Server Version : 80031 (8.0.31)
+ Source Host           : localhost:3306
+ Source Schema         : hero
 
- Target Server Type    : SQL Server
- Target Server Version : 15002095 (15.00.2095)
+ Target Server Type    : MySQL
+ Target Server Version : 80031 (8.0.31)
  File Encoding         : 65001
 
- Date: 07/09/2022 15:47:56
+ Date: 09/11/2022 22:25:03
 */
 
+SET NAMES utf8mb4;
+SET
+FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for flyway_schema_history
+-- ----------------------------
+DROP TABLE IF EXISTS `flyway_schema_history`;
+CREATE TABLE `flyway_schema_history`
+(
+    `installed_rank` int                                                           NOT NULL,
+    `version`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `description`    varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `type`           varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
+    `script`         text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `checksum`       int NULL DEFAULT NULL,
+    `installed_by`   varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `installed_on`   datetime                                                      NOT NULL,
+    `execution_time` int                                                           NOT NULL,
+    `success`        tinyint                                                       NOT NULL,
+    PRIMARY KEY (`installed_rank`) USING BTREE,
+    INDEX            `flyway_schema_history_s_idx`(`success` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of flyway_schema_history
+-- ----------------------------
+INSERT INTO `flyway_schema_history`
+VALUES (1, '1.0.0.20220902', 'init', 'SQL', 'V1.0.0_20220902__init.sql', -187461026, 'jkwsyjxt', '2022-09-07 15:48:51',
+        117, 1);
 
 -- ----------------------------
 -- Table structure for h_dict_data
 -- ----------------------------
-IF EXISTS(SELECT *
-          FROM sys.all_objects
-          WHERE object_id = OBJECT_ID(N'[dbo].[h_dict_data]')
-            AND type IN ('U'))
-    DROP TABLE [dbo].[h_dict_data]
-GO
-
-CREATE TABLE [dbo].[h_dict_data]
+DROP TABLE IF EXISTS `h_dict_data`;
+CREATE TABLE `h_dict_data`
 (
-    [dictCode]     int IDENTITY (1,1)                      NOT NULL,
-    [orderNum]     int                                     NULL,
-    [dictLabel]    nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
-    [dictValue]    nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
-    [dictType]     nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
-    [defaultState] int DEFAULT 0                           NULL,
-    [state]        int DEFAULT 1                           NULL,
-    [createBy]     int                                     NULL,
-    [createTime]   datetime2(7)                            NULL,
-    [updateBy]     int                                     NULL,
-    [updateTime]   datetime2(7)                            NULL,
-    [remark]       nchar(10) COLLATE Chinese_PRC_CI_AS     NULL
-)
-GO
-
-ALTER TABLE [dbo].[h_dict_data]
-    SET (LOCK_ESCALATION = TABLE)
-GO
-
+    `dictCode`     int NOT NULL,
+    `orderNum`     int NULL DEFAULT NULL,
+    `dictLabel`    varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `dictValue`    varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `dictType`     varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `defaultState` int NULL DEFAULT NULL,
+    `delFlag`      int NULL DEFAULT 0,
+    `createBy`     int NULL DEFAULT NULL,
+    `createTime`   datetime NULL DEFAULT NULL,
+    `updateBy`     int NULL DEFAULT NULL,
+    `updateTime`   datetime NULL DEFAULT NULL,
+    `remark`       char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    PRIMARY KEY (`dictCode`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of h_dict_data
 -- ----------------------------
-SET IDENTITY_INSERT [dbo].[h_dict_data] ON
-GO
-
-SET IDENTITY_INSERT [dbo].[h_dict_data] OFF
-GO
-
 
 -- ----------------------------
 -- Table structure for h_dict_type
 -- ----------------------------
-IF EXISTS(SELECT *
-          FROM sys.all_objects
-          WHERE object_id = OBJECT_ID(N'[dbo].[h_dict_type]')
-            AND type IN ('U'))
-    DROP TABLE [dbo].[h_dict_type]
-GO
-
-CREATE TABLE [dbo].[h_dict_type]
+DROP TABLE IF EXISTS `h_dict_type`;
+CREATE TABLE `h_dict_type`
 (
-    [dictId]     int IDENTITY (1,1)                      NOT NULL,
-    [dictName]   nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
-    [dictType]   nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
-    [state]      int DEFAULT 1                           NULL,
-    [createBy]   int                                     NULL,
-    [createTime] datetime2(7)                            NULL,
-    [updateBy]   int                                     NULL,
-    [updateTime] datetime2(7)                            NULL,
-    [remark]     nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
-)
-GO
-
-ALTER TABLE [dbo].[h_dict_type]
-    SET (LOCK_ESCALATION = TABLE)
-GO
-
+    `dictId`     int NOT NULL,
+    `dictName`   varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `dictType`   varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `delFlag`    int NULL DEFAULT 0,
+    `createBy`   int NULL DEFAULT NULL,
+    `createTime` datetime NULL DEFAULT NULL,
+    `updateBy`   int NULL DEFAULT NULL,
+    `updateTime` datetime NULL DEFAULT NULL,
+    `remark`     varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    PRIMARY KEY (`dictId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of h_dict_type
 -- ----------------------------
-SET IDENTITY_INSERT [dbo].[h_dict_type] ON
-GO
-
-SET IDENTITY_INSERT [dbo].[h_dict_type] OFF
-GO
-
+INSERT INTO `h_dict_type`
+VALUES (1, '1', '2', 1, 3, '2022-09-09 16:51:27', NULL, NULL, '333');
+INSERT INTO `h_dict_type`
+VALUES (2, '23', 'sada', 1, 3, '2022-09-09 16:54:29', NULL, NULL, 'sdasd');
+INSERT INTO `h_dict_type`
+VALUES (13, '用户性别', 'sys_user_sex', 1, 3, '2022-09-13 14:37:57', NULL, NULL, NULL);
+INSERT INTO `h_dict_type`
+VALUES (15, '1', '2', 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `h_dict_type`
+VALUES (16, '2', '3', 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `h_dict_type`
+VALUES (18, '4', '5', 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `h_dict_type`
+VALUES (19, '5', '6', 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `h_dict_type`
+VALUES (23, '9', '11', 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `h_dict_type`
+VALUES (30, 'sd', 'sds', 1, 3, '2022-09-16 08:25:15', NULL, NULL, NULL);
+INSERT INTO `h_dict_type`
+VALUES (31, '12', '33', 1, 3, '2022-09-16 10:32:16', NULL, NULL, NULL);
+INSERT INTO `h_dict_type`
+VALUES (32, '11111', '22ssssssss', 0, 3, '2022-09-16 10:32:26', NULL, NULL, NULL);
+INSERT INTO `h_dict_type`
+VALUES (33, '1', '334', 0, 3, '2022-09-16 10:33:10', NULL, NULL, NULL);
+INSERT INTO `h_dict_type`
+VALUES (34, 'ggg', 'ssss', 0, 3, '2022-09-16 10:33:33', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for h_menu
 -- ----------------------------
-IF EXISTS(SELECT *
-          FROM sys.all_objects
-          WHERE object_id = OBJECT_ID(N'[dbo].[h_menu]')
-            AND type IN ('U'))
-    DROP TABLE [dbo].[h_menu]
-GO
-
-CREATE TABLE [dbo].[h_menu]
+DROP TABLE IF EXISTS `h_menu`;
+CREATE TABLE `h_menu`
 (
-    [menuId]     int IDENTITY (1,1)                     NOT NULL,
-    [menuName]   nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
-    [parentId]   int                                    NULL,
-    [parentName] nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
-    [orderNum]   int                                    NULL,
-    [path]       nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
-    [component]  nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
-    [menuType]   nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
-    [state]      int DEFAULT 1                          NULL,
-    [perms]      nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
-    [icon]       nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
-    [createBy]   int                                    NULL,
-    [createTime] datetime2(7)                           NULL,
-    [updateBy]   int                                    NULL,
-    [updateTime] datetime2(7)                           NULL
-)
-GO
-
-ALTER TABLE [dbo].[h_menu]
-    SET (LOCK_ESCALATION = TABLE)
-GO
-
-EXEC sp_addextendedproperty
-     'MS_Description', N'GET:/post/list 请求路径',
-     'SCHEMA', N'dbo',
-     'TABLE', N'h_menu',
-     'COLUMN', N'path'
-GO
-
-EXEC sp_addextendedproperty
-     'MS_Description', N'路由组件',
-     'SCHEMA', N'dbo',
-     'TABLE', N'h_menu',
-     'COLUMN', N'component'
-GO
-
-EXEC sp_addextendedproperty
-     'MS_Description', N'菜单类型 (M目录 C菜单 F按钮)',
-     'SCHEMA', N'dbo',
-     'TABLE', N'h_menu',
-     'COLUMN', N'menuType'
-GO
-
-EXEC sp_addextendedproperty
-     'MS_Description', N'权限字符 *:*:*拥有所有权限 super',
-     'SCHEMA', N'dbo',
-     'TABLE', N'h_menu',
-     'COLUMN', N'perms'
-GO
-
+    `menuId`     int NOT NULL,
+    `menuName`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `parentId`   int NULL DEFAULT NULL,
+    `parentName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `orderNum`   int NULL DEFAULT NULL,
+    `path`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'GET:/post/list 请求路径',
+    `component`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路由组件',
+    `menuType`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单类型 (M目录 C菜单 F按钮)',
+    `delFlag`    int NULL DEFAULT 0,
+    `perms`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限字符 *:*:*拥有所有权限 super',
+    `icon`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `createBy`   int NULL DEFAULT NULL,
+    `createTime` datetime NULL DEFAULT NULL,
+    `updateBy`   int NULL DEFAULT NULL,
+    `updateTime` datetime NULL DEFAULT NULL,
+    PRIMARY KEY (`menuId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of h_menu
 -- ----------------------------
-SET IDENTITY_INSERT [dbo].[h_menu] ON
-GO
-
-INSERT INTO [dbo].[h_menu] ([menuId], [menuName], [parentId], [parentName], [orderNum], [path], [component], [menuType],
-                            [state], [perms], [icon], [createBy], [createTime], [updateBy], [updateTime])
-VALUES (N'1', N'用户列表', N'0', N'', N'1', NULL, NULL, NULL, N'1', N'sys:user:list', NULL, NULL, NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[h_menu] ([menuId], [menuName], [parentId], [parentName], [orderNum], [path], [component], [menuType],
-                            [state], [perms], [icon], [createBy], [createTime], [updateBy], [updateTime])
-VALUES (N'2', N'角色列表', N'0', NULL, N'2', NULL, NULL, NULL, N'1', N'sys:role:list', NULL, NULL, NULL, NULL, NULL)
-GO
-
-SET IDENTITY_INSERT [dbo].[h_menu] OFF
-GO
-
+INSERT INTO `h_menu`
+VALUES (1, '用户列表', 0, '', 1, NULL, NULL, NULL, 1, 'sys:user:list', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `h_menu`
+VALUES (2, '角色列表', 0, NULL, 2, NULL, NULL, NULL, 1, 'sys:role:list', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `h_menu`
+VALUES (3, '新增用户', 1, NULL, 1, NULL, NULL, NULL, 1, 'sys:user:add', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `h_menu`
+VALUES (4, '新增角色', 2, NULL, 3, NULL, NULL, NULL, 1, 'sys:role:add', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `h_menu`
+VALUES (5, '修改用户', 2, NULL, 1, NULL, NULL, NULL, 1, 'sys:role:update', NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for h_oper_log
 -- ----------------------------
-IF EXISTS(SELECT *
-          FROM sys.all_objects
-          WHERE object_id = OBJECT_ID(N'[dbo].[h_oper_log]')
-            AND type IN ('U'))
-    DROP TABLE [dbo].[h_oper_log]
-GO
-
-CREATE TABLE [dbo].[h_oper_log]
+DROP TABLE IF EXISTS `h_oper_log`;
+CREATE TABLE `h_oper_log`
 (
-    [operId]        int IDENTITY (1,1)                       NOT NULL,
-    [title]         nvarchar(50) COLLATE Chinese_PRC_CI_AS   NULL,
-    [businessType]  int                                      NULL,
-    [method]        nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
-    [requestMethod] nvarchar(10) COLLATE Chinese_PRC_CI_AS   NULL,
-    [operName]      nvarchar(50) COLLATE Chinese_PRC_CI_AS   NULL,
-    [deptName]      nvarchar(50) COLLATE Chinese_PRC_CI_AS   NULL,
-    [operUrl]       nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
-    [operIp]        nvarchar(128) COLLATE Chinese_PRC_CI_AS  NULL,
-    [operLocation]  nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
-    [operParam]     nvarchar(2000) COLLATE Chinese_PRC_CI_AS NULL,
-    [jsonResult]    nvarchar(2000) COLLATE Chinese_PRC_CI_AS NULL,
-    [state]         int DEFAULT 1                            NULL,
-    [errorMsg]      nvarchar(2000) COLLATE Chinese_PRC_CI_AS NULL,
-    [operTime]      datetime2(7)                             NULL
-)
-GO
-
-ALTER TABLE [dbo].[h_oper_log]
-    SET (LOCK_ESCALATION = TABLE)
-GO
-
+    `operId`        int NOT NULL,
+    `title`         varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `businessType`  int NULL DEFAULT NULL,
+    `method`        varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `requestMethod` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `operName`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `deptName`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `operUrl`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `operIp`        varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `operLocation`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `operParam`     text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+    `jsonResult`    text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+    `delFlag`       int NULL DEFAULT 0,
+    `errorMsg`      text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+    `operTime`      datetime NULL DEFAULT NULL,
+    PRIMARY KEY (`operId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of h_oper_log
 -- ----------------------------
-SET IDENTITY_INSERT [dbo].[h_oper_log] ON
-GO
-
-INSERT INTO [dbo].[h_oper_log] ([operId], [title], [businessType], [method], [requestMethod], [operName], [deptName],
-                                [operUrl], [operIp], [operLocation], [operParam], [jsonResult], [state], [errorMsg],
-                                [operTime])
-VALUES (N'1', N'认证', N'0', N'com.han.hero.project.controller.AuthController.getUserInfo()', NULL, N'zhangsan', NULL,
-        N'/auth/getUserInfo', N'0:0:0:0:0:0:0:1', NULL, N'{}',
-        N'{"code":2000,"message":"成功","defaultMsg":null,"data":{"userId":3,"userName":"zhangsan","password":"$2a$10$oVMNNsg3uFKtwpA5xAjwSe/3ivp/IQncBydyKrNM6i4RGz.Ia3wLq","state":1}}',
-        N'1', NULL, N'2022-09-05 17:41:34.5100000')
-GO
-
-INSERT INTO [dbo].[h_oper_log] ([operId], [title], [businessType], [method], [requestMethod], [operName], [deptName],
-                                [operUrl], [operIp], [operLocation], [operParam], [jsonResult], [state], [errorMsg],
-                                [operTime])
-VALUES (N'2', N'认证', N'0', N'com.han.hero.project.controller.AuthController.getUserInfo()', N'GET', N'zhangsan', NULL,
-        N'/auth/getUserInfo', N'0:0:0:0:0:0:0:1', NULL, N'{}',
-        N'{"code":2000,"message":"成功","defaultMsg":null,"data":{"userId":3,"userName":"zhangsan","password":"$2a$10$oVMNNsg3uFKtwpA5xAjwSe/3ivp/IQncBydyKrNM6i4RGz.Ia3wLq","state":1}}',
-        N'1', NULL, N'2022-09-05 18:00:33.1266667')
-GO
-
-INSERT INTO [dbo].[h_oper_log] ([operId], [title], [businessType], [method], [requestMethod], [operName], [deptName],
-                                [operUrl], [operIp], [operLocation], [operParam], [jsonResult], [state], [errorMsg],
-                                [operTime])
-VALUES (N'1002', N'认证', N'0', N'com.han.hero.project.controller.AuthController.getUserInfo()', N'GET', N'zhangsan',
-        NULL, N'/auth/getUserInfo', N'0:0:0:0:0:0:0:1', NULL, N'{}',
-        N'{"code":2000,"message":"成功","defaultMsg":null,"data":{"userId":3,"userName":"zhangsan","password":"$2a$10$oVMNNsg3uFKtwpA5xAjwSe/3ivp/IQncBydyKrNM6i4RGz.Ia3wLq","state":1}}',
-        N'1', NULL, N'2022-09-06 16:51:04.3200000')
-GO
-
-SET IDENTITY_INSERT [dbo].[h_oper_log] OFF
-GO
-
 
 -- ----------------------------
 -- Table structure for h_post
 -- ----------------------------
-IF EXISTS(SELECT *
-          FROM sys.all_objects
-          WHERE object_id = OBJECT_ID(N'[dbo].[h_post]')
-            AND type IN ('U'))
-    DROP TABLE [dbo].[h_post]
-GO
-
-CREATE TABLE [dbo].[h_post]
+DROP TABLE IF EXISTS `h_post`;
+CREATE TABLE `h_post`
 (
-    [postId]     int IDENTITY (1,1)                     NOT NULL,
-    [postCode]   nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
-    [postName]   nchar(10) COLLATE Chinese_PRC_CI_AS    NULL,
-    [orderNum]   int                                    NULL,
-    [state]      int DEFAULT 1                          NULL,
-    [createBy]   int                                    NULL,
-    [createTime] datetime2(7)                           NULL,
-    [updateBy]   int                                    NULL,
-    [updateTime] datetime2(7)                           NULL
-)
-GO
-
-ALTER TABLE [dbo].[h_post]
-    SET (LOCK_ESCALATION = TABLE)
-GO
-
+    `postId`     int NOT NULL,
+    `postCode`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `postName`   char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `orderNum`   int NULL DEFAULT NULL,
+    `delFlag`    int NULL DEFAULT 0,
+    `createBy`   int NULL DEFAULT NULL,
+    `createTime` datetime NULL DEFAULT NULL,
+    `updateBy`   int NULL DEFAULT NULL,
+    `updateTime` datetime NULL DEFAULT NULL,
+    PRIMARY KEY (`postId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of h_post
 -- ----------------------------
-SET IDENTITY_INSERT [dbo].[h_post] ON
-GO
-
-SET IDENTITY_INSERT [dbo].[h_post] OFF
-GO
-
+INSERT INTO `h_post`
+VALUES (2, 'hr', '人力资源', 1, 1, 3, '2022-09-13 15:31:00', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for h_role
 -- ----------------------------
-IF EXISTS(SELECT *
-          FROM sys.all_objects
-          WHERE object_id = OBJECT_ID(N'[dbo].[h_role]')
-            AND type IN ('U'))
-    DROP TABLE [dbo].[h_role]
-GO
-
-CREATE TABLE [dbo].[h_role]
+DROP TABLE IF EXISTS `h_role`;
+CREATE TABLE `h_role`
 (
-    [roleId]     int IDENTITY (1,1)                     NOT NULL,
-    [roleName]   nvarchar(50) COLLATE Chinese_PRC_CI_AS NULL,
-    [orderNum]   int                                    NULL,
-    [state]      int DEFAULT 1                          NULL,
-    [createBy]   int                                    NULL,
-    [createTime] datetime2(7)                           NULL,
-    [updateBy]   int                                    NULL,
-    [updateTime] datetime2(7)                           NULL
-)
-GO
-
-ALTER TABLE [dbo].[h_role]
-    SET (LOCK_ESCALATION = TABLE)
-GO
-
+    `roleId`     int NOT NULL,
+    `roleName`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `orderNum`   int NULL DEFAULT NULL,
+    `delFlag`    int NULL DEFAULT 0,
+    `createBy`   int NULL DEFAULT NULL,
+    `createTime` datetime NULL DEFAULT NULL,
+    `updateBy`   int NULL DEFAULT NULL,
+    `updateTime` datetime NULL DEFAULT NULL,
+    PRIMARY KEY (`roleId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of h_role
 -- ----------------------------
-SET IDENTITY_INSERT [dbo].[h_role] ON
-GO
-
-INSERT INTO [dbo].[h_role] ([roleId], [roleName], [orderNum], [state], [createBy], [createTime], [updateBy],
-                            [updateTime])
-VALUES (N'1', N'super', N'1', N'1', NULL, NULL, NULL, NULL)
-GO
-
-SET IDENTITY_INSERT [dbo].[h_role] OFF
-GO
-
+INSERT INTO `h_role`
+VALUES (1, 'super', 1, 1, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for h_role_menu
 -- ----------------------------
-IF EXISTS(SELECT *
-          FROM sys.all_objects
-          WHERE object_id = OBJECT_ID(N'[dbo].[h_role_menu]')
-            AND type IN ('U'))
-    DROP TABLE [dbo].[h_role_menu]
-GO
-
-CREATE TABLE [dbo].[h_role_menu]
+DROP TABLE IF EXISTS `h_role_menu`;
+CREATE TABLE `h_role_menu`
 (
-    [roleId] int NOT NULL,
-    [menuId] int NOT NULL
-)
-GO
-
-ALTER TABLE [dbo].[h_role_menu]
-    SET (LOCK_ESCALATION = TABLE)
-GO
-
+    `roleId` int NOT NULL,
+    `menuId` int NOT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of h_role_menu
 -- ----------------------------
-INSERT INTO [dbo].[h_role_menu] ([roleId], [menuId])
-VALUES (N'1', N'2')
-GO
-
+INSERT INTO `h_role_menu`
+VALUES (1, 2);
 
 -- ----------------------------
 -- Table structure for h_user
 -- ----------------------------
-IF EXISTS(SELECT *
-          FROM sys.all_objects
-          WHERE object_id = OBJECT_ID(N'[dbo].[h_user]')
-            AND type IN ('U'))
-    DROP TABLE [dbo].[h_user]
-GO
-
-CREATE TABLE [dbo].[h_user]
+DROP TABLE IF EXISTS `h_user`;
+CREATE TABLE `h_user`
 (
-    [userId]     int IDENTITY (1,1)                      NOT NULL,
-    [userName]   nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
-    [password]   nvarchar(100) COLLATE Chinese_PRC_CI_AS NULL,
-    [state]      int DEFAULT 1                           NULL,
-    [createBy]   int                                     NULL,
-    [createTime] datetime2(7)                            NULL,
-    [updateBy]   int                                     NULL,
-    [updateTime] datetime2(7)                            NULL
-)
-GO
-
-ALTER TABLE [dbo].[h_user]
-    SET (LOCK_ESCALATION = TABLE)
-GO
-
+    `userId`     int NOT NULL,
+    `userName`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `password`   varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+    `delFlag`    int NULL DEFAULT 0,
+    `createBy`   int NULL DEFAULT NULL,
+    `createTime` datetime NULL DEFAULT NULL,
+    `updateBy`   int NULL DEFAULT NULL,
+    `updateTime` datetime NULL DEFAULT NULL,
+    PRIMARY KEY (`userId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of h_user
 -- ----------------------------
-SET IDENTITY_INSERT [dbo].[h_user] ON
-GO
-
-INSERT INTO [dbo].[h_user] ([userId], [userName], [password], [state], [createBy], [createTime], [updateBy],
-                            [updateTime])
-VALUES (N'3', N'zhangsan', N'$2a$10$oVMNNsg3uFKtwpA5xAjwSe/3ivp/IQncBydyKrNM6i4RGz.Ia3wLq', N'1', NULL, NULL, NULL,
-        NULL)
-GO
-
-SET IDENTITY_INSERT [dbo].[h_user] OFF
-GO
-
+INSERT INTO `h_user`
+VALUES (3, 'zhangsan', '$2a$10$oVMNNsg3uFKtwpA5xAjwSe/3ivp/IQncBydyKrNM6i4RGz.Ia3wLq', 1, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for h_user_post
 -- ----------------------------
-IF EXISTS(SELECT *
-          FROM sys.all_objects
-          WHERE object_id = OBJECT_ID(N'[dbo].[h_user_post]')
-            AND type IN ('U'))
-    DROP TABLE [dbo].[h_user_post]
-GO
-
-CREATE TABLE [dbo].[h_user_post]
+DROP TABLE IF EXISTS `h_user_post`;
+CREATE TABLE `h_user_post`
 (
-    [userId] int NOT NULL,
-    [postId] int NOT NULL
-)
-GO
-
-ALTER TABLE [dbo].[h_user_post]
-    SET (LOCK_ESCALATION = TABLE)
-GO
-
+    `userId` int NOT NULL,
+    `postId` int NOT NULL,
+    PRIMARY KEY (`userId`, `postId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of h_user_post
@@ -437,198 +288,19 @@ GO
 -- ----------------------------
 -- Table structure for h_user_role
 -- ----------------------------
-IF EXISTS(SELECT *
-          FROM sys.all_objects
-          WHERE object_id = OBJECT_ID(N'[dbo].[h_user_role]')
-            AND type IN ('U'))
-    DROP TABLE [dbo].[h_user_role]
-GO
-
-CREATE TABLE [dbo].[h_user_role]
+DROP TABLE IF EXISTS `h_user_role`;
+CREATE TABLE `h_user_role`
 (
-    [userId] int NOT NULL,
-    [roleId] int NOT NULL
-)
-GO
-
-ALTER TABLE [dbo].[h_user_role]
-    SET (LOCK_ESCALATION = TABLE)
-GO
-
+    `userId` int NOT NULL,
+    `roleId` int NOT NULL,
+    PRIMARY KEY (`userId`, `roleId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of h_user_role
 -- ----------------------------
-INSERT INTO [dbo].[h_user_role] ([userId], [roleId])
-VALUES (N'3', N'1')
-GO
+INSERT INTO `h_user_role`
+VALUES (3, 1);
 
-
--- ----------------------------
--- Auto increment value for h_dict_data
--- ----------------------------
-DBCC CHECKIDENT ('[dbo].[h_dict_data]', RESEED, 1)
-GO
-
-
--- ----------------------------
--- Primary Key structure for table h_dict_data
--- ----------------------------
-ALTER TABLE [dbo].[h_dict_data]
-    ADD CONSTRAINT [PK_h_dict_data] PRIMARY KEY CLUSTERED ([dictCode])
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
-
--- ----------------------------
--- Auto increment value for h_dict_type
--- ----------------------------
-DBCC CHECKIDENT ('[dbo].[h_dict_type]', RESEED, 1)
-GO
-
-
--- ----------------------------
--- Primary Key structure for table h_dict_type
--- ----------------------------
-ALTER TABLE [dbo].[h_dict_type]
-    ADD CONSTRAINT [PK_h_dict_type] PRIMARY KEY CLUSTERED ([dictId])
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
-
--- ----------------------------
--- Auto increment value for h_menu
--- ----------------------------
-DBCC CHECKIDENT ('[dbo].[h_menu]', RESEED, 2)
-GO
-
-
--- ----------------------------
--- Primary Key structure for table h_menu
--- ----------------------------
-ALTER TABLE [dbo].[h_menu]
-    ADD CONSTRAINT [PK_h_menu] PRIMARY KEY CLUSTERED ([menuId])
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
-
--- ----------------------------
--- Auto increment value for h_oper_log
--- ----------------------------
-DBCC CHECKIDENT ('[dbo].[h_oper_log]', RESEED, 1002)
-GO
-
-
--- ----------------------------
--- Primary Key structure for table h_oper_log
--- ----------------------------
-ALTER TABLE [dbo].[h_oper_log]
-    ADD CONSTRAINT [PK_h_oper_log] PRIMARY KEY CLUSTERED ([operId])
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
-
--- ----------------------------
--- Auto increment value for h_post
--- ----------------------------
-DBCC CHECKIDENT ('[dbo].[h_post]', RESEED, 1)
-GO
-
-
--- ----------------------------
--- Primary Key structure for table h_post
--- ----------------------------
-ALTER TABLE [dbo].[h_post]
-    ADD CONSTRAINT [PK_h_post] PRIMARY KEY CLUSTERED ([postId])
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
-
--- ----------------------------
--- Auto increment value for h_role
--- ----------------------------
-DBCC CHECKIDENT ('[dbo].[h_role]', RESEED, 1)
-GO
-
-
--- ----------------------------
--- Primary Key structure for table h_role
--- ----------------------------
-ALTER TABLE [dbo].[h_role]
-    ADD CONSTRAINT [PK_h_role] PRIMARY KEY CLUSTERED ([roleId])
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
-
--- ----------------------------
--- Uniques structure for table h_role_menu
--- ----------------------------
-ALTER TABLE [dbo].[h_role_menu]
-    ADD CONSTRAINT [UQ__h_role_m__9E2C413C8D8B1376] UNIQUE NONCLUSTERED ([roleId] ASC, [menuId] ASC)
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
-
--- ----------------------------
--- Auto increment value for h_user
--- ----------------------------
-DBCC CHECKIDENT ('[dbo].[h_user]', RESEED, 3)
-GO
-
-
--- ----------------------------
--- Uniques structure for table h_user
--- ----------------------------
-ALTER TABLE [dbo].[h_user]
-    ADD CONSTRAINT [UQ__h_user__66DCF95C8C2A6C5B] UNIQUE NONCLUSTERED ([userName] ASC)
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
-
--- ----------------------------
--- Primary Key structure for table h_user
--- ----------------------------
-ALTER TABLE [dbo].[h_user]
-    ADD CONSTRAINT [PK_h_user] PRIMARY KEY CLUSTERED ([userId])
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
-
--- ----------------------------
--- Primary Key structure for table h_user_post
--- ----------------------------
-ALTER TABLE [dbo].[h_user_post]
-    ADD CONSTRAINT [PK_h_user_post] PRIMARY KEY CLUSTERED ([userId], [postId])
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
-
--- ----------------------------
--- Uniques structure for table h_user_role
--- ----------------------------
-ALTER TABLE [dbo].[h_user_role]
-    ADD CONSTRAINT [UQ__h_user_r__7743989CF6133B8D] UNIQUE NONCLUSTERED ([userId] ASC, [roleId] ASC)
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
-
--- ----------------------------
--- Primary Key structure for table h_user_role
--- ----------------------------
-ALTER TABLE [dbo].[h_user_role]
-    ADD CONSTRAINT [PK_h_user_role] PRIMARY KEY CLUSTERED ([userId], [roleId])
-        WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-        ON [PRIMARY]
-GO
-
+SET
+FOREIGN_KEY_CHECKS = 1;
