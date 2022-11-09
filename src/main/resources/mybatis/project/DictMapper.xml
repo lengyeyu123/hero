@@ -7,7 +7,7 @@
     <!-- ===========dictType===========  -->
     <insert id="typeAdd">
         insert into h_dict_type (dictName, dictType, createBy, createTime, remark <if test="state != null">,state</if>)
-        values (#{dictName}, #{dictType}, #{createBy}, getDate(), #{remark}, <if test="state != null">#{state}</if>)
+        values (#{dictName}, #{dictType}, #{createBy}, getDate(), #{remark} <if test="state != null">,#{state}</if>)
     </insert>
 
     <update id="typeUpdate">
@@ -88,7 +88,7 @@
                 remark = #{remark},
             </if>
             updateBy = #{updateBy},
-            updateTime = #{updateTime},
+            updateTime = getDate()
         </set>
         where dictCode = #{dictCode}
     </update>

@@ -53,13 +53,12 @@ public class CustomizeNullJsonSerializer {
     }
 
     /**
-     * 处理Date类型的null值 {}
+     * 处理Date类型的null值 ""
      */
     public static class NullDateJsonSerializer extends JsonSerializer<Object> {
         @Override
         public void serialize(Object value, JsonGenerator jsonGenerator, SerializerProvider serializers) throws IOException {
-            jsonGenerator.writeStartObject();
-            jsonGenerator.writeEndObject();
+            jsonGenerator.writeString("");
         }
     }
 

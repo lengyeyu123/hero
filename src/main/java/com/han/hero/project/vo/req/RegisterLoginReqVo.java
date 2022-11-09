@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 public class RegisterLoginReqVo {
 
     @NotBlank
-    private String userName;
+    private String username;
 
     @NotBlank
     private String password;

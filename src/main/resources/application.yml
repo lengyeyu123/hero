@@ -121,7 +121,7 @@ pagehelper:
 # token配置
 token:
   atConfig:
-    header: accessToken
+    header: Authorization
     secret: 14oiry*&jd
     # 令牌有效期(默认1天 )（单位分钟）
     expireTime: 1400

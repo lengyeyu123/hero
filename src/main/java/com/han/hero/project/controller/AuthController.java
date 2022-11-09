@@ -19,13 +19,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
@@ -43,9 +45,9 @@ public class AuthController {
     @PostMapping("/register")
     public R<?> register(@RequestBody @Validated RegisterLoginReqVo vo) {
         User user = new User();
-        user.setUserName(vo.getUserName());
+        user.setUserName(vo.getUsername());
         user.setPassword(passwordEncoder.encode(vo.getPassword()));
-        if (userService.validateUserName(vo.getUserName())) {
+        if (userService.validateUserName(vo.getUsername())) {
             userService.insertUser(user);
         } else {
             throw new ServiceException(ResultStatus.ACCOUNT_USER_NAME_REPEAT);
@@ -55,7 +57,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public R<LoginRespVO> login(@RequestBody @Validated RegisterLoginReqVo vo) {
-        User user = userService.selectByUserName(vo.getUserName());
+        User user = userService.selectByUserName(vo.getUsername());
         if (user == null) {
             throw new ServiceException(ResultStatus.ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
         } else {
@@ -69,7 +71,18 @@ public class AuthController {
 
                 String accessToken = JwtUtil.generateJwt(tokenProperties.getAtConfig(), claims);
                 String refreshToken = JwtUtil.generateJwt(tokenProperties.getRtConfig(), claims);
-                return R.ok(new LoginRespVO(accessToken, refreshToken));
+                LoginRespVO respVO = new LoginRespVO();
+                respVO.setToken(accessToken);
+                respVO.setUserId(user.getUserId());
+                respVO.setUsername(user.getUserName());
+                respVO.setRealName(user.getUserName());
+                respVO.setDesc(user.getRemark());
+                respVO.setHomePath("/dashboard/analysis");
+                Map<String, String> roleMap = new HashMap<>();
+                roleMap.put("roleName", "Super Admin");
+                roleMap.put("value", "super");
+                respVO.getRoles().add(roleMap);
+                return R.ok(respVO);
             } else {
                 throw new ServiceException(ResultStatus.ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
             }
@@ -83,10 +96,21 @@ public class AuthController {
     @Log(title = "认证", businessType = BusinessType.OTHER)
     @PreAuthorize("hasRole('super')")
     @GetMapping("/getUserInfo")
-    public R<LoginUser> getUserInfo() {
+    public R<?> getUserInfo() {
         LoginUser loginUser = SecurityUtil.getLoginUser();
         redisUtil.set(loginUser.getUsername(), loginUser);
-        return R.ok(loginUser);
+        LoginRespVO vo = new LoginRespVO();
+        vo.setUserId(loginUser.getUser().getUserId());
+        vo.setUsername(loginUser.getUsername());
+        vo.setRealName(loginUser.getUsername());
+        vo.setAvatar("https://picsum.photos/id/1005/100/100.webp");
+        vo.setDesc(loginUser.getUser().getRemark());
+        vo.setHomePath("/dashboard/analysis");
+        Map<String, String> roleMap = new HashMap<>();
+        roleMap.put("roleName", "Super Admin");
+        roleMap.put("value", "super");
+        vo.getRoles().add(roleMap);
+        return R.ok(vo);
     }
 
 

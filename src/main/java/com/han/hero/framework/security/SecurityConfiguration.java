@@ -83,8 +83,8 @@ public class SecurityConfiguration {
                 // 过滤请求
                 .authorizeRequests()
                 // 允许访问
-                .antMatchers("/auth/login").permitAll()
-                .antMatchers("/auth/register").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/register").permitAll()
                 // 除上面外的所有请求全部需要 认证 鉴权
                 .anyRequest().authenticated()
                 .and()

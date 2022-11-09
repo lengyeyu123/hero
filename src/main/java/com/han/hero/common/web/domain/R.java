@@ -22,7 +22,7 @@ public class R<T> {
      */
     private String defaultMsg;
 
-    private T data;
+    private T result;
 
     public static <T> R<T> ok() {
         R<T> r = new R<>();
@@ -31,11 +31,11 @@ public class R<T> {
         return r;
     }
 
-    public static <T> R<T> ok(T data) {
+    public static <T> R<T> ok(T result) {
         R<T> r = new R<>();
         r.setCode(ResultStatus.OK.getCode());
         r.setMessage(ResultStatus.OK.getMsg());
-        r.setData(data);
+        r.setResult(result);
         return r;
     }
 

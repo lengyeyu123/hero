@@ -38,9 +38,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         TokenProperties.TokenConfig atConfig = tokenProperties.getAtConfig();
-        // TODO header 字段问题 Authorization
         String header = request.getHeader(atConfig.getHeader());
-        // String header = request.getHeader("Authorization");
         if (StringUtils.isNotBlank(header)) {
             Claims claims;
             R<?> r = new R<>();
