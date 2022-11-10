@@ -2,14 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.han.hero.project.mapper.InitDBMapper">
 
-    <insert id="createDB">
-        CREATE DATABASE #{dbName} CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci'
+    <insert id="batchInsertSuper">
+        insert into b_super (userName, password, remark)
+        values
+        <foreach collection="superList" item="item" index="index" separator=",">
+            ( #{item.userName}, #{item.password}, #{item.remark} )
+        </foreach>
+    </insert>
+    <insert id="batchInsertOrgan">
+        insert into b_organ (name, organType, address, email, linkman, linkmanPhone, remark)
+        values
+        <foreach collection="organList" item="item" index="index" separator=",">
+            ( #{item.name}, #{item.organType}, #{item.address}, #{item.email}, #{item.linkman}, #{item.linkmanPhone},
+            #{item.remark} )
+        </foreach>
     </insert>
 
-    <select id="checkDbExist" resultType="java.util.Map">
+    <select id="createDB">
+        CREATE DATABASE ${dbName} CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci'
+    </select>
+
+    <select id="checkDBExist" resultType="java.util.Map">
         SELECT *
         from information_schema.SCHEMATA
         WHERE SCHEMA_NAME = #{dbName}
+    </select>
+    <select id="checkTableExist" resultType="java.util.Map">
+        select *
+        from information_schema.tables
+        where table_schema = #{dbName}
+          and table_name = #{tableName}
+    </select>
+    <select id="createTable">
+        ${value}
     </select>
 
 </mapper>

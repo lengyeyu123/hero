@@ -50,7 +50,7 @@ public class AuthController {
         if (userService.validateUserName(vo.getUsername())) {
             userService.insertUser(user);
         } else {
-            throw new ServiceException(ResultStatus.ACCOUNT_USER_NAME_REPEAT);
+            throw new ServiceException(ResultStatus.AUTH_ACCOUNT_USER_NAME_REPEAT);
         }
         return R.ok();
     }
@@ -59,11 +59,11 @@ public class AuthController {
     public R<LoginRespVO> login(@RequestBody @Validated RegisterLoginReqVo vo) {
         User user = userService.selectByUserName(vo.getUsername());
         if (user == null) {
-            throw new ServiceException(ResultStatus.ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
+            throw new ServiceException(ResultStatus.AUTH_ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
         } else {
             if (passwordEncoder.matches(vo.getPassword(), user.getPassword())) {
                 if (user.getDelFlag() == DelFlagEnums.Del) {
-                    return R.fail(ResultStatus.ACCOUNT_DISABLED);
+                    return R.fail(ResultStatus.AUTH_ACCOUNT_DISABLED);
                 }
                 // 登录成功
                 Map<String, Object> claims = new HashMap<>();
@@ -84,7 +84,7 @@ public class AuthController {
                 responseVo.getRoles().add(roleMap);
                 return R.ok(responseVo);
             } else {
-                throw new ServiceException(ResultStatus.ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
+                throw new ServiceException(ResultStatus.AUTH_ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
             }
         }
     }

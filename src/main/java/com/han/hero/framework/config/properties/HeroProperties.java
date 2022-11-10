@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "hero")
 public class HeroProperties {
 
+    private String dbName;
+
     private String uploadFilePathWinPrefix;
 
     private String uploadFilePathLinuxPrefix;
@@ -15,6 +17,14 @@ public class HeroProperties {
     private String downloadFilePathWinPrefix;
 
     private String downloadFilePathLinuxPrefix;
+
+    public String getDbName() {
+        return dbName;
+    }
+
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
+    }
 
     public String getUploadFilePathWinPrefix() {
         return uploadFilePathWinPrefix;
@@ -32,16 +42,8 @@ public class HeroProperties {
         this.uploadFilePathLinuxPrefix = uploadFilePathLinuxPrefix;
     }
 
-    public String getDownloadFilePathWinPrefix() {
-        return downloadFilePathWinPrefix;
-    }
-
     public void setDownloadFilePathWinPrefix(String downloadFilePathWinPrefix) {
         this.downloadFilePathWinPrefix = downloadFilePathWinPrefix;
-    }
-
-    public String getDownloadFilePathLinuxPrefix() {
-        return downloadFilePathLinuxPrefix;
     }
 
     public void setDownloadFilePathLinuxPrefix(String downloadFilePathLinuxPrefix) {

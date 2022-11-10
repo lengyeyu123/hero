@@ -47,7 +47,7 @@ public class MenuService {
         // 菜单时候包含子菜单
         List<Menu> parentMenuList = menuMapper.selectByParentMenuId(menuId);
         if (!parentMenuList.isEmpty()) {
-            throw new ServiceException(ResultStatus.DATA_HAS_USED);
+            throw new ServiceException(ResultStatus.COMMON_DATA_HAS_USED);
         }
         menuMapper.del(menuId);
     }

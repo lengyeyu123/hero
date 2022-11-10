@@ -57,8 +57,8 @@ public class R<T> {
 
     public static <T> R<T> fail(Throwable exception) {
         R<T> r = new R<>();
-        r.setCode(ResultStatus.SERVER_ERROR.getCode());
-        r.setMessage(ResultStatus.SERVER_ERROR.getMsg());
+        r.setCode(ResultStatus.COMMON_SERVER_ERROR.getCode());
+        r.setMessage(ResultStatus.COMMON_SERVER_ERROR.getMsg());
         r.setDefaultMsg(exception.getMessage());
         return r;
     }

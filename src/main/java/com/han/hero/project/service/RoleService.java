@@ -69,7 +69,7 @@ public class RoleService {
         List<UserRole> userRoleList = userMapper.selectUserRoleByRoleId(roleId);
         List<RoleMenu> roleMenuList = menuMapper.selectRoleMenuByRoleId(roleId);
         if (!userRoleList.isEmpty() || !roleMenuList.isEmpty()) {
-            throw new ServiceException(ResultStatus.DATA_HAS_USED);
+            throw new ServiceException(ResultStatus.COMMON_DATA_HAS_USED);
         }
         roleMapper.del(roleId);
     }

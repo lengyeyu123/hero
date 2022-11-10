@@ -46,15 +46,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 claims = JwtUtil.parseJwt(header, atConfig.getSecret());
             } catch (ExpiredJwtException expiredJwtException) {
                 log.error("token过期", expiredJwtException);
-                r.setCode(ResultStatus.TOKEN_EXPIRED.getCode());
-                r.setMessage(ResultStatus.TOKEN_EXPIRED.getMsg());
+                r.setCode(ResultStatus.AUTH_TOKEN_EXPIRED.getCode());
+                r.setMessage(ResultStatus.AUTH_TOKEN_EXPIRED.getMsg());
                 ResponseWriterUtil.write(response, JsonUtil.toJson(r));
                 // TODO 这个return的含义？？ 没搞懂
                 return;
             } catch (Exception exception) {
                 log.error("token解析发生异常", exception);
-                r.setCode(ResultStatus.SERVER_ERROR.getCode());
-                r.setMessage(ResultStatus.SERVER_ERROR.getMsg());
+                r.setCode(ResultStatus.COMMON_SERVER_ERROR.getCode());
+                r.setMessage(ResultStatus.COMMON_SERVER_ERROR.getMsg());
                 r.setDefaultMsg(exception.getMessage());
                 ResponseWriterUtil.write(response, JsonUtil.toJson(r));
                 return;

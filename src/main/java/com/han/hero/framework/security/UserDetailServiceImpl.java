@@ -36,12 +36,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (StringUtils.isBlank(username)) {
             log.error("loadUserByUsername 参数 username 为空");
-            throw new ServiceException(ResultStatus.ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
+            throw new ServiceException(ResultStatus.AUTH_ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
         }
         User user = userMapper.selectByUserName(username);
         if (Objects.isNull(user)) {
             log.info("用户名错误未查询到用户");
-            throw new ServiceException(ResultStatus.ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
+            throw new ServiceException(ResultStatus.AUTH_ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
         }
 
         List<Role> roles = roleMapper.selectByUserId(user.getUserId());

@@ -1,5 +1,8 @@
 package com.han.hero.framework.db;
 
+import com.han.hero.framework.annotation.DS;
+import com.han.hero.project.domain.Organ;
+import com.han.hero.project.domain.Super;
 import com.han.hero.project.mapper.InitDBMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +15,30 @@ public class InitDBService {
     @Autowired
     private InitDBMapper initDBMapper;
 
-    public List<?> checkDbExist(String dbName) {
-        return initDBMapper.checkDbExist(dbName);
+    public List<?> checkDBExist(String dbName) {
+        return initDBMapper.checkDBExist(dbName);
     }
 
     public void createDB(String dbName) {
         initDBMapper.createDB(dbName);
+    }
+
+    public List<?> checkTableExist(String dbName, String tableName) {
+        return initDBMapper.checkTableExist(dbName, tableName);
+    }
+
+    @DS(value = "#dbName")
+    public void createTable(String dbName, String superTableSql) {
+        initDBMapper.createTable(superTableSql);
+    }
+
+    @DS(value = "#dbName")
+    public void batchInsertSuper(String dbName, List<Super> superList) {
+        initDBMapper.batchInsertSuper(superList);
+    }
+
+    @DS(value = "#dbName")
+    public void batchInsertOrgan(String dbName, List<Organ> organList) {
+        initDBMapper.batchInsertOrgan(organList);
     }
 }

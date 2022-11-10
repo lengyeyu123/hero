@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * 解决注解与数据库转换问题
+ */
 public class AutoGenericEnumTypeHandler<E extends BaseEnum> extends BaseTypeHandler<E> {
 
     private Class<E> enumType;

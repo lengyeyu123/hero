@@ -65,7 +65,7 @@ public class DictService {
     public void typeDel(Integer dictId) {
         DictType dictType = dictMapper.selectTypeById(dictId);
         if (dictType == null) {
-            throw new ServiceException(ResultStatus.DATA_NOT_EXIST);
+            throw new ServiceException(ResultStatus.COMMON_DATA_NOT_EXIST);
         }
         DataListReqVo vo = new DataListReqVo();
         vo.setDictType(dictType.getDictType());
@@ -73,7 +73,7 @@ public class DictService {
         if (list.isEmpty()) {
             dictMapper.typeDel(dictId);
         } else {
-            throw new ServiceException(ResultStatus.DATA_HAS_USED);
+            throw new ServiceException(ResultStatus.COMMON_DATA_HAS_USED);
         }
     }
 

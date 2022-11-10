@@ -1,5 +1,7 @@
 # 项目相关配置
 hero:
+  # 主数据库名称
+  dbName: hero
   # 上传文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
   # profile: D:/qlib/uploadPath
   uploadFilePathWinPrefix: D:/han/hero/upload/
@@ -84,7 +86,8 @@ spring:
     # username: jkwsyjxt
     # password: jkwsyjxt
     # mysql驱动
-    url: jdbc:mysql://localhost:3306/hero?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/information_schema?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
     username: root
     password: mysql
   # flyway 数据库迁移工具
