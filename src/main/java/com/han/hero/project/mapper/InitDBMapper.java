@@ -2,6 +2,7 @@ package com.han.hero.project.mapper;
 
 import com.han.hero.project.domain.Organ;
 import com.han.hero.project.domain.Super;
+import com.han.hero.project.domain.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,5 +21,7 @@ public interface InitDBMapper {
     void batchInsertSuper(@Param("superList") List<Super> superList);
 
     void batchInsertOrgan(@Param("organList") List<Organ> organList);
+
+    void batchInsertUser(@Param("userList") List<User> userList);
 
 }

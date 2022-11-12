@@ -8,7 +8,7 @@ public class User extends BaseDomain {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Integer id;
 
     /**
      * 用户名
@@ -25,12 +25,12 @@ public class User extends BaseDomain {
      */
     private DelFlagEnums delFlag;
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUserName() {

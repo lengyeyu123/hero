@@ -73,7 +73,7 @@ public class AuthController {
                 String refreshToken = JwtUtil.generateJwt(tokenProperties.getRtConfig(), claims);
                 LoginRespVO responseVo = new LoginRespVO();
                 responseVo.setToken(accessToken);
-                responseVo.setUserId(user.getUserId());
+                responseVo.setUserId(user.getId());
                 responseVo.setUsername(user.getUserName());
                 responseVo.setRealName(user.getUserName());
                 responseVo.setDesc(user.getRemark());
@@ -100,7 +100,7 @@ public class AuthController {
         LoginUser loginUser = SecurityUtil.getLoginUser();
         redisUtil.set(loginUser.getUsername(), loginUser);
         LoginRespVO vo = new LoginRespVO();
-        vo.setUserId(loginUser.getUser().getUserId());
+        vo.setUserId(loginUser.getUser().getId());
         vo.setUsername(loginUser.getUsername());
         vo.setRealName(loginUser.getUsername());
         vo.setAvatar("https://picsum.photos/id/1005/100/100.webp");

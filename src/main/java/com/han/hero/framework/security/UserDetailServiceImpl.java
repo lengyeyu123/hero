@@ -44,7 +44,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new ServiceException(ResultStatus.AUTH_ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
         }
 
-        List<Role> roles = roleMapper.selectByUserId(user.getUserId());
+        List<Role> roles = roleMapper.selectByUserId(user.getId());
         List<Menu> menus = menuMapper.getRoleMenuByRoles(roles);
         return new LoginUser(user, roles, menus);
     }

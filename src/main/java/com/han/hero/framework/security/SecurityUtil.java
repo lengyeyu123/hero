@@ -12,7 +12,7 @@ public class SecurityUtil {
      * 获取用户ID
      */
     public static Integer getUserId() {
-        return getLoginUser().getUser().getUserId();
+        return getLoginUser().getUser().getId();
     }
 
     /**

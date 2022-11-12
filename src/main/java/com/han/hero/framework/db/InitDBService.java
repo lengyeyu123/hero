@@ -3,6 +3,7 @@ package com.han.hero.framework.db;
 import com.han.hero.framework.annotation.DS;
 import com.han.hero.project.domain.Organ;
 import com.han.hero.project.domain.Super;
+import com.han.hero.project.domain.User;
 import com.han.hero.project.mapper.InitDBMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,10 @@ public class InitDBService {
     @DS(value = "#dbName")
     public void batchInsertOrgan(String dbName, List<Organ> organList) {
         initDBMapper.batchInsertOrgan(organList);
+    }
+
+    @DS(value = "#dbName")
+    public void batchInsertUser(String dbName, List<User> userList) {
+        initDBMapper.batchInsertUser(userList);
     }
 }
