@@ -14,6 +14,11 @@ public class Menu extends BaseDomain {
     private Integer menuId;
 
     /**
+     * 菜单编码
+     */
+    private String menuCode;
+
+    /**
      * 菜单名称
      */
     private String menuName;
@@ -22,6 +27,11 @@ public class Menu extends BaseDomain {
      * 父菜单id
      */
     private Integer parentId;
+
+    /**
+     * 父菜单code
+     */
+    private String parentCode;
 
     /**
      * 父菜单名称
@@ -39,7 +49,7 @@ public class Menu extends BaseDomain {
     private String path;
 
     /**
-     * 路由组件
+     * 路由组件名称
      */
     private String component;
 
@@ -54,7 +64,7 @@ public class Menu extends BaseDomain {
     private DelFlagEnums delFlag;
 
     /**
-     * 权限字符串
+     * 权限字符 *:*:*拥有所有权限 super
      */
     private String perms;
 

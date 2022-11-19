@@ -1,6 +1,7 @@
 package com.han.hero.project.mapper;
 
 import com.han.hero.project.domain.Organ;
+import com.han.hero.project.domain.Role;
 import com.han.hero.project.domain.Super;
 import com.han.hero.project.domain.User;
 import org.apache.ibatis.annotations.Param;
@@ -24,4 +25,5 @@ public interface InitDBMapper {
 
     void batchInsertUser(@Param("userList") List<User> userList);
 
+    void batchInsertRole(@Param("roleList") List<Role> roleList);
 }

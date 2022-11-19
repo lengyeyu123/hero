@@ -11,6 +11,11 @@ public class Role extends BaseDomain {
     private Integer roleId;
 
     /**
+     * 角色编码
+     */
+    private String roleCode;
+
+    /**
      * 角色名称
      */
     private String roleName;
@@ -31,6 +36,14 @@ public class Role extends BaseDomain {
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 
     public String getRoleName() {

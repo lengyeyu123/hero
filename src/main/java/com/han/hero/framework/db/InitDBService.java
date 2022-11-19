@@ -2,6 +2,7 @@ package com.han.hero.framework.db;
 
 import com.han.hero.framework.annotation.DS;
 import com.han.hero.project.domain.Organ;
+import com.han.hero.project.domain.Role;
 import com.han.hero.project.domain.Super;
 import com.han.hero.project.domain.User;
 import com.han.hero.project.mapper.InitDBMapper;
@@ -46,5 +47,10 @@ public class InitDBService {
     @DS(value = "#dbName")
     public void batchInsertUser(String dbName, List<User> userList) {
         initDBMapper.batchInsertUser(userList);
+    }
+
+    @DS(value = "#dbName")
+    public void batchInsertRole(String dbName, List<Role> roleList) {
+        initDBMapper.batchInsertRole(roleList);
     }
 }

@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.han.hero.project.mapper.InitDBMapper">
     <!-- ============插入 -->
-    <insert id="batchInsertSuper">
+    <insert id="batchInsertSuper" useGeneratedKeys="true" keyProperty="id">
         insert into t_super (userName, password, remark, createTime)
         values
         <foreach collection="superList" item="item" index="index" separator=",">
             ( #{item.userName}, #{item.password}, #{item.remark}, getDate() )
         </foreach>
     </insert>
-    <insert id="batchInsertOrgan">
+    <insert id="batchInsertOrgan" useGeneratedKeys="true" keyProperty="id">
         insert into t_organ (name, organType, address, email, linkman, linkmanPhone, remark, createTime)
         values
         <foreach collection="organList" item="item" index="index" separator=",">
@@ -17,11 +17,18 @@
             #{item.remark}, getDate() )
         </foreach>
     </insert>
-    <insert id="batchInsertUser">
+    <insert id="batchInsertUser" useGeneratedKeys="true" keyProperty="id">
         insert into t_user (userName, password, remark, createTime)
         values
         <foreach collection="userList" item="item" index="index" separator=",">
             ( #{item.userName}, #{item.password}, #{item.remark}, getDate() )
+        </foreach>
+    </insert>
+    <insert id="batchInsertRole" useGeneratedKeys="true" keyProperty="id">
+        insert into t_role (roleCode, roleName, remark, createTime)
+        values
+        <foreach collection="roleList" item="item" index="index" separator=",">
+            (#{item.roleCode}, #{item.roleName}, #{remark}, getDate())
         </foreach>
     </insert>
 

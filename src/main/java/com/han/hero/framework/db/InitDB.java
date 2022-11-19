@@ -5,6 +5,7 @@ import com.han.hero.common.enums.OrganType;
 import com.han.hero.framework.config.datasource.DynamicDataSourceConfig;
 import com.han.hero.framework.config.properties.HeroProperties;
 import com.han.hero.project.domain.Organ;
+import com.han.hero.project.domain.Role;
 import com.han.hero.project.domain.Super;
 import com.han.hero.project.domain.User;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,6 @@ public class InitDB implements ApplicationRunner {
 
         // 1. 检查数据库是否存在 不存在则创建数据库 创建完成数据库添加数据源
         List<?> list = initDBService.checkDBExist(dbName);
-        System.out.println(list);
         if (list.isEmpty()) {
             // 创建数据库
             // 检查数据库文件存放路径是否存在
@@ -173,6 +173,57 @@ public class InitDB implements ApplicationRunner {
             initDBService.batchInsertUser(dbName, userList);
         }
 
+        List<?> roleTableList = initDBService.checkTableExist(dbName, "t_role", dbName + ".dbo.sysobjects");
+        if (roleTableList.isEmpty()) {
+            String roleTableSql = "CREATE TABLE [t_role](" +
+                    "[id] [int] IDENTITY(1,1) NOT NULL," +
+                    "[roleCode] [nvarchar](50) NOT NULL," +
+                    "[roleName] [nvarchar](50) NOT NULL," +
+                    "[orderNum] [int] NULL," +
+                    "[createBy] [int] NULL," +
+                    "[updateBy] [int] NULL," +
+                    "[createTime] [datetime2](7) NULL," +
+                    "[updateTime] [datetime2](7) NULL," +
+                    "[remark] [nvarchar](200) NULL," +
+                    "[delFlag] [tinyint] NOT NULL DEFAULT 0)";
+            initDBService.createTable(dbName, roleTableSql);
+            // 插入基础数据
+            List<Role> roleList = new ArrayList<>();
+            Role role = new Role();
+            role.setRoleCode("admin");
+            role.setRoleName("管理员");
+            roleList.add(role);
+            initDBService.batchInsertRole(dbName, roleList);
+        }
+
+        List<?> menuTableList = initDBService.checkTableExist(dbName, "t_menu", dbName + ".dbo.sysobjects");
+        if (menuTableList.isEmpty()) {
+            if (menuTableList.isEmpty()) {
+                String menuTableSql = "CREATE TABLE [t_role](" +
+                        "[id] [int] IDENTITY(1,1) NOT NULL," +
+                        "[menuCode] [nvarchar](50) NOT NULL," +
+                        "[menuName] [nvarchar](50) NOT NULL," +
+                        "[parentId] [int] NULL," +
+                        "[parentCode] [nvarchar](50) NULL," +
+                        "[parentName] [nvarchar](50) NULL," +
+                        "[orderNum] [int] NULL," +
+                        "[path] [nvarchar](200) NULL," +
+                        "[component] [nvarchar](50) NULL," +
+                        "[menuType] [varchar](1) NULL," +
+                        "[perms] [nvarchar](50) NULL," +
+                        "[icon] [nvarchar](50) NULL," +
+                        "[createBy] [int] NULL," +
+                        "[updateBy] [int] NULL," +
+                        "[createTime] [datetime2](7) NULL," +
+                        "[updateTime] [datetime2](7) NULL," +
+                        "[remark] [nvarchar](200) NULL," +
+                        "[delFlag] [tinyint] NOT NULL DEFAULT 0)";
+                initDBService.createTable(dbName, menuTableSql);
+                // 插入基础数据
+
+
+            }
+        }
 
     }
 
