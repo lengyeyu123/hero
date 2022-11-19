@@ -64,7 +64,7 @@ public class InitDB implements ApplicationRunner {
         // hero 中的表 t_user t_organ t_menu
 
         // ---- t_user表是否存在
-        List<?> userTableList = initDBService.checkTableExist(dbName, "t_user");
+        List<?> userTableList = initDBService.checkTableExist("information_schema", "t_user");
         if (userTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.UserTableSql);
             List<User> superList = new ArrayList<>();

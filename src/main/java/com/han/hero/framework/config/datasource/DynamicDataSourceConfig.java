@@ -42,7 +42,7 @@ public class DynamicDataSourceConfig {
             return DataSourceBuilder.create()
                     .type(dataSourceType)
                     .driverClassName(dataSourceProperties.getDriverClassName())
-                    .url(dataSourceProperties.getUrl().replaceAll("DatabaseName=.*?;", "DatabaseName=" + dbName + ";"))
+                    .url(dataSourceProperties.getUrl().replaceAll("3306/.*?\\?", "3306/" + dbName + "\\?"))
                     .username(dataSourceProperties.getUsername())
                     .password(dataSourceProperties.getPassword())
                     .build();
