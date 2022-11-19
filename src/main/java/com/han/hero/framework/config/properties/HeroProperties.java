@@ -18,6 +18,10 @@ public class HeroProperties {
 
     private String downloadFilePathLinuxPrefix;
 
+    private String dbFilePathWinPrefix;
+
+    private String dbFilePathLinuxPrefix;
+
     public String getDbName() {
         return dbName;
     }
@@ -42,12 +46,36 @@ public class HeroProperties {
         this.uploadFilePathLinuxPrefix = uploadFilePathLinuxPrefix;
     }
 
+    public String getDownloadFilePathWinPrefix() {
+        return downloadFilePathWinPrefix;
+    }
+
     public void setDownloadFilePathWinPrefix(String downloadFilePathWinPrefix) {
         this.downloadFilePathWinPrefix = downloadFilePathWinPrefix;
     }
 
+    public String getDownloadFilePathLinuxPrefix() {
+        return downloadFilePathLinuxPrefix;
+    }
+
     public void setDownloadFilePathLinuxPrefix(String downloadFilePathLinuxPrefix) {
         this.downloadFilePathLinuxPrefix = downloadFilePathLinuxPrefix;
+    }
+
+    public String getDbFilePathWinPrefix() {
+        return dbFilePathWinPrefix;
+    }
+
+    public void setDbFilePathWinPrefix(String dbFilePathWinPrefix) {
+        this.dbFilePathWinPrefix = dbFilePathWinPrefix;
+    }
+
+    public String getDbFilePathLinuxPrefix() {
+        return dbFilePathLinuxPrefix;
+    }
+
+    public void setDbFilePathLinuxPrefix(String dbFilePathLinuxPrefix) {
+        this.dbFilePathLinuxPrefix = dbFilePathLinuxPrefix;
     }
 
     public String getUploadFilePathPrefix() {
@@ -56,6 +84,10 @@ public class HeroProperties {
 
     public String getDownloadFilePathPrefix() {
         return FileUtil.isWindows() ? downloadFilePathWinPrefix : downloadFilePathLinuxPrefix;
+    }
+
+    public String getDbFilePathPrefix() {
+        return FileUtil.isWindows() ? dbFilePathWinPrefix : dbFilePathLinuxPrefix;
     }
 
 }

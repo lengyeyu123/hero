@@ -29,6 +29,7 @@ public class DynamicDataSourceConfig {
             log.error("DataSourceType 类名错误", e);
         }
         if (StringUtils.isBlank(dbName)) {
+            // 默认master数据源
             return DataSourceBuilder.create()
                     .type(dataSourceType)
                     .driverClassName(dataSourceProperties.getDriverClassName())
@@ -41,7 +42,7 @@ public class DynamicDataSourceConfig {
             return DataSourceBuilder.create()
                     .type(dataSourceType)
                     .driverClassName(dataSourceProperties.getDriverClassName())
-                    .url("jdbc:mysql://localhost:3306/" + dbName + "?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8")
+                    .url(dataSourceProperties.getUrl().replaceAll("DatabaseName=.*?;", "DatabaseName=" + dbName + ";"))
                     .username(dataSourceProperties.getUsername())
                     .password(dataSourceProperties.getPassword())
                     .build();
