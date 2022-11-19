@@ -12,9 +12,9 @@ public interface InitDBMapper {
 
     List<Map<String, Object>> checkDBExist(@Param("dbName") String dbName);
 
-    void createDB(@Param("dbName") String dbName);
+    void createDB(@Param("sql") String sql);
 
-    List<Map<String, Object>> checkTableExist(@Param("dbName") String dbName, @Param("tableName") String tableName);
+    List<Map<String, Object>> checkTableExist(@Param("dbName") String dbName, @Param("tableName") String tableName, @Param("sysobjectsFullTableName") String sysobjectsFullTableName);
 
     void createTable(String superTableSql);
 

@@ -20,12 +20,12 @@ public class InitDBService {
         return initDBMapper.checkDBExist(dbName);
     }
 
-    public void createDB(String dbName) {
-        initDBMapper.createDB(dbName);
+    public void createDB(String sql) {
+        initDBMapper.createDB(sql);
     }
 
-    public List<?> checkTableExist(String dbName, String tableName) {
-        return initDBMapper.checkTableExist(dbName, tableName);
+    public List<?> checkTableExist(String dbName, String tableName, String sysobjectsFullTableName) {
+        return initDBMapper.checkTableExist(dbName, tableName, sysobjectsFullTableName);
     }
 
     @DS(value = "#dbName")

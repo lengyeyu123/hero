@@ -3,44 +3,42 @@
 <mapper namespace="com.han.hero.project.mapper.InitDBMapper">
     <!-- ============插入 -->
     <insert id="batchInsertSuper">
-        insert into t_super (userName, password, remark)
+        insert into t_super (userName, password, remark, createTime)
         values
         <foreach collection="superList" item="item" index="index" separator=",">
-            ( #{item.userName}, #{item.password}, #{item.remark} )
+            ( #{item.userName}, #{item.password}, #{item.remark}, getDate() )
         </foreach>
     </insert>
     <insert id="batchInsertOrgan">
-        insert into t_organ (name, organType, address, email, linkman, linkmanPhone, remark)
+        insert into t_organ (name, organType, address, email, linkman, linkmanPhone, remark, createTime)
         values
         <foreach collection="organList" item="item" index="index" separator=",">
             ( #{item.name}, #{item.organType}, #{item.address}, #{item.email}, #{item.linkman}, #{item.linkmanPhone},
-            #{item.remark} )
+            #{item.remark}, getDate() )
         </foreach>
     </insert>
     <insert id="batchInsertUser">
-        insert into t_user (userName, password, remark)
+        insert into t_user (userName, password, remark, createTime)
         values
         <foreach collection="userList" item="item" index="index" separator=",">
-            ( #{item.userName}, #{item.password}, #{item.remark} )
+            ( #{item.userName}, #{item.password}, #{item.remark}, getDate() )
         </foreach>
     </insert>
 
 
     <!-- ============查询 -->
-    <select id="createDB">
-        CREATE DATABASE ${dbName} CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci'
-    </select>
-
     <select id="checkDBExist" resultType="java.util.Map">
-        SELECT *
-        from information_schema.SCHEMATA
-        WHERE SCHEMA_NAME = #{dbName}
+        select *
+        From master.dbo.sysdatabases
+        where name = #{dbName}
+    </select>
+    <select id="createDB">
+        ${sql}
     </select>
     <select id="checkTableExist" resultType="java.util.Map">
-        select *
-        from information_schema.tables
-        where table_schema = #{dbName}
-          and table_name = #{tableName}
+        select name
+        from ${sysobjectsFullTableName}
+        where id = object_id(CONCAT(#{dbName}, '.dbo.', #{tableName}))
     </select>
     <select id="createTable">
         ${value}

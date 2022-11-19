@@ -1,5 +1,6 @@
 package com.han.hero.framework.db;
 
+import cn.hutool.core.io.FileUtil;
 import com.han.hero.common.enums.OrganType;
 import com.han.hero.framework.config.datasource.DynamicDataSourceConfig;
 import com.han.hero.framework.config.properties.HeroProperties;
@@ -42,9 +43,12 @@ public class InitDB implements ApplicationRunner {
 
         // 1. 检查数据库是否存在 不存在则创建数据库 创建完成数据库添加数据源
         List<?> list = initDBService.checkDBExist(dbName);
+        System.out.println(list);
         if (list.isEmpty()) {
             // 创建数据库
-            initDBService.createDB(dbName);
+            // 检查数据库文件存放路径是否存在
+            FileUtil.mkdir(heroProperties.getDbFilePathPrefix());
+            initDBService.createDB(generateCreateDbSql(dbName));
         }
         // 添加数据源
         dynamicDataSourceConfig.addDataSource(dbName, false);
@@ -53,24 +57,37 @@ public class InitDB implements ApplicationRunner {
         log.info("==========数据库初始化完成=============");
     }
 
+    private String generateCreateDbSql(String dbName) {
+        return "CREATE DATABASE " + dbName + " ON PRIMARY (" +
+                "NAME=" + dbName + "_DATA," +
+                "FILENAME='" + heroProperties.getDbFilePathPrefix() + dbName + "_DATA.mdf'," +
+                "SIZE=5MB," +
+                "MAXSIZE=UNLIMITED," +
+                "FILEGROWTH=65536KB" +
+                ")" +
+                "LOG ON(NAME=" + dbName + "_LOG," +
+                "FILENAME='" + heroProperties.getDbFilePathPrefix() + dbName + "_LOG.ldf'," +
+                "SIZE=2MB," +
+                "MAXSIZE=2048GB," +
+                "FILEGROWTH=65536KB)";
+    }
+
     private void checkTableExist() {
         String dbName = heroProperties.getDbName();
 
         // ---- super表是否存在
-        List<?> superTableList = initDBService.checkTableExist(dbName, "t_super");
+        List<?> superTableList = initDBService.checkTableExist(dbName, "t_super", dbName + ".dbo.sysobjects");
         if (superTableList.isEmpty()) {
-            String superTableSql = "CREATE TABLE `t_super`  (" +
-                    "  `id` int NOT NULL AUTO_INCREMENT," +
-                    "  `userName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL," +
-                    "  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL," +
-                    "  `createBy` int NULL DEFAULT NULL," +
-                    "  `updateBy` int NULL DEFAULT NULL," +
-                    "  `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP," +
-                    "  `updateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
-                    "  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL," +
-                    "  `delFlag` tinyint NOT NULL DEFAULT 0," +
-                    "  PRIMARY KEY (`id`) USING BTREE" +
-                    ") ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;";
+            String superTableSql = "CREATE TABLE [t_super](" +
+                    "[id] [int] IDENTITY(1,1) NOT NULL," +
+                    "[userName] [nvarchar](100) NOT NULL," +
+                    "[password] [nvarchar](100) NOT NULL," +
+                    "[createBy] [int] NULL," +
+                    "[updateBy] [int] NULL," +
+                    "[createTime] [datetime2](7) NULL," +
+                    "[updateTime] [datetime2](7) NULL," +
+                    "[remark] [nvarchar](200) NULL," +
+                    "[delFlag] [tinyint] NOT NULL DEFAULT 0)";
             initDBService.createTable(dbName, superTableSql);
             List<Super> superList = new ArrayList<>();
             Super superUser = new Super();
@@ -82,25 +99,22 @@ public class InitDB implements ApplicationRunner {
         }
 
         // ---- 机构表是否存在
-        List<?> organTableList = initDBService.checkTableExist(dbName, "t_organ");
+        List<?> organTableList = initDBService.checkTableExist(dbName, "t_organ", dbName + ".dbo.sysobjects");
         if (organTableList.isEmpty()) {
-            String organTableSql = "CREATE TABLE `t_organ`  (" +
-                    "  `id` int NOT NULL AUTO_INCREMENT," +
-                    "  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL," +
-                    "  `organType` tinyint NOT NULL," +
-                    "  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL," +
-                    "  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL," +
-                    "  `linkman` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL," +
-                    "  `linkmanPhone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL," +
-                    "  `createBy` int NULL DEFAULT NULL," +
-                    "  `updateBy` int NULL DEFAULT NULL," +
-                    "  `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP," +
-                    "  `updateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
-                    "  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL," +
-                    "  `delFlag` tinyint NOT NULL DEFAULT 0," +
-                    "  PRIMARY KEY (`id`) USING BTREE" +
-                    ") ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;";
-
+            String organTableSql = "CREATE TABLE [t_organ](" +
+                    "[id] [int] IDENTITY(1,1) NOT NULL," +
+                    "[name] [nvarchar](100) NOT NULL," +
+                    "[organType] [tinyint] NOT NULL," +
+                    "[email] [nvarchar](100) NULL," +
+                    "[address] [nvarchar](200) NULL," +
+                    "[linkman] [nvarchar](50) NULL," +
+                    "[linkmanPhone] [nvarchar](11) NULL," +
+                    "[createBy] [int] NULL," +
+                    "[updateBy] [int] NULL," +
+                    "[createTime] [datetime2](7) NULL," +
+                    "[updateTime] [datetime2](7) NULL," +
+                    "[remark] [nvarchar](200) NULL," +
+                    "[delFlag] [tinyint] NOT NULL DEFAULT 0)";
             initDBService.createTable(dbName, organTableSql);
             List<Organ> organList = new ArrayList<>();
             Organ organ = new Organ();
@@ -129,28 +143,26 @@ public class InitDB implements ApplicationRunner {
         List<?> list = initDBService.checkDBExist(dbName);
         if (list.isEmpty()) {
             // 2. 创建数据库
-            initDBService.createDB(dbName);
+            FileUtil.mkdir(heroProperties.getDbFilePathPrefix());
+            initDBService.createDB(generateCreateDbSql(dbName));
         }
 
         // 3. 添加数据源
         dynamicDataSourceConfig.addDataSource(dbName, false);
         // 4. 检查表是否存在 不存在则创建表并插入基础数据
-        List<?> userTableList = initDBService.checkTableExist(dbName, "t_user");
+        List<?> userTableList = initDBService.checkTableExist(dbName, "t_user", dbName + ".dbo.sysobjects");
         if (userTableList.isEmpty()) {
-            String userTableSql = "CREATE TABLE `t_user`  (" +
-                    "  `id` int NOT NULL AUTO_INCREMENT," +
-                    "  `userName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL," +
-                    "  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL," +
-                    "  `createBy` int NULL DEFAULT NULL," +
-                    "  `updateBy` int NULL DEFAULT NULL," +
-                    "  `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP," +
-                    "  `updateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
-                    "  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL," +
-                    "  `delFlag` tinyint NOT NULL DEFAULT 0," +
-                    "  PRIMARY KEY (`id`) USING BTREE" +
-                    ") ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;";
+            String userTableSql = "CREATE TABLE [t_user](" +
+                    "[id] [int] IDENTITY(1,1) NOT NULL," +
+                    "[userName] [nvarchar](100) NOT NULL," +
+                    "[password] [nvarchar](100) NOT NULL," +
+                    "[createBy] [int] NULL," +
+                    "[updateBy] [int] NULL," +
+                    "[createTime] [datetime2](7) NULL," +
+                    "[updateTime] [datetime2](7) NULL," +
+                    "[remark] [nvarchar](200) NULL," +
+                    "[delFlag] [tinyint] NOT NULL DEFAULT 0)";
             initDBService.createTable(dbName, userTableSql);
-
             // 插入基础数据
             List<User> userList = new ArrayList<>();
             User user = new User();
