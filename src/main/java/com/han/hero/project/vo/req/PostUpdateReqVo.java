@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 public class PostUpdateReqVo {
 
     @NotNull
-    private Integer postId;
+    private Integer id;
 
     private String postName;
 

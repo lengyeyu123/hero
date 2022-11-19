@@ -1,9 +1,7 @@
 package com.han.hero.framework.db;
 
 import com.han.hero.framework.annotation.DS;
-import com.han.hero.project.domain.Organ;
-import com.han.hero.project.domain.Super;
-import com.han.hero.project.domain.User;
+import com.han.hero.project.domain.*;
 import com.han.hero.project.mapper.InitDBMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +32,7 @@ public class InitDBService {
     }
 
     @DS(value = "#dbName")
-    public void batchInsertSuper(String dbName, List<Super> superList) {
+    public void batchInsertSuper(String dbName, List<User> superList) {
         initDBMapper.batchInsertSuper(superList);
     }
 
@@ -46,5 +44,30 @@ public class InitDBService {
     @DS(value = "#dbName")
     public void batchInsertUser(String dbName, List<User> userList) {
         initDBMapper.batchInsertUser(userList);
+    }
+
+    @DS(value = "#dbName")
+    public void batchInsertRole(String dbName, List<Role> roleList) {
+        initDBMapper.batchInsertRole(roleList);
+    }
+
+    @DS(value = "#dbName")
+    public void batchInsertMenu(String dbName, List<Menu> menuList) {
+        initDBMapper.batchInsertMenu(menuList);
+    }
+
+    @DS(value = "#dbName")
+    public void batchInsertUserRole(String dbName, List<UserRole> userRoleList) {
+        initDBMapper.batchInsertUserRole(userRoleList);
+    }
+
+    @DS(value = "#dbName")
+    public void batchInsertRoleMenu(String dbName, List<RoleMenu> roleMenuList) {
+        initDBMapper.batchInsertRoleMenu(roleMenuList);
+    }
+
+    @DS(value = "#dbName")
+    public void batchInsertSemester(String dbName, List<Semester> semesterList) {
+        initDBMapper.batchInsertSemester(semesterList);
     }
 }

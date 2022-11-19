@@ -1,8 +1,6 @@
 package com.han.hero.project.mapper;
 
-import com.han.hero.project.domain.Organ;
-import com.han.hero.project.domain.Super;
-import com.han.hero.project.domain.User;
+import com.han.hero.project.domain.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -18,10 +16,20 @@ public interface InitDBMapper {
 
     void createTable(String superTableSql);
 
-    void batchInsertSuper(@Param("superList") List<Super> superList);
+    void batchInsertSuper(@Param("superList") List<User> superList);
 
     void batchInsertOrgan(@Param("organList") List<Organ> organList);
 
     void batchInsertUser(@Param("userList") List<User> userList);
+
+    void batchInsertRole(@Param("roleList") List<Role> roleList);
+
+    void batchInsertMenu(@Param("menuList") List<Menu> menuList);
+
+    void batchInsertUserRole(@Param("userRoleList") List<UserRole> userRoleList);
+
+    void batchInsertRoleMenu(@Param("roleMenuList") List<RoleMenu> roleMenuList);
+
+    void batchInsertSemester(@Param("semesterList") List<Semester> semesterList);
 
 }

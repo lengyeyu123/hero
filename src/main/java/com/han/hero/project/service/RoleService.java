@@ -55,7 +55,7 @@ public class RoleService {
 
     public void update(RoleUpdateReqVo vo) {
         Role role = new Role();
-        role.setRoleId(vo.getRoleId());
+        role.setId(vo.getId());
         role.setRoleName(vo.getRoleName());
         role.setOrderNum(vo.getOrderNum());
         role.setDelFlag(vo.getState());

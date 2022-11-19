@@ -1,17 +1,19 @@
 package com.han.hero.project.domain;
 
-import com.han.hero.common.enums.DelFlagEnums;
+import com.han.hero.common.enums.MenuType;
 import com.han.hero.framework.web.BaseDomain;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class Menu extends BaseDomain {
 
     /**
      * 菜单Id
      */
-    private Integer menuId;
+    private Integer id;
 
     /**
      * 菜单名称
@@ -46,15 +48,10 @@ public class Menu extends BaseDomain {
     /**
      * 菜单类型 (M目录 C菜单 F按钮)
      */
-    private String menuType;
+    private MenuType menuType;
 
     /**
-     * 状态 0禁用 1正常
-     */
-    private DelFlagEnums delFlag;
-
-    /**
-     * 权限字符串
+     * 权限字符 *:*:*拥有所有权限 super
      */
     private String perms;
 
@@ -68,99 +65,4 @@ public class Menu extends BaseDomain {
      */
     private List<Menu> children = new ArrayList<>();
 
-    public Integer getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(Integer menuId) {
-        this.menuId = menuId;
-    }
-
-    public String getMenuName() {
-        return menuName;
-    }
-
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getParentName() {
-        return parentName;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
-    }
-
-    public Integer getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(Integer orderNum) {
-        this.orderNum = orderNum;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getComponent() {
-        return component;
-    }
-
-    public void setComponent(String component) {
-        this.component = component;
-    }
-
-    public String getMenuType() {
-        return menuType;
-    }
-
-    public void setMenuType(String menuType) {
-        this.menuType = menuType;
-    }
-
-    public DelFlagEnums getDelFlag() {
-        return delFlag;
-    }
-
-    public void setDelFlag(DelFlagEnums delFlag) {
-        this.delFlag = delFlag;
-    }
-
-    public String getPerms() {
-        return perms;
-    }
-
-    public void setPerms(String perms) {
-        this.perms = perms;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public List<Menu> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Menu> children) {
-        this.children = children;
-    }
 }

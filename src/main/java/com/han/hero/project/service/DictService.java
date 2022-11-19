@@ -53,7 +53,7 @@ public class DictService {
             }
         }
         DictType update = new DictType();
-        update.setDictId(vo.getDictId());
+        update.setId(vo.getId());
         update.setDictName(vo.getDictName());
         update.setDictType(vo.getDictType());
         update.setDelFlag(vo.getState());
@@ -96,7 +96,7 @@ public class DictService {
 
     public void dataUpdate(DataUpdateReqVo vo) {
         DictTypeData dictTypeData = new DictTypeData();
-        dictTypeData.setDictCode(vo.getDictCode());
+        dictTypeData.setId(vo.getId());
         dictTypeData.setOrderNum(vo.getOrderNum());
         dictTypeData.setDictLabel(vo.getDictLabel());
         dictTypeData.setDictValue(vo.getDictValue());

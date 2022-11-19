@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class TypeUpdateReqVo {
 
-    private Integer dictId;
+    private Integer id;
 
     private String dictName;
 

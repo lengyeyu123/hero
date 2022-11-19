@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 public class DataUpdateReqVo {
 
     @NotNull
-    private Integer dictCode;
+    private Integer id;
 
     private Integer orderNum;
 

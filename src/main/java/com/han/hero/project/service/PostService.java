@@ -33,7 +33,7 @@ public class PostService {
 
     public void update(PostUpdateReqVo vo) {
         Post post = new Post();
-        post.setPostId(vo.getPostId());
+        post.setId(vo.getId());
         post.setPostCode(vo.getPostCode());
         post.setPostName(vo.getPostName());
         post.setOrderNum(vo.getOrderNum());

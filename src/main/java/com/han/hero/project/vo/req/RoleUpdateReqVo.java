@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 public class RoleUpdateReqVo {
 
     @NotNull
-    private Integer roleId;
+    private Integer id;
 
     private String roleName;
 

@@ -54,12 +54,12 @@ public class MenuService {
 
     public void update(MenuUpdateReqVo vo) {
         Menu menu = new Menu();
-        menu.setMenuId(vo.getMuenId());
+        menu.setId(vo.getMuenId());
         menu.setMenuName(vo.getMenuName());
         if (vo.getParentId() != null) {
             Menu parentMenu = menuMapper.selectByMenuId(vo.getParentId());
             if (parentMenu != null) {
-                menu.setParentId(parentMenu.getMenuId());
+                menu.setParentId(parentMenu.getId());
                 menu.setParentName(parentMenu.getMenuName());
             }
         }
@@ -91,7 +91,7 @@ public class MenuService {
                 .collect(Collectors.toList());
         for (Menu topMenu : topMenuList) {
             List<Menu> childMenuList = list.stream()
-                    .filter(menu -> Objects.equals(menu.getParentId(), topMenu.getMenuId()))
+                    .filter(menu -> Objects.equals(menu.getParentId(), topMenu.getId()))
                     .sorted(Comparator.comparingInt(Menu::getOrderNum))
                     .collect(Collectors.toList());
             topMenu.setChildren(childMenuList);
@@ -101,7 +101,7 @@ public class MenuService {
             List<Menu> menuChildren = menu.getChildren();
             if (!menuChildren.isEmpty()) {
                 for (Menu menuChild : menuChildren) {
-                    treeData(list, menuChild.getMenuId());
+                    treeData(list, menuChild.getId());
                 }
             }
         }
