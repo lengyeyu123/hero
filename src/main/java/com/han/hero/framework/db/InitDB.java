@@ -1,5 +1,6 @@
 package com.han.hero.framework.db;
 
+import com.han.hero.common.constants.DataSourceConstants;
 import com.han.hero.common.enums.MenuType;
 import com.han.hero.common.enums.OrganType;
 import com.han.hero.framework.config.datasource.DynamicDataSourceConfig;
@@ -64,7 +65,7 @@ public class InitDB implements ApplicationRunner {
         // hero 中的表 t_user t_organ t_menu
 
         // ---- t_user表是否存在
-        List<?> userTableList = initDBService.checkTableExist("information_schema", "t_user");
+        List<?> userTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, "t_user");
         if (userTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.UserTableSql);
             List<User> superList = new ArrayList<>();
