@@ -1,7 +1,6 @@
 package com.han.hero.framework.db;
 
 import com.han.hero.common.constants.DataSourceConstants;
-import com.han.hero.common.enums.MenuType;
 import com.han.hero.common.enums.OrganType;
 import com.han.hero.framework.config.datasource.DynamicDataSourceConfig;
 import com.han.hero.framework.config.properties.HeroProperties;
@@ -20,7 +19,8 @@ import java.util.List;
 
 /**
  * 注意事项
- * 1. 所有数据库中的t_user表均添加了super2022用户 用户名为super2022 密码为super2022 默认用户名为super2022的用户拥有所有权限
+ * 1. 所有数据库中的t_user表均添加了super2022用户 用户id为1 用户名为super2022 密码为super2022 默认用户名为super2022的用户拥有所有权限
+ * 2. 演示机构code为 000000
  */
 @Slf4j
 @Component
@@ -70,32 +70,36 @@ public class InitDB implements ApplicationRunner {
             initDBService.createTable(dbName, InitSQL.UserTableSql);
             List<User> superList = new ArrayList<>();
             User superUser = new User();
+            superUser.setId(1);
             superUser.setUserName("super2022");
             superUser.setPassword(passwordEncoder.encode("super2022"));
             superUser.setRemark("super man set sys config");
             superList.add(superUser);
-            initDBService.batchInsertSuper(dbName, superList);
+            initDBService.batchInsertUser(dbName, superList);
         }
 
         // ---- t_organ是否存在
         List<?> organTableList = initDBService.checkTableExist(dbName, "t_organ");
         if (organTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.OrganTableSql);
-            List<Organ> organList = new ArrayList<>();
-            Organ organ = new Organ();
-            // 演示机构
-            organ.setCode("000000");
-            organ.setName("demo");
-            organ.setOrganType(OrganType.UNIVERSITY);
-            organ.setAddress("my");
-            organ.setEmail("my@qq.com");
-            organ.setLinkman("my");
-            organ.setLinkmanPhone("phone");
-            organ.setRemark("remark");
-            organList.add(organ);
-            initDBService.batchInsertOrgan(dbName, organList);
-            for (Organ o : organList) {
-                initOrganDB(o);
+            // 若非演示模式 不创建机构数据库
+            if (heroProperties.getDemo()) {
+                List<Organ> organList = new ArrayList<>();
+                Organ organ = new Organ();
+                // 演示机构
+                organ.setCode("000000");
+                organ.setName("demo");
+                organ.setOrganType(OrganType.UNIVERSITY);
+                organ.setAddress("my");
+                organ.setEmail("my@qq.com");
+                organ.setLinkman("my");
+                organ.setLinkmanPhone("phone");
+                organ.setRemark("remark");
+                organList.add(organ);
+                initDBService.batchInsertOrgan(dbName, organList);
+                for (Organ o : organList) {
+                    initOrganDB(o);
+                }
             }
         }
 
@@ -116,10 +120,7 @@ public class InitDB implements ApplicationRunner {
         if (menuTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.MenuTableSql);
             List<Menu> menuList = new ArrayList<>();
-            Menu menu = new Menu();
-            menu.setMenuName("用户管理");
-            menu.setMenuType(MenuType.C);
-            menuList.add(menu);
+            initHeroDbAllMenu(menuList);
             initDBService.batchInsertMenu(dbName, menuList);
         }
 
@@ -162,6 +163,7 @@ public class InitDB implements ApplicationRunner {
 
             // 插入基础数据
             User superUser = new User();
+            superUser.setId(1);
             superUser.setUserName("super2022");
             superUser.setPassword(passwordEncoder.encode("super2022"));
             superUser.setRemark("I am superman");
@@ -191,10 +193,7 @@ public class InitDB implements ApplicationRunner {
         List<?> menuTableList = initDBService.checkTableExist(dbName, "t_menu");
         if (menuTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.MenuTableSql);
-            Menu menu = new Menu();
-            menu.setMenuName("用户管理");
-            menu.setMenuType(MenuType.C);
-            menuList.add(menu);
+            initOrganAllMenu(menuList);
             initDBService.batchInsertMenu(dbName, menuList);
         }
 
@@ -230,6 +229,28 @@ public class InitDB implements ApplicationRunner {
             // initDBService.batchInsertRoleMenu(dbName, roleMenuList);
         }
 
+    }
+
+    /**
+     * 主库菜单
+     *
+     * @param menuList
+     */
+    private void initHeroDbAllMenu(List<Menu> menuList) {
+        // menuList.add(new Menu().setMenuType(MenuType.M));
+        // menuList.add(new Menu().setMenuType(MenuType.M));
+        // menuList.add(new Menu().setMenuType(MenuType.M));
+        // menuList.add(new Menu().setMenuType(MenuType.M));
+    }
+
+    /**
+     * 机构所有的菜单
+     */
+    public void initOrganAllMenu(List<Menu> menuList) {
+        // menuList.add(new Menu().setMenuType(MenuType.M));
+        // menuList.add(new Menu().setMenuType(MenuType.M));
+        // menuList.add(new Menu().setMenuType(MenuType.M));
+        // menuList.add(new Menu().setMenuType(MenuType.M));
     }
 
 }

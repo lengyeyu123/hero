@@ -3,11 +3,13 @@ package com.han.hero.project.domain;
 import com.han.hero.common.enums.MenuType;
 import com.han.hero.framework.web.BaseDomain;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Accessors(chain = true)
 public class Menu extends BaseDomain {
 
     /**

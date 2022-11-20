@@ -33,11 +33,6 @@ public class InitDBService {
     }
 
     @DS(value = "#dbName")
-    public void batchInsertSuper(String dbName, List<User> superList) {
-        initDBMapper.batchInsertSuper(superList);
-    }
-
-    @DS(value = "#dbName")
     public void batchInsertOrgan(String dbName, List<Organ> organList) {
         initDBMapper.batchInsertOrgan(organList);
     }

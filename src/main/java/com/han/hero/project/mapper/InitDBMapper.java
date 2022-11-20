@@ -16,8 +16,6 @@ public interface InitDBMapper {
 
     void createTable(String superTableSql);
 
-    void batchInsertSuper(@Param("superList") List<User> superList);
-
     void batchInsertOrgan(@Param("organList") List<Organ> organList);
 
     void batchInsertUser(@Param("userList") List<User> userList);

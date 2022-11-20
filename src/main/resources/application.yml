@@ -2,9 +2,8 @@
 hero:
   # 主数据库名称
   dbName: hero
-  # 数据库文件位置
-  dbFilePathWinPrefix: D:\han\hero\db\
-  dbFilePathLinuxPrefix: /usr/local/hero/db/
+  # 是否为演示模式
+  demo: true
   # 上传文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
   # profile: D:/qlib/uploadPath
   uploadFilePathWinPrefix: D:/han/hero/upload/
