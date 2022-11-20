@@ -1,7 +1,7 @@
 package com.han.hero.framework.aspectj;
 
 import com.han.hero.framework.annotation.DS;
-import com.han.hero.framework.config.datasource.DynamicDataSourceContextHolder;
+import com.han.hero.framework.datasource.DynamicDataSourceContextHolder;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;

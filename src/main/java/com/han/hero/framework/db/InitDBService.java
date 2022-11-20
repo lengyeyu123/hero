@@ -22,8 +22,8 @@ public class InitDBService {
         initDBMapper.createDB(dbName);
     }
 
-    @DS(value = "#dbName")
-    public List<?> checkTableExist(String dbName, String tableName) {
+    @DS(value = "#dsKeyBase")
+    public List<?> checkTableExist(String dsKeyBase, String dbName, String tableName) {
         return initDBMapper.checkTableExist(dbName, tableName);
     }
 

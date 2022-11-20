@@ -14,12 +14,12 @@ public class Post extends BaseDomain {
     /**
      * 岗位编号
      */
-    private String postCode;
+    private String code;
 
     /**
      * 岗位名称
      */
-    private String postName;
+    private String name;
 
     /**
      * 排序编号

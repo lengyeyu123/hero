@@ -1,10 +1,12 @@
 package com.han.hero.framework.db;
 
 import com.han.hero.common.constants.DataSourceConstants;
+import com.han.hero.common.enums.MenuType;
 import com.han.hero.common.enums.OrganType;
-import com.han.hero.framework.config.datasource.DynamicDataSourceConfig;
 import com.han.hero.framework.config.properties.HeroProperties;
+import com.han.hero.framework.datasource.DynamicDataSourceConfig;
 import com.han.hero.project.domain.*;
+import com.han.hero.project.service.OrganService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -39,8 +41,12 @@ public class InitDB implements ApplicationRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private OrganService organService;
+
     @Override
     public void run(ApplicationArguments args) {
+        log.info("==========数据库初始化开始=============");
 
         String dbName = heroProperties.getDbName();
 
@@ -65,7 +71,7 @@ public class InitDB implements ApplicationRunner {
         // hero 中的表 t_user t_organ t_menu
 
         // ---- t_user表是否存在
-        List<?> userTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, "t_user");
+        List<?> userTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, dbName, "t_user");
         if (userTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.UserTableSql);
             List<User> superList = new ArrayList<>();
@@ -79,7 +85,7 @@ public class InitDB implements ApplicationRunner {
         }
 
         // ---- t_organ是否存在
-        List<?> organTableList = initDBService.checkTableExist(dbName, "t_organ");
+        List<?> organTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, dbName, "t_organ");
         if (organTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.OrganTableSql);
             // 若非演示模式 不创建机构数据库
@@ -89,7 +95,7 @@ public class InitDB implements ApplicationRunner {
                 // 演示机构
                 organ.setCode("000000");
                 organ.setName("demo");
-                organ.setOrganType(OrganType.UNIVERSITY);
+                organ.setType(OrganType.UNIVERSITY);
                 organ.setAddress("my");
                 organ.setEmail("my@qq.com");
                 organ.setLinkman("my");
@@ -101,22 +107,27 @@ public class InitDB implements ApplicationRunner {
                     initOrganDB(o);
                 }
             }
+        } else {
+            List<Organ> list = organService.all(heroProperties.getDbName());
+            for (Organ organ : list) {
+                initOrganDB(organ);
+            }
         }
 
         // ---- t_dict_type是否存在
-        List<?> dictTypeTableList = initDBService.checkTableExist(dbName, "t_dict_type");
+        List<?> dictTypeTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, dbName, "t_dict_type");
         if (dictTypeTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.DictTypeTableSql);
         }
 
         // ---- t_dict_data是否存在
-        List<?> dictDataTableList = initDBService.checkTableExist(dbName, "t_dict_data");
+        List<?> dictDataTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, dbName, "t_dict_data");
         if (dictDataTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.DictDataTableSql);
         }
 
         // ---- t_menu是否存在
-        List<?> menuTableList = initDBService.checkTableExist(dbName, "t_menu");
+        List<?> menuTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, dbName, "t_menu");
         if (menuTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.MenuTableSql);
             List<Menu> menuList = new ArrayList<>();
@@ -125,7 +136,7 @@ public class InitDB implements ApplicationRunner {
         }
 
         // ---- t_semester是否存在
-        List<?> semesterTableList = initDBService.checkTableExist(dbName, "t_semester");
+        List<?> semesterTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, dbName, "t_semester");
         if (semesterTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.SemesterTableSql);
             // 添加当前学期
@@ -157,7 +168,7 @@ public class InitDB implements ApplicationRunner {
         // 4. t_user 检查表是否存在 不存在则创建表并插入基础数据
         // ---- t_user是否存在
         List<User> userList = new ArrayList<>();
-        List<?> userTableList = initDBService.checkTableExist(dbName, "t_user");
+        List<?> userTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, dbName, "t_user");
         if (userTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.UserTableSql);
 
@@ -178,19 +189,19 @@ public class InitDB implements ApplicationRunner {
 
         // // ---- t_role是否存在
         List<Role> roleList = new ArrayList<>();
-        List<?> roleTableList = initDBService.checkTableExist(dbName, "t_role");
+        List<?> roleTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, dbName, "t_role");
         if (roleTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.RoleTableSql);
             Role superRole = new Role();
-            superRole.setRoleCode("super");
-            superRole.setRoleName("超级管理员");
+            superRole.setCode("super");
+            superRole.setName("超级管理员");
             roleList.add(superRole);
             initDBService.batchInsertRole(dbName, roleList);
         }
 
         // ---- t_menu是否存在
         List<Menu> menuList = new ArrayList<>();
-        List<?> menuTableList = initDBService.checkTableExist(dbName, "t_menu");
+        List<?> menuTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, dbName, "t_menu");
         if (menuTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.MenuTableSql);
             initOrganAllMenu(menuList);
@@ -199,7 +210,7 @@ public class InitDB implements ApplicationRunner {
 
         // ---- t_user_role是否存在
         List<UserRole> userRoleList = new ArrayList<>();
-        List<?> userRoleTableList = initDBService.checkTableExist(dbName, "t_user_role");
+        List<?> userRoleTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, dbName, "t_user_role");
         if (userRoleTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.UserRoleTableSql);
             // for (User user : userList) {
@@ -215,7 +226,7 @@ public class InitDB implements ApplicationRunner {
 
         // ---- t_role_menu是否存在
         List<RoleMenu> roleMenuList = new ArrayList<>();
-        List<?> roleMenuTableList = initDBService.checkTableExist(dbName, "t_role_menu");
+        List<?> roleMenuTableList = initDBService.checkTableExist(DataSourceConstants.DS_KEY_BASE, dbName, "t_role_menu");
         if (roleMenuTableList.isEmpty()) {
             initDBService.createTable(dbName, InitSQL.RoleMenuTableSql);
             // for (Role role : roleList) {
@@ -237,6 +248,12 @@ public class InitDB implements ApplicationRunner {
      * @param menuList
      */
     private void initHeroDbAllMenu(List<Menu> menuList) {
+        menuList.add(
+                new Menu()
+                        .setType(MenuType.M)
+                        .setName("用户管理")
+                        .setComponent("component")
+        );
         // menuList.add(new Menu().setMenuType(MenuType.M));
         // menuList.add(new Menu().setMenuType(MenuType.M));
         // menuList.add(new Menu().setMenuType(MenuType.M));
@@ -247,10 +264,21 @@ public class InitDB implements ApplicationRunner {
      * 机构所有的菜单
      */
     public void initOrganAllMenu(List<Menu> menuList) {
+        menuList.add(
+                new Menu()
+                        .setType(MenuType.M)
+                        .setName("用户管理")
+                        .setComponent("component")
+        );
         // menuList.add(new Menu().setMenuType(MenuType.M));
         // menuList.add(new Menu().setMenuType(MenuType.M));
         // menuList.add(new Menu().setMenuType(MenuType.M));
         // menuList.add(new Menu().setMenuType(MenuType.M));
     }
+
+    public static String organDbName(String organCode) {
+        return "organ_" + organCode;
+    }
+
 
 }

@@ -46,9 +46,9 @@ public class RoleService {
 
     public void add(RoleAddReqVo vo) {
         Role role = new Role();
-        role.setRoleName(vo.getRoleName());
+        role.setName(vo.getName());
         role.setOrderNum(vo.getOrderNum());
-        role.setDelFlag(vo.getState());
+        role.setDelFlag(vo.getDelFlag());
         role.setCreateBy(SecurityUtil.getUserId());
         roleMapper.add(role);
     }
@@ -56,9 +56,9 @@ public class RoleService {
     public void update(RoleUpdateReqVo vo) {
         Role role = new Role();
         role.setId(vo.getId());
-        role.setRoleName(vo.getRoleName());
+        role.setName(vo.getName());
         role.setOrderNum(vo.getOrderNum());
-        role.setDelFlag(vo.getState());
+        role.setDelFlag(vo.getDelFlag());
         role.setRemark(vo.getRemark());
         role.setUpdateBy(SecurityUtil.getUserId());
         roleMapper.update(role);

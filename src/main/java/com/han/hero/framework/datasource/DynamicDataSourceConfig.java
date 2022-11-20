@@ -1,4 +1,4 @@
-package com.han.hero.framework.config.datasource;
+package com.han.hero.framework.datasource;
 
 import com.han.hero.common.constants.DataSourceConstants;
 import com.han.hero.common.util.SpringUtil;
@@ -64,12 +64,15 @@ public class DynamicDataSourceConfig {
 
     public void addDataSource(String dbName, boolean defaultFlag) {
         DynamicDataSource dataSource = SpringUtil.getBean("dynamicDataSource");
-        DataSource newDataSource = createDataSource(dbName);
+        // 检查数据源是否已经存在
         Map<Object, Object> dataSourceMap = dataSource.getDataSourceMap();
-        dataSourceMap.put(dbName, newDataSource);
-        dataSource.setTargetDataSources(dataSourceMap);
-        if (defaultFlag) {
-            dataSource.setDefaultTargetDataSource(newDataSource);
+        if (!dataSourceMap.containsKey(dbName)) {
+            DataSource newDataSource = createDataSource(dbName);
+            dataSourceMap.put(dbName, newDataSource);
+            dataSource.setTargetDataSources(dataSourceMap);
+            if (defaultFlag) {
+                dataSource.setDefaultTargetDataSource(newDataSource);
+            }
         }
     }
 

@@ -14,11 +14,11 @@ public class DictType extends BaseDomain {
     /**
      * 字典名称
      */
-    private String dictName;
+    private String name;
 
     /**
      * 字典类型
      */
-    private String dictType;
+    private String type;
 
 }

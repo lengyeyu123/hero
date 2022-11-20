@@ -16,6 +16,6 @@ public class OperLogService {
 
 
     public void insertOperLog(OperLog operLog) {
-        operLogMapper.insertOperLog(operLog);
+        // operLogMapper.insertOperLog(operLog);
     }
 }

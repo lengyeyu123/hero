@@ -4,109 +4,103 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.han.hero.project.mapper.DictMapper">
 
-    <!-- ===========dictType===========  -->
+    <!-- ===========type===========  -->
     <insert id="typeAdd">
-        insert into h_dict_type (dictName, dictType, createBy, createTime, remark <if test="state != null">,state</if>)
-        values (#{dictName}, #{dictType}, #{createBy}, getDate(), #{remark} <if test="state != null">,#{state}</if>)
+        insert into t_dict_type (name, type)
+        values (#{name}, #{type})
     </insert>
 
     <update id="typeUpdate">
-        update h_dict_type
+        update t_dict_type
         <set>
-            <if test="dictName != null and dictName != ''">
-                dictName = #{dictName}
+            <if test="name != null and name != ''">
+                name = #{name}
             </if>
-            <if test="dictType != null and dictType != ''">
-                dictType = #{dictType}
-            </if>
-            <if test="state != null">
-                state = #{state}
+            <if test="type != null and type != ''">
+                type = #{type}
             </if>
             <if test="remark != null and remark != ''">
                 remark = #{remark}
             </if>
-            updateBy = #{updateBy},
-            updateTime = #{updateTime}
+            updateBy = #{updateBy}
         </set>
-        where dictId = #{dictId}
+        where id = #{id}
     </update>
     <delete id="typeDel">
         delete
-        from h_dict_type
-        where dictId = #{dictId}
+        from t_dict_type
+        where id = #{id}
     </delete>
 
 
     <select id="typeList" resultType="com.han.hero.project.domain.DictType">
-        select * from h_dict_type
+        select * from t_dict_type
         <where>
-            <if test="dictName != null and dictName != ''">
-                and dictName like CONCAT ('%', #{dictName}, '%')
+            <if test="name != null and name != ''">
+                and name like CONCAT ('%', #{name}, '%')
             </if>
-            <if test="dictType != null and dictType != ''">
-                and dictType like CONCAT('%', #{dictType}, '%')
+            <if test="type != null and type != ''">
+                and type like CONCAT('%', #{type}, '%')
             </if>
         </where>
     </select>
     <select id="selectTypeById" resultType="com.han.hero.project.domain.DictType">
         select *
-        from h_dict_type
-        where dictId = #{dictId}
+        from t_dict_type
+        where id = #{id}
     </select>
 
 
-    <!-- ===========dictTypeData===========  -->
+    <!-- ===========dictData===========  -->
 
-    <insert id="dataAdd">
-        insert into h_dict_data (orderNum, dictLabel, dictValue, dictType, defaultState, createBy, createTime, remark)
-        values (#{orderNum}, #{dictLabel}, #{dictValue}, #{dictType}, #{defaultState}, #{createBy}, getDate(),
-                #{remark});
+    <insert id="dictDataAdd">
+        insert into t_dict_data (orderNum, label, val, type, defaultState, createBy, remark)
+        values (#{orderNum}, #{label}, #{val}, #{type}, #{defaultState}, #{createBy}, #{remark});
     </insert>
 
-    <update id="dataUpdate">
-        update h_dict_data
+    <update id="dictDataUpdate">
+        update t_dict_data
         <set>
             <if test="orderNum != null">
                 orderNum = #{orderNum},
             </if>
-            <if test="dictLabel != null and dictLabel != ''">
-                dictLabel = #{dictLabel},
+            <if test="label != null and label != ''">
+                label = #{label},
             </if>
-            <if test="dictValue != null">
-                dictValue = #{dictValue},
+            <if test="val != null">
+                val = #{val},
             </if>
-            <if test="dictType != null and dictType != ''">
-                dictType = #{dictType},
+            <if test="type != null and type != ''">
+                type = #{type},
             </if>
             <if test="defaultState != null">
                 defaultState = #{defaultState},
             </if>
-            <if test="state != null">
-                state = #{state},
+            <if test="delFlag != null">
+                delFlag = #{delFlag},
             </if>
             <if test="remark != null and remark != ''">
                 remark = #{remark},
             </if>
-            updateBy = #{updateBy},
-            updateTime = getDate()
+            updateBy = #{updateBy}
         </set>
-        where dictCode = #{dictCode}
+        where id = #{id}
     </update>
 
-    <delete id="dataDel">
+    <delete id="dictDataDel">
         delete
-        from h_dict_data
-        where dictCode = #{dictCode}
+        from t_dict_data
+        where id = #{id}
     </delete>
 
-    <select id="dataList" resultType="com.han.hero.project.domain.DictTypeData">
-        select * from h_dict_data
+    <select id="dictDataList" resultType="com.han.hero.project.domain.DictData">
+        select * from t_dict_data
         <where>
-            <if test="dictLabel != null and dictLabel != ''">
-                and dictLabel like CONCAT ('%', #{dictLabel}, '%')
+            <if test="label != null and label != ''">
+                and label like CONCAT ('%', #{label}, '%')
             </if>
-            <if test="dictType != null and dictType != ''">
-                and dictType like CONCAT ('%', #{dictType}, '%')
+            <if test="type != null and type != ''">
+                and type like CONCAT ('%', #{type}, '%')
             </if>
             <if test="remark != null and remark != ''">
                 and remark like CONCAT ('%', #{remark}, '%')

@@ -12,9 +12,14 @@ public class User extends BaseDomain {
     private Integer id;
 
     /**
-     * 用户名
+     * 用户名(教师工号)
      */
     private String userName;
+
+    /**
+     * 教师真实姓名
+     */
+    private String realName;
 
     /**
      * 密码

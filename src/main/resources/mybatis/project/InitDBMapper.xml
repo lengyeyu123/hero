@@ -3,11 +3,12 @@
 <mapper namespace="com.han.hero.project.mapper.InitDBMapper">
     <!-- ============插入 -->
     <insert id="batchInsertOrgan" useGeneratedKeys="true" keyProperty="id">
-        insert into t_organ (name, organType, address, email, linkman, linkmanPhone, remark)
+        insert into t_organ (name, type, code, address, email, linkman, linkmanPhone, remark)
         values
         <foreach collection="organList" item="item" index="index" separator=",">
-            ( #{item.name}, #{item.organType}, #{item.address}, #{item.email}, #{item.linkman}, #{item.linkmanPhone},
-                #{item.remark})
+            ( #{item.name}, #{item.type}, #{item.code}, #{item.address}, #{item.email}, #{item.linkman},
+            #{item.linkmanPhone},
+            #{item.remark})
         </foreach>
     </insert>
     <insert id="batchInsertUser" useGeneratedKeys="true" keyProperty="id">
@@ -18,38 +19,39 @@
         </foreach>
     </insert>
     <insert id="batchInsertRole" useGeneratedKeys="true" keyProperty="id">
-        insert into t_role (roleCode, roleName)
+        insert into t_role (code, name)
         values
         <foreach collection="roleList" item="item" index="index" separator=",">
-                ( #{item.roleCode}, #{item.roleName})
+            ( #{item.code}, #{item.name})
         </foreach>
     </insert>
     <insert id="batchInsertMenu" useGeneratedKeys="true" keyProperty="id">
-        insert into t_menu (menuName, parentId, parentName, orderNum, path, component, menuType, perms, icon)
+        insert into t_menu (name, parentId, parentName, orderNum, path, component, type, perms, icon)
         values
         <foreach collection="menuList" item="item" index="index" separator=",">
-            ( #{item.menuName}, #{item.parentId}, #{item.parentName}, #{item.orderNum}, #{item.path}, #{item.component}, #{item.menuType}, #{item.perms}, #{item.icon})
+            ( #{item.name}, #{item.parentId}, #{item.parentName}, #{item.orderNum}, #{item.path}, #{item.component},
+            #{item.type}, #{item.perms}, #{item.icon})
         </foreach>
     </insert>
     <insert id="batchInsertUserRole">
         insert into t_user_role( userId, roleId )
         values
         <foreach collection="userRoleList" item="item" index="index" separator=",">
-                ( #{item.userId}, #{item.roleId})
+            ( #{item.userId}, #{item.roleId})
         </foreach>
     </insert>
     <insert id="batchInsertRoleMenu">
         insert into t_role_menu ( roleId, menuId )
         values
         <foreach collection="roleMenuList" item="item" index="index" separator=",">
-                ( #{item.roleId}, #{item.menuId})
+            ( #{item.roleId}, #{item.menuId})
         </foreach>
     </insert>
     <insert id="batchInsertSemester" useGeneratedKeys="true" keyProperty="id">
         insert into t_semester ( startDate, endDate )
         values
         <foreach collection="semesterList" item="item" index="index" separator=",">
-                ( #{item.startDate}, #{item.endDate})
+            ( #{item.startDate}, #{item.endDate})
         </foreach>
     </insert>
 

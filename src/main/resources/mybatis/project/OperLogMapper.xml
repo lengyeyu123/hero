@@ -5,7 +5,7 @@
 <mapper namespace="com.han.hero.project.mapper.OperLogMapper">
 
     <insert id="insertOperLog">
-        insert into h_oper_log(title, businessType, method, requestMethod, operName, deptName, operUrl, operIp,
+        insert into t_oper_log(title, businessType, method, requestMethod, operName, deptName, operUrl, operIp,
                                operLocation, operParam, jsonResult, state, errorMsg, operTime)
         values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operName}, #{deptName},
                 #{operUrl}, #{operIp}, #{operLocation}, #{operParam}, #{jsonResult}, #{state}, #{errorMsg}, getDate())

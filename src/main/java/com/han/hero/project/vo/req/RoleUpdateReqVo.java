@@ -11,11 +11,11 @@ public class RoleUpdateReqVo {
     @NotNull
     private Integer id;
 
-    private String roleName;
+    private String name;
 
     private Integer orderNum;
 
-    private DelFlagEnums state;
+    private DelFlagEnums delFlag;
 
     private String remark;
 

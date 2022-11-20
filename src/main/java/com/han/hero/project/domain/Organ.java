@@ -19,7 +19,7 @@ public class Organ extends BaseDomain {
     private String name;
 
     // 机构类型
-    private OrganType organType;
+    private OrganType type;
 
     // 邮箱地址
     private String email;
@@ -32,9 +32,5 @@ public class Organ extends BaseDomain {
 
     // 联系人手机号
     private String linkmanPhone;
-
-    public String tableName() {
-        return "t_" + code;
-    }
 
 }

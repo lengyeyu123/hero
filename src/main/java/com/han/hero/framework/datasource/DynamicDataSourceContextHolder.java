@@ -1,4 +1,4 @@
-package com.han.hero.framework.config.datasource;
+package com.han.hero.framework.datasource;
 
 import com.han.hero.common.constants.DataSourceConstants;
 import lombok.extern.slf4j.Slf4j;

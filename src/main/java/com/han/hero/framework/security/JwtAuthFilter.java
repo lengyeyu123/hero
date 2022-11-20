@@ -1,5 +1,6 @@
 package com.han.hero.framework.security;
 
+import com.han.hero.common.constants.ClaimsConstants;
 import com.han.hero.common.enums.ResultStatus;
 import com.han.hero.common.util.JsonUtil;
 import com.han.hero.common.util.JwtUtil;
@@ -60,7 +61,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 return;
             }
             if (claims != null) {
-                String userName = (String) claims.get("userName");
+                String userName = (String) claims.get(ClaimsConstants.USER_NAME_KEY);
                 if (StringUtils.isNotBlank(userName) && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = userDetailService.loadUserByUsername(userName);
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

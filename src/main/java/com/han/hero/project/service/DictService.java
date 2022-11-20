@@ -5,8 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.han.hero.common.enums.ResultStatus;
 import com.han.hero.common.exception.ServiceException;
 import com.han.hero.framework.security.SecurityUtil;
+import com.han.hero.project.domain.DictData;
 import com.han.hero.project.domain.DictType;
-import com.han.hero.project.domain.DictTypeData;
 import com.han.hero.project.mapper.DictMapper;
 import com.han.hero.project.vo.req.*;
 import lombok.extern.slf4j.Slf4j;
@@ -23,40 +23,40 @@ public class DictService {
     @Autowired
     private DictMapper dictMapper;
 
-    public PageInfo<?> typePageList(TypeListReqVo vo) {
+    public PageInfo<?> typePageList(DictTypeListReqVo vo) {
         return PageHelper.startPage(vo).doSelectPageInfo(() -> dictMapper.typeList(vo));
     }
 
-    public void typeAdd(TypeAddReqVo vo) {
+    public void typeAdd(DictTypeAddReqVo vo) {
         DictType dictType = new DictType();
-        dictType.setDictName(vo.getDictName());
-        dictType.setDictType(vo.getDictType());
+        dictType.setName(vo.getName());
+        dictType.setType(vo.getType());
         dictType.setRemark(vo.getRemark());
-        dictType.setDelFlag(vo.getState());
+        dictType.setDelFlag(vo.getDelFlag());
         dictType.setCreateBy(SecurityUtil.getUserId());
         dictMapper.typeAdd(dictType);
     }
 
-    public void typeUpdate(TypeUpdateReqVo vo) {
+    public void typeUpdate(DictTypeUpdateReqVo vo) {
         Integer userId = SecurityUtil.getUserId();
-        String dictType = vo.getDictType();
+        String dictType = vo.getType();
         if (StringUtils.isNotBlank(dictType)) {
-            DataListReqVo dataListReqVo = new DataListReqVo();
-            dataListReqVo.setDictType(dictType);
-            List<DictTypeData> list = dictMapper.dataList(dataListReqVo);
+            DictDataListReqVo dictDataListReqVo = new DictDataListReqVo();
+            dictDataListReqVo.setType(dictType);
+            List<DictData> list = dictMapper.dictDataList(dictDataListReqVo);
             if (!list.isEmpty()) {
-                for (DictTypeData dictTypeData : list) {
-                    dictTypeData.setUpdateBy(userId);
-                    dictTypeData.setDictType(dictType);
-                    dictMapper.dataUpdate(dictTypeData);
+                for (DictData dictData : list) {
+                    dictData.setUpdateBy(userId);
+                    dictData.setType(dictType);
+                    dictMapper.dictDataUpdate(dictData);
                 }
             }
         }
         DictType update = new DictType();
         update.setId(vo.getId());
-        update.setDictName(vo.getDictName());
-        update.setDictType(vo.getDictType());
-        update.setDelFlag(vo.getState());
+        update.setName(vo.getName());
+        update.setType(vo.getType());
+        update.setDelFlag(vo.getDelFlag());
         update.setUpdateBy(userId);
         update.setRemark(vo.getRemark());
         dictMapper.typeUpdate(update);
@@ -67,9 +67,9 @@ public class DictService {
         if (dictType == null) {
             throw new ServiceException(ResultStatus.COMMON_DATA_NOT_EXIST);
         }
-        DataListReqVo vo = new DataListReqVo();
-        vo.setDictType(dictType.getDictType());
-        List<DictTypeData> list = dictMapper.dataList(vo);
+        DictDataListReqVo vo = new DictDataListReqVo();
+        vo.setType(dictType.getType());
+        List<DictData> list = dictMapper.dictDataList(vo);
         if (list.isEmpty()) {
             dictMapper.typeDel(dictId);
         } else {
@@ -77,34 +77,34 @@ public class DictService {
         }
     }
 
-    public PageInfo<?> dataPageList(DataListReqVo vo) {
+    public PageInfo<?> dataPageList(DictDataListReqVo vo) {
         return PageHelper.startPage(vo)
                 .setOrderBy("dictType")
                 .setOrderBy("orderNum")
-                .doSelectPageInfo(() -> dictMapper.dataList(vo));
+                .doSelectPageInfo(() -> dictMapper.dictDataList(vo));
     }
 
-    public void dataAdd(DataAddReqVo vo) {
+    public void dataAdd(DictDataAddReqVo vo) {
         vo.setCreateBy(SecurityUtil.getUserId());
-        dictMapper.dataAdd(vo);
+        dictMapper.dictDataAdd(vo);
     }
 
     public void dataDel(Integer dictCode) {
-        dictMapper.dataDel(dictCode);
+        dictMapper.dictDataDel(dictCode);
     }
 
 
-    public void dataUpdate(DataUpdateReqVo vo) {
-        DictTypeData dictTypeData = new DictTypeData();
-        dictTypeData.setId(vo.getId());
-        dictTypeData.setOrderNum(vo.getOrderNum());
-        dictTypeData.setDictLabel(vo.getDictLabel());
-        dictTypeData.setDictValue(vo.getDictValue());
-        dictTypeData.setDictType(vo.getDictType());
-        dictTypeData.setDefaultState(vo.getDefaultState());
-        dictTypeData.setDelFlag(vo.getState());
-        dictTypeData.setRemark(vo.getRemark());
-        dictTypeData.setUpdateBy(SecurityUtil.getUserId());
-        dictMapper.dataUpdate(dictTypeData);
+    public void dataUpdate(DictDataUpdateReqVo vo) {
+        DictData dictData = new DictData();
+        dictData.setId(vo.getId());
+        dictData.setOrderNum(vo.getOrderNum());
+        dictData.setLabel(vo.getLabel());
+        dictData.setVal(vo.getVal());
+        dictData.setType(vo.getType());
+        dictData.setDefaultState(vo.getDefaultState());
+        dictData.setDelFlag(vo.getState());
+        dictData.setRemark(vo.getRemark());
+        dictData.setUpdateBy(SecurityUtil.getUserId());
+        dictMapper.dictDataUpdate(dictData);
     }
 }

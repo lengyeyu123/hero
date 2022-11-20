@@ -24,14 +24,14 @@ public class DictController {
      * 字典类型列表
      */
     @PostMapping("/type/list")
-    public R<?> typeList(@RequestBody TypeListReqVo vo) {
+    public R<?> typeList(@RequestBody DictTypeListReqVo vo) {
         return R.ok(dictService.typePageList(vo));
     }
 
     @PreAuthorize("hasRole('super')")
     @Log(title = "新增字典类型", businessType = BusinessType.INSERT)
     @PostMapping("/type/add")
-    public R<?> typeAdd(@RequestBody @Validated TypeAddReqVo vo) {
+    public R<?> typeAdd(@RequestBody @Validated DictTypeAddReqVo vo) {
         dictService.typeAdd(vo);
         return R.ok();
     }
@@ -39,7 +39,7 @@ public class DictController {
     @PreAuthorize("hasRole('super')")
     @Log(title = "修改字典类型", businessType = BusinessType.UPDATE)
     @PostMapping("/type/update")
-    public R<?> typeUpdate(@RequestBody TypeUpdateReqVo vo) {
+    public R<?> typeUpdate(@RequestBody DictTypeUpdateReqVo vo) {
         dictService.typeUpdate(vo);
         return R.ok();
     }
@@ -53,14 +53,14 @@ public class DictController {
     }
 
     @PostMapping("/data/list")
-    public R<?> dataList(@RequestBody DataListReqVo vo) {
+    public R<?> dataList(@RequestBody DictDataListReqVo vo) {
         return R.ok(dictService.dataPageList(vo));
     }
 
     @PreAuthorize("hasRole('super')")
     @Log(title = "新增字典数据", businessType = BusinessType.INSERT)
     @PostMapping("/data/add")
-    public R<?> dataAdd(@RequestBody @Validated DataAddReqVo vo) {
+    public R<?> dataAdd(@RequestBody @Validated DictDataAddReqVo vo) {
         dictService.dataAdd(vo);
         return R.ok();
     }
@@ -76,7 +76,7 @@ public class DictController {
     @PreAuthorize("hasRole('super')")
     @Log(title = "修改字典数据", businessType = BusinessType.UPDATE)
     @PostMapping("/data/update")
-    public R<?> dataUpdate(@RequestBody @Validated DataUpdateReqVo vo) {
+    public R<?> dataUpdate(@RequestBody @Validated DictDataUpdateReqVo vo) {
         dictService.dataUpdate(vo);
         return R.ok();
     }

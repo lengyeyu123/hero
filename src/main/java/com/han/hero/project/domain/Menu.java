@@ -20,7 +20,7 @@ public class Menu extends BaseDomain {
     /**
      * 菜单名称
      */
-    private String menuName;
+    private String name;
 
     /**
      * 父菜单id
@@ -50,7 +50,7 @@ public class Menu extends BaseDomain {
     /**
      * 菜单类型 (M目录 C菜单 F按钮)
      */
-    private MenuType menuType;
+    private MenuType type;
 
     /**
      * 权限字符 *:*:*拥有所有权限 super

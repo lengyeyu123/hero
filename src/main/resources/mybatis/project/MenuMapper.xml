@@ -4,17 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.han.hero.project.mapper.MenuMapper">
     <insert id="add">
-        insert into h_menu (menuName, parentId, parentName, orderNum, path, component, menuType, perms, icon, createBy,
-        createTime <if test="state != null">, state</if>)
-        values (#{menuName}, #{parentId}, #{parentName}, #{orderNum}, #{path}, #{component}, #{menuType}, #{perms},
-        #{icon}, #{createBy}, getDate()
-        <if test="state != null">,state</if>);
+        insert into t_menu (name, parentId, parentName, orderNum, path, component, type, perms, icon, createBy)
+        values (#{name}, #{parentId}, #{parentName}, #{orderNum}, #{path}, #{component}, #{type}, #{perms},
+                #{icon}, #{createBy});
     </insert>
     <update id="update">
-        update h_menu
+        update t_menu
         <set>
-            <if test="menuName != null and menu != ''">
-                menuName = #{menuName},
+            <if test="name != null and menu != ''">
+                name = #{name},
             </if>
             <if test="parentId != null">
                 parentId = #{parentId},
@@ -31,11 +29,11 @@
             <if test="component != null and component != ''">
                 component = #{component},
             </if>
-            <if test="menuType != null and menuType != ''">
-                menuType = #{menuType},
+            <if test="type != null and type != ''">
+                type = #{type},
             </if>
-            <if test="state != null">
-                state = #{state},
+            <if test="delFlag != null">
+                delFlag = #{delFlag},
             </if>
             <if test="perms != null and perms != ''">
                 perms = #{perms},
@@ -43,44 +41,43 @@
             <if test="icon != null and icon != ''">
                 icon = #{icon},
             </if>
-            updateBy = #{updateBy},
-            updateTime = getDate()
+            updateBy = #{updateBy}
         </set>
         where
-        menuId = #{menuId}
+        id = #{id}
     </update>
     <delete id="del">
         delete
-        from h_menu
-        where menuId = #{menuId}
+        from t_menu
+        where id = #{id}
     </delete>
 
     <select id="getRoleMenuByRoles" resultType="com.han.hero.project.domain.Menu">
-        select h_menu.* from h_menu,h_role_menu where h_menu.menuId = h_role_menu.menuId and h_role_menu.roleId in
+        select t_menu.* from t_menu,t_role_menu where t_menu.id = t_role_menu.id and t_role_menu.roleId in
         <foreach collection="roles" item="role" index="index" separator="," open="(" close=")">
-            #{role.roleId}
+            #{role.id}
         </foreach>
     </select>
     <select id="selectRoleMenuByRoleId" resultType="com.han.hero.project.domain.RoleMenu">
         select *
-        from h_role_menu
+        from t_role_menu
         where roleId = #{roleId}
     </select>
-    <select id="selectByMenuId" resultType="com.han.hero.project.domain.Menu">
+    <select id="selectByid" resultType="com.han.hero.project.domain.Menu">
         select *
-        from h_menu
-        where menuId = #{menuId}
+        from t_menu
+        where id = #{id}
     </select>
-    <select id="selectByParentMenuId" resultType="com.han.hero.project.domain.Menu">
+    <select id="selectByParentid" resultType="com.han.hero.project.domain.Menu">
         select *
-        from h_menu
-        where parentId = #{menuId}
+        from t_menu
+        where parentId = #{id}
     </select>
     <select id="list" resultType="com.han.hero.project.domain.Menu">
-        select * from h_menu
+        select * from t_menu
         <where>
-            <if test="menuName != null and menuName != ''">
-                and menuName like CONCAT ('%', #{menuName}, '%')
+            <if test="name != null and name != ''">
+                and name like CONCAT ('%', #{name}, '%')
             </if>
             <if test="parentName != null and parentName != ''">
                 and parentName like CONCAT ('%', #{parentName}, '%')
@@ -91,11 +88,11 @@
             <if test="component != null and component != ''">
                 and component like CONCAT ('%', #{component}, '%')
             </if>
-            <if test="menuType != null and menuType != ''">
-                and menuType like CONCAT ('%', #{menuType}, '%')
+            <if test="type != null and type != ''">
+                and type like CONCAT ('%', #{type}, '%')
             </if>
-            <if test="state != null">
-                and state = #{state}
+            <if test="delFlag != null">
+                and delFlag = #{delFlag}
             </if>
             <if test="perms != null and perms != ''">
                 and perms like CONCAT ('%', #{perms}, '%')

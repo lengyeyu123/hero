@@ -9,11 +9,11 @@ import javax.validation.constraints.NotBlank;
 public class RoleAddReqVo {
 
     @NotBlank
-    private String roleName;
+    private String name;
 
     private Integer orderNum;
 
-    private DelFlagEnums state;
+    private DelFlagEnums delFlag;
 
     private String remark;
 

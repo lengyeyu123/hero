@@ -1,4 +1,4 @@
-package com.han.hero.framework.config.datasource;
+package com.han.hero.framework.datasource;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

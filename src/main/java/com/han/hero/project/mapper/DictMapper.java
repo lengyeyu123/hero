@@ -1,22 +1,22 @@
 package com.han.hero.project.mapper;
 
+import com.han.hero.project.domain.DictData;
 import com.han.hero.project.domain.DictType;
-import com.han.hero.project.domain.DictTypeData;
-import com.han.hero.project.vo.req.DataAddReqVo;
-import com.han.hero.project.vo.req.DataListReqVo;
-import com.han.hero.project.vo.req.TypeListReqVo;
+import com.han.hero.project.vo.req.DictDataAddReqVo;
+import com.han.hero.project.vo.req.DictDataListReqVo;
+import com.han.hero.project.vo.req.DictTypeListReqVo;
 
 import java.util.List;
 
 public interface DictMapper {
 
-    List<DictType> typeList(TypeListReqVo vo);
+    List<DictType> typeList(DictTypeListReqVo vo);
 
     void typeAdd(DictType dictType);
 
-    List<DictTypeData> dataList(DataListReqVo vo);
+    List<DictData> dictDataList(DictDataListReqVo vo);
 
-    void dataUpdate(DictTypeData dictTypeData);
+    void dictDataUpdate(DictData dictData);
 
     void typeUpdate(DictType dictType);
 
@@ -24,7 +24,7 @@ public interface DictMapper {
 
     void typeDel(Integer dictId);
 
-    void dataAdd(DataAddReqVo vo);
+    void dictDataAdd(DictDataAddReqVo vo);
 
-    void dataDel(Integer dictCode);
+    void dictDataDel(Integer dictCode);
 }

@@ -1,6 +1,5 @@
 package com.han.hero.framework.security;
 
-import com.han.hero.common.enums.DelFlagEnums;
 import com.han.hero.project.domain.Menu;
 import com.han.hero.project.domain.Role;
 import com.han.hero.project.domain.User;
@@ -33,7 +32,7 @@ public class LoginUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.addAll(roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName())).collect(Collectors.toList()));
+        authorities.addAll(roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName())).collect(Collectors.toList()));
         authorities.addAll(menus.stream().map(menu -> new SimpleGrantedAuthority(menu.getPerms())).collect(Collectors.toList()));
         return authorities;
     }
@@ -65,9 +64,6 @@ public class LoginUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if (user.getDelFlag() == null) {
-            return false;
-        }
-        return user.getDelFlag().equals(DelFlagEnums.NORMAL);
+        return true;
     }
 }

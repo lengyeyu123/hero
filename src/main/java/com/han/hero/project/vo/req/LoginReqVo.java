@@ -5,10 +5,12 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class RegisterLoginReqVo {
+public class LoginReqVo {
+
+    private String organCode;
 
     @NotBlank
-    private String username;
+    private String userName;
 
     @NotBlank
     private String password;

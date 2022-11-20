@@ -25,17 +25,17 @@ public class MenuService {
 
     public void add(MenuAddReqVo vo) {
         Menu menu = new Menu();
-        menu.setMenuName(vo.getMenuName());
+        menu.setName(vo.getName());
         menu.setParentId(vo.getParentId());
         if (vo.getParentId() != null) {
             Menu parentMenu = menuMapper.selectByMenuId(vo.getParentId());
             if (parentMenu != null) {
-                menu.setParentName(parentMenu.getMenuName());
+                menu.setParentName(parentMenu.getName());
             }
         }
         menu.setPath(vo.getPath());
         menu.setComponent(vo.getComponent());
-        menu.setMenuType(vo.getMenuType());
+        menu.setType(vo.getType());
         menu.setDelFlag(vo.getState());
         menu.setPerms(vo.getPerms());
         menu.setIcon(vo.getIcon());
@@ -54,19 +54,19 @@ public class MenuService {
 
     public void update(MenuUpdateReqVo vo) {
         Menu menu = new Menu();
-        menu.setId(vo.getMuenId());
-        menu.setMenuName(vo.getMenuName());
+        menu.setId(vo.getId());
+        menu.setName(vo.getName());
         if (vo.getParentId() != null) {
             Menu parentMenu = menuMapper.selectByMenuId(vo.getParentId());
             if (parentMenu != null) {
                 menu.setParentId(parentMenu.getId());
-                menu.setParentName(parentMenu.getMenuName());
+                menu.setParentName(parentMenu.getName());
             }
         }
         menu.setOrderNum(vo.getOrderNum());
         menu.setPath(vo.getPath());
         menu.setComponent(vo.getComponent());
-        menu.setMenuType(vo.getMenuType());
+        menu.setType(vo.getMenuType());
         menu.setDelFlag(vo.getState());
         menu.setPerms(vo.getPerms());
         menu.setIcon(vo.getIcon());

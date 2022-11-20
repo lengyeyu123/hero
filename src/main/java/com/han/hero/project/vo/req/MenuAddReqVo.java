@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class MenuAddReqVo {
 
-    private String menuName;
+    private String name;
 
     private Integer parentId;
 
@@ -17,7 +17,7 @@ public class MenuAddReqVo {
 
     private String component;
 
-    private MenuType menuType;
+    private MenuType type;
 
     private DelFlagEnums state;
 

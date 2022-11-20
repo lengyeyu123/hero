@@ -14,12 +14,12 @@ public class Role extends BaseDomain {
     /**
      * 角色编码
      */
-    private String roleCode;
+    private String code;
 
     /**
      * 角色名称
      */
-    private String roleName;
+    private String name;
 
     /**
      * 角色排序序号

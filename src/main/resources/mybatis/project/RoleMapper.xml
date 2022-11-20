@@ -5,14 +5,14 @@
 <mapper namespace="com.han.hero.project.mapper.RoleMapper">
 
     <insert id="add">
-        insert into h_role (roleName, orderNum, createBy, createTime)
-        values (#{roleName}, #{orderNum}, #{createBy}, getDate())
+        insert into t_role (name, orderNum, createBy)
+        values (#{name}, #{orderNum}, #{createBy})
     </insert>
     <update id="update">
-        update h_role
+        update t_role
         <set>
-            <if test="roleName != null and roleName != ''">
-                roleName = #{roleName},
+            <if test="name != null and name != ''">
+                name = #{name},
             </if>
             <if test="orderNum != null">
                 orderNum = #{orderNum},
@@ -20,30 +20,29 @@
             <if test="remark != null and remark != ''">
                 remark = #{remark},
             </if>
-            updateBy = #{updateBy},
-            updateTime = getDate()
+            updateBy = #{updateBy}
         </set>
-        where roleId = #{roleId}
+        where roleId = #{id}
     </update>
     <delete id="del">
         delete
-        from h_role
+        from t_role
         where roleId = #{roleId}
     </delete>
 
 
     <select id="selectByUserId" resultType="com.han.hero.project.domain.Role">
-        select h_role.*
-        from h_role,
-             h_user_role
-        where h_user_role.userId = #{userId}
-          and h_user_role.roleId = h_role.roleId
+        select t_role.*
+        from t_role,
+             t_user_role
+        where t_user_role.userId = #{userId}
+          and t_user_role.roleId = t_role.id
     </select>
     <select id="list" resultType="com.han.hero.project.domain.Role">
-        select * from h_role
+        select * from t_role
         <where>
-            <if test="roleName != null and roleName != ''">
-                and roleName like CONCAT('%', #{roleName}, '%')
+            <if test="name != null and name != ''">
+                and name like CONCAT('%', #{name}, '%')
             </if>
         </where>
     </select>

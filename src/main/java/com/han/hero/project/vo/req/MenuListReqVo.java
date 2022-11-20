@@ -1,12 +1,13 @@
 package com.han.hero.project.vo.req;
 
 import com.han.hero.common.enums.DelFlagEnums;
+import com.han.hero.common.enums.MenuType;
 import lombok.Data;
 
 @Data
 public class MenuListReqVo {
 
-    private String menuName;
+    private String name;
 
     private String parentName;
 
@@ -16,7 +17,7 @@ public class MenuListReqVo {
 
     private DelFlagEnums state;
 
-    private String menuType;
+    private MenuType type;
 
     private String perms;
 

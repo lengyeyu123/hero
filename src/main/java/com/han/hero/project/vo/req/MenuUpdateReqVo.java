@@ -10,9 +10,9 @@ import javax.validation.constraints.NotNull;
 public class MenuUpdateReqVo {
 
     @NotNull
-    private Integer muenId;
+    private Integer id;
 
-    private String menuName;
+    private String name;
 
     private Integer parentId;
 
