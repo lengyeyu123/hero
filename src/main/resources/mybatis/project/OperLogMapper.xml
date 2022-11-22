@@ -5,9 +5,9 @@
 <mapper namespace="com.han.hero.project.mapper.OperLogMapper">
 
     <insert id="insertOperLog">
-        insert into sys_oper_log(title, businessType, method, requestMethod, operName, operUrl, operIp,
-                                 operLocation, operParam, jsonResult, status, errorMsg)
-        values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operName},
-                #{operUrl}, #{operIp}, #{operLocation}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg}) )
+        insert into sys_oper_log(title, businessType, method, requestMethod, operName, operUrl, operIp, operLocation,
+                                 operParam, jsonResult, status, errorMsg)
+        values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operName}, #{operUrl}, #{operIp},
+                #{operLocation}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg})
     </insert>
 </mapper>

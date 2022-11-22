@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -31,6 +32,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
@@ -45,7 +47,6 @@ public class AuthController {
     @Autowired
     private RoleService roleService;
 
-    @Log(title = "登录成功，获取用户信息", businessType = BusinessType.GRANT)
     @PostMapping("/login")
     public R<LoginRespVo> login(@RequestBody @Validated LoginReqVo vo) {
         User user = userService.selectByUserName(vo.getUserName());
@@ -62,7 +63,7 @@ public class AuthController {
         String refreshToken = JwtUtil.generateJwt(tokenProperties.getRtConfig(), claims);
         return R.ok(
                 new LoginRespVo()
-                        .setToken(accessToken)
+                        .setAccessToken(accessToken)
                         .setRefreshToken(refreshToken)
         );
     }

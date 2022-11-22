@@ -2,7 +2,6 @@ package com.han.hero.project.domain;
 
 import com.han.hero.common.enums.BusinessType;
 import com.han.hero.common.enums.OperStatus;
-import com.han.hero.framework.web.BaseDomain;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,7 +10,7 @@ import java.util.Date;
  * 操作日志记录
  */
 @Data
-public class OperLog extends BaseDomain {
+public class OperLog {
 
     /**
      * 日志主键

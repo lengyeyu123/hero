@@ -6,6 +6,7 @@ import com.han.hero.project.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,7 +34,9 @@ public class LoginUser implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.addAll(roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName())).collect(Collectors.toList()));
-        authorities.addAll(menus.stream().map(menu -> new SimpleGrantedAuthority(menu.getPerms())).collect(Collectors.toList()));
+        authorities.addAll(menus.stream()
+                .filter(menu -> StringUtils.isNotBlank(menu.getPerms()))
+                .map(menu -> new SimpleGrantedAuthority(menu.getPerms())).collect(Collectors.toList()));
         return authorities;
     }
 

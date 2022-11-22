@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.han.hero.common.enums.DelFlagEnums;
+import com.han.hero.common.enums.OperStatus;
 import com.han.hero.common.util.JsonUtil;
 import com.han.hero.common.util.ServletUtil;
 import com.han.hero.framework.annotation.Log;
@@ -71,7 +71,7 @@ public class LogAspect {
 
             // ======数据库日志======
             OperLog operLog = new OperLog();
-            operLog.setDelFlag(DelFlagEnums.NORMAL);
+            operLog.setStatus(OperStatus.Normal);
             operLog.setOperIp(ServletUtil.getClientIP(ServletUtil.getRequest()));
             operLog.setOperUrl(ServletUtil.getRequest().getRequestURI());
             if (loginUser != null) {
@@ -79,7 +79,7 @@ public class LogAspect {
             }
 
             if (e != null) {
-                operLog.setDelFlag(DelFlagEnums.Del);
+                operLog.setStatus(OperStatus.Abnormal);
                 operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
             // 设置方法名
@@ -95,7 +95,7 @@ public class LogAspect {
         } catch (Exception exp) {
             // 记录本地异常日志
             log.error("==前置通知异常==");
-            log.error("异常信息: {}", exp.getMessage());
+            log.error("异常信息:", exp);
         }
 
     }
@@ -138,20 +138,6 @@ public class LogAspect {
             operLog.setOperParam(StringUtils.substring(paramsMap.toString(), 0, 2000));
         }
     }
-
-    // public static void main(String[] args) {
-    //     class My{
-    //         public String userName;
-    //
-    //         public String password;
-    //     }
-    //     My my = new My();
-    //     my.userName = "张三";
-    //     my.password = "123";
-    //     My[] mies = {my};
-    //     System.out.println(new LogAspect().argsArrayToString(mies));
-    //
-    // }
 
     /**
      * 参数拼装

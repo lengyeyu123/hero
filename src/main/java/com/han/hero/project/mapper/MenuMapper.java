@@ -25,4 +25,7 @@ public interface MenuMapper {
     void update(Menu menu);
 
     List<Menu> list(MenuListReqVo vo);
+
+    List<Menu> all();
+
 }

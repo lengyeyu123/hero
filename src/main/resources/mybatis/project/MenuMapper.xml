@@ -105,4 +105,9 @@
             </if>
         </where>
     </select>
+    <select id="all" resultType="com.han.hero.project.domain.Menu">
+        select *
+        from sys_menu
+        order by parentId, orderNum
+    </select>
 </mapper>
