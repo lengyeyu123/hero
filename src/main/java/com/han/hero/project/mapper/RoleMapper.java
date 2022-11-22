@@ -16,4 +16,6 @@ public interface RoleMapper {
     void update(Role role);
 
     void del(Integer roleId);
+
+    List<Role> all();
 }

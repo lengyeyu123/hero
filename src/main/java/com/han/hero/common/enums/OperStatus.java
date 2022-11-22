@@ -1,17 +1,17 @@
 package com.han.hero.common.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Objects;
 
-public enum OrganType implements BaseEnum {
+public enum OperStatus implements BaseEnum {
 
-    UNIVERSITY(0, "大学"),
+    Normal(1, "正常"),
 
-    COLLAGE(1, "学院"),
+    Abnormal(0, "异常");
 
-    SCHOOL(3, "中小学");
-
+    @JsonValue
     private final Integer code;
 
     private final String msg;
@@ -26,19 +26,19 @@ public enum OrganType implements BaseEnum {
         return msg;
     }
 
-    OrganType(Integer code, String msg) {
+
+    OperStatus(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static OrganType getByCode(Integer code) {
-        for (OrganType value : OrganType.values()) {
+    public static OperStatus getByCode(Integer code) {
+        for (OperStatus value : OperStatus.values()) {
             if (Objects.equals(value.code, code)) {
                 return value;
             }
         }
         return null;
     }
-
 }

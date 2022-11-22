@@ -15,7 +15,6 @@ public class AsyncFactory {
 
     private static final Logger sys_user_logger = LoggerFactory.getLogger("sys-user");
 
-
     /**
      * 操作日志记录
      *

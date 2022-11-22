@@ -1,6 +1,5 @@
 package com.han.hero.project.service;
 
-import com.han.hero.framework.annotation.DS;
 import com.han.hero.project.domain.Menu;
 import com.han.hero.project.domain.User;
 import com.han.hero.project.mapper.UserMapper;
@@ -34,8 +33,7 @@ public class UserService {
         return userMapper.countByUserName(userName) == 0;
     }
 
-    @DS(value = "#dbName")
-    public User selectByUserName(String dbName, String userName) {
+    public User selectByUserName(String userName) {
         return userMapper.selectByUserName(userName);
     }
 }

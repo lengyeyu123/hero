@@ -4,40 +4,44 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.han.hero.project.mapper.UserMapper">
     <insert id="insertUser">
-        insert into t_user (username, password)
+        insert into sys_user (username, password)
         values (#{userName}, #{password})
     </insert>
 
-
     <select id="selectById" resultType="com.han.hero.project.domain.User">
         select *
-        from t_user
+        from sys_user
         where id = #{id}
+          and delFlag = 0
     </select>
     <select id="selectByUserName" resultType="com.han.hero.project.domain.User">
         select *
-        from t_user
+        from sys_user
         where userName = #{userName}
+          and delFlag = 0
     </select>
     <select id="getUserPermissions" resultType="com.han.hero.project.domain.Menu">
-        SELECT t_menu.*
-        FROM t_user,
-             t_user_role,
-             t_role_menu,
-             t_menu
-        WHERE t_user.id = #{id}
-          AND t_user.id = t_user_role.id
-          AND t_user_role.id = t_role_menu.id
-          AND t_role_menu.id = t_menu.id
+        SELECT sys_menu.*
+        FROM sys_user,
+             sys_user_role,
+             sys_role_menu,
+             sys_menu
+        WHERE sys_user.id = #{id}
+          AND sys_user.id = sys_user_role.id
+          AND sys_user_role.id = sys_role_menu.id
+          AND sys_role_menu.id = sys_menu.id
+          AND sys_user.delFlag = 0
+          AND sys_menu.delFlag = 0
     </select>
     <select id="countByUserName" resultType="java.lang.Integer">
         select count(id)
-        from t_user
+        from sys_user
         where userName = #{userName}
+          and delFlag = 0
     </select>
-    <select id="selectUserRoleById" resultType="com.han.hero.project.domain.UserRole">
+    <select id="selectUserRoleByRoleId" resultType="com.han.hero.project.domain.UserRole">
         select *
-        from t_user_role
+        from sys_user_role
         where id = #{id}
     </select>
 

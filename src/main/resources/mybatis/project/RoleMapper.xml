@@ -5,11 +5,11 @@
 <mapper namespace="com.han.hero.project.mapper.RoleMapper">
 
     <insert id="add">
-        insert into t_role (name, orderNum, createBy)
-        values (#{name}, #{orderNum}, #{createBy})
+        insert into sys_role (code, name, orderNum, createBy)
+        values (#{code}, #{name}, #{orderNum}, #{createBy})
     </insert>
     <update id="update">
-        update t_role
+        update sys_role
         <set>
             <if test="name != null and name != ''">
                 name = #{name},
@@ -26,24 +26,32 @@
     </update>
     <delete id="del">
         delete
-        from t_role
-        where roleId = #{roleId}
+        from sys_role
+        where id = #{roleId}
     </delete>
 
-
     <select id="selectByUserId" resultType="com.han.hero.project.domain.Role">
-        select t_role.*
-        from t_role,
-             t_user_role
-        where t_user_role.userId = #{userId}
-          and t_user_role.roleId = t_role.id
+        select sys_role.*
+        from sys_role,
+             sys_user_role
+        where sys_user_role.userId = #{userId}
+          and sys_user_role.roleId = sys_role.id
+          and delFlag = 0
     </select>
     <select id="list" resultType="com.han.hero.project.domain.Role">
-        select * from t_role
+        select * from sys_role
         <where>
+            delFlag = 0
             <if test="name != null and name != ''">
                 and name like CONCAT('%', #{name}, '%')
             </if>
         </where>
+        order by orderNum
+    </select>
+    <select id="all" resultType="com.han.hero.project.domain.Role">
+        select *
+        from sys_role
+        where delFlag = 0
+        order by orderNum
     </select>
 </mapper>

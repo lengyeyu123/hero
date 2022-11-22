@@ -51,11 +51,6 @@ public enum BusinessType implements BaseEnum {
     FORCE(6, "强退"),
 
     /**
-     * 代码生成
-     */
-    GENCODE(7, "代码生成"),
-
-    /**
      * 清空数据
      */
     CLEAN(8, "清空数据"),

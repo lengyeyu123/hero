@@ -1,7 +1,7 @@
 package com.han.hero.project.domain;
 
 import com.han.hero.common.enums.BusinessType;
-import com.han.hero.common.enums.DelFlagEnums;
+import com.han.hero.common.enums.OperStatus;
 import com.han.hero.framework.web.BaseDomain;
 import lombok.Data;
 
@@ -16,7 +16,7 @@ public class OperLog extends BaseDomain {
     /**
      * 日志主键
      */
-    private Integer operId;
+    private Integer id;
 
     /**
      * 操作模块
@@ -49,11 +49,6 @@ public class OperLog extends BaseDomain {
     private String operName;
 
     /**
-     * TODO 部门名称
-     */
-    private String deptName;
-
-    /**
      * 请求地址
      */
     private String operUrl;
@@ -64,7 +59,7 @@ public class OperLog extends BaseDomain {
     private String operIp;
 
     /**
-     * TODO 操作地点
+     * 操作地点
      */
     private String operLocation;
 
@@ -81,7 +76,7 @@ public class OperLog extends BaseDomain {
     /**
      * 操作状态 0异常 1正常
      */
-    private DelFlagEnums delFlag;
+    private OperStatus status;
 
     /**
      * 错误消息

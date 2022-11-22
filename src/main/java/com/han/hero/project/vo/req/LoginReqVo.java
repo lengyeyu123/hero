@@ -7,8 +7,6 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class LoginReqVo {
 
-    private String organCode;
-
     @NotBlank
     private String userName;
 

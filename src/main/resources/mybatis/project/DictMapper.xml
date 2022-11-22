@@ -6,12 +6,12 @@
 
     <!-- ===========type===========  -->
     <insert id="typeAdd">
-        insert into t_dict_type (name, type)
+        insert into sys_dict_type (name, type)
         values (#{name}, #{type})
     </insert>
 
     <update id="typeUpdate">
-        update t_dict_type
+        update sys_dict_type
         <set>
             <if test="name != null and name != ''">
                 name = #{name}
@@ -28,14 +28,15 @@
     </update>
     <delete id="typeDel">
         delete
-        from t_dict_type
+        from sys_dict_type
         where id = #{id}
     </delete>
 
 
     <select id="typeList" resultType="com.han.hero.project.domain.DictType">
-        select * from t_dict_type
+        select * from sys_dict_type
         <where>
+            delFlag = 0
             <if test="name != null and name != ''">
                 and name like CONCAT ('%', #{name}, '%')
             </if>
@@ -46,20 +47,21 @@
     </select>
     <select id="selectTypeById" resultType="com.han.hero.project.domain.DictType">
         select *
-        from t_dict_type
+        from sys_dict_type
         where id = #{id}
+          and delFlag = 0
     </select>
 
 
     <!-- ===========dictData===========  -->
 
     <insert id="dictDataAdd">
-        insert into t_dict_data (orderNum, label, val, type, defaultState, createBy, remark)
+        insert into sys_dict_data (orderNum, label, val, type, defaultState, createBy, remark)
         values (#{orderNum}, #{label}, #{val}, #{type}, #{defaultState}, #{createBy}, #{remark});
     </insert>
 
     <update id="dictDataUpdate">
-        update t_dict_data
+        update sys_dict_data
         <set>
             <if test="orderNum != null">
                 orderNum = #{orderNum},
@@ -89,13 +91,14 @@
 
     <delete id="dictDataDel">
         delete
-        from t_dict_data
+        from sys_dict_data
         where id = #{id}
     </delete>
 
     <select id="dictDataList" resultType="com.han.hero.project.domain.DictData">
-        select * from t_dict_data
+        select * from sys_dict_data
         <where>
+            delFlag = 0
             <if test="label != null and label != ''">
                 and label like CONCAT ('%', #{label}, '%')
             </if>

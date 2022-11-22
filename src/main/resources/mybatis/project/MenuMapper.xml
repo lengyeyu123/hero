@@ -4,12 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.han.hero.project.mapper.MenuMapper">
     <insert id="add">
-        insert into t_menu (name, parentId, parentName, orderNum, path, component, type, perms, icon, createBy)
+        insert into sys_menu (name, parentId, parentName, orderNum, path, component, type, perms, icon, createBy)
         values (#{name}, #{parentId}, #{parentName}, #{orderNum}, #{path}, #{component}, #{type}, #{perms},
-                #{icon}, #{createBy});
+                #{icon}, #{createBy})
     </insert>
     <update id="update">
-        update t_menu
+        update sys_menu
         <set>
             <if test="name != null and menu != ''">
                 name = #{name},
@@ -48,34 +48,40 @@
     </update>
     <delete id="del">
         delete
-        from t_menu
+        from sys_menu
         where id = #{id}
     </delete>
 
     <select id="getRoleMenuByRoles" resultType="com.han.hero.project.domain.Menu">
-        select t_menu.* from t_menu,t_role_menu where t_menu.id = t_role_menu.id and t_role_menu.roleId in
+        select sys_menu.* from sys_menu,sys_role_menu
+        where sys_menu.delFlag = 0
+        and sys_menu.id = sys_role_menu.id
+        and sys_role_menu.roleId in
         <foreach collection="roles" item="role" index="index" separator="," open="(" close=")">
             #{role.id}
         </foreach>
     </select>
     <select id="selectRoleMenuByRoleId" resultType="com.han.hero.project.domain.RoleMenu">
         select *
-        from t_role_menu
+        from sys_role_menu
         where roleId = #{roleId}
     </select>
-    <select id="selectByid" resultType="com.han.hero.project.domain.Menu">
+    <select id="selectByMenuId" resultType="com.han.hero.project.domain.Menu">
         select *
-        from t_menu
+        from sys_menu
         where id = #{id}
+          and delFlag = 0
     </select>
-    <select id="selectByParentid" resultType="com.han.hero.project.domain.Menu">
+    <select id="selectByParentMenuId" resultType="com.han.hero.project.domain.Menu">
         select *
-        from t_menu
+        from sys_menu
         where parentId = #{id}
+          and delFlag = 0
     </select>
     <select id="list" resultType="com.han.hero.project.domain.Menu">
-        select * from t_menu
+        select * from sys_menu
         <where>
+            delFlag = 0
             <if test="name != null and name != ''">
                 and name like CONCAT ('%', #{name}, '%')
             </if>

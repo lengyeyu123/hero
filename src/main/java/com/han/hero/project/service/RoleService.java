@@ -73,4 +73,8 @@ public class RoleService {
         }
         roleMapper.del(roleId);
     }
+
+    public List<Role> all() {
+        return roleMapper.all();
+    }
 }
