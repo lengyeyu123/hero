@@ -33,7 +33,7 @@ public class LoginUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.addAll(roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName())).collect(Collectors.toList()));
+        authorities.addAll(roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getCode())).collect(Collectors.toList()));
         authorities.addAll(menus.stream()
                 .filter(menu -> StringUtils.isNotBlank(menu.getPerms()))
                 .map(menu -> new SimpleGrantedAuthority(menu.getPerms())).collect(Collectors.toList()));

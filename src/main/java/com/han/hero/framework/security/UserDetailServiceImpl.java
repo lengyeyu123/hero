@@ -44,9 +44,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new ServiceException(ResultStatus.AUTH_ACCOUNT_ERROR_USER_NAME_OR_PASSWORD);
         }
 
-        List<Role> roles = null;
-        List<Menu> menus = null;
-
+        List<Role> roles;
+        List<Menu> menus;
         if (user.getId() == 1) {
             // 超级管理员
             roles = roleMapper.all();
