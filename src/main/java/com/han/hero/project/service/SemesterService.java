@@ -13,7 +13,6 @@ public class SemesterService {
     @Autowired
     private SemesterMapper semesterMapper;
 
-    @Autowired
     public List<Semester> list(Semester semester) {
         return semesterMapper.list(semester);
     }
