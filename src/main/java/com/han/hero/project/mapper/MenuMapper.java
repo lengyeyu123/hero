@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface MenuMapper {
 
-    List<Menu> getRoleMenuByRoles(List<Role> roles);
-
     List<RoleMenu> selectRoleMenuByRoleId(Integer roleId);
 
     Menu selectByMenuId(Integer parentId);
@@ -26,6 +24,11 @@ public interface MenuMapper {
 
     List<Menu> list(MenuListReqVo vo);
 
-    List<Menu> all();
+    List<String> allPerms();
 
+    List<String> selectPermsByRoles(List<Role> roles);
+
+    List<Menu> selectMenuTreeAll();
+
+    List<Menu> selectMenuTreeByUserId(Integer id);
 }

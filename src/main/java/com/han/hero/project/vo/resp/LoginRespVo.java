@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class LoginRespVo {
 
-    private String accessToken;
+    private String token;
 
     private String refreshToken;
 

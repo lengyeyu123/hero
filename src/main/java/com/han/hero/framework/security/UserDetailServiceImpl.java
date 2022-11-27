@@ -2,7 +2,6 @@ package com.han.hero.framework.security;
 
 import com.han.hero.common.enums.ResultStatus;
 import com.han.hero.common.exception.ServiceException;
-import com.han.hero.project.domain.Menu;
 import com.han.hero.project.domain.Role;
 import com.han.hero.project.domain.User;
 import com.han.hero.project.mapper.MenuMapper;
@@ -45,16 +44,16 @@ public class UserDetailServiceImpl implements UserDetailsService {
         }
 
         List<Role> roles;
-        List<Menu> menus;
+        List<String> perms;
         if (user.getId() == 1) {
             // 超级管理员
             roles = roleMapper.all();
-            menus = menuMapper.all();
+            perms = menuMapper.allPerms().stream().filter(StringUtils::isNotBlank).toList();
         } else {
             roles = roleMapper.selectByUserId(user.getId());
-            menus = menuMapper.getRoleMenuByRoles(roles);
+            perms = menuMapper.selectPermsByRoles(roles).stream().filter(StringUtils::isNotBlank).toList();
         }
-        return new LoginUser(user, roles, menus);
+        return new LoginUser(user, roles, perms);
     }
 
 

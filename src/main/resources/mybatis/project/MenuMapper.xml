@@ -52,15 +52,6 @@
         where id = #{id}
     </delete>
 
-    <select id="getRoleMenuByRoles" resultType="com.han.hero.project.domain.Menu">
-        select sys_menu.* from sys_menu,sys_role_menu
-        where sys_menu.delFlag = 0
-        and sys_menu.id = sys_role_menu.id
-        and sys_role_menu.roleId in
-        <foreach collection="roles" item="role" index="index" separator="," open="(" close=")">
-            #{role.id}
-        </foreach>
-    </select>
     <select id="selectRoleMenuByRoleId" resultType="com.han.hero.project.domain.RoleMenu">
         select *
         from sys_role_menu
@@ -105,9 +96,61 @@
             </if>
         </where>
     </select>
-    <select id="all" resultType="com.han.hero.project.domain.Menu">
-        select *
+    <select id="allPerms" resultType="java.lang.String">
+        select perms
         from sys_menu
+        where perms is not null
+          and perms != ''
+    </select>
+    <select id="selectPermsByRoles" resultType="java.lang.String">
+        select distinct sys_menu.perms from sys_menu,sys_role_menu
+        where sys_menu.delFlag = 0
+        and sys_menu.id = sys_role_menu.menuId
+        and sys_role_menu.roleId in
+        <foreach collection="roles" item="role" index="index" separator="," open="(" close=")">
+            #{role.id}
+        </foreach>
+    </select>
+    <select id="selectMenuTreeAll" resultType="com.han.hero.project.domain.Menu">
+        select id,
+               code,
+               name,
+               parentId,
+               parentName,
+               path,
+               component,
+               type,
+               icon,
+               orderNum,
+               remark
+        from sys_menu
+        where type in (0, 1)
+          and delFlag = 0
         order by parentId, orderNum
     </select>
+    <select id="selectMenuTreeByUserId" resultType="com.han.hero.project.domain.Menu">
+        select distinct m.id,
+                        m.code,
+                        m.name,
+                        m.parentId,
+                        m.parentName,
+                        m.orderNum,
+                        m.path,
+                        m.component,
+                        m.type,
+                        m.icon,
+                        m.remark
+        from sys_menu m
+                 left join sys_role_menu rm on m.id = rm.menuId
+                 left join sys_role r on rm.roleId = r.id
+                 left join sys_user_role ur on r.id = ur.roleId
+                 left join sys_user u on ur.userId = u.id
+        where u.id = #{id}
+          and m.type in (0, 1)
+          and m.delFlag = 0
+          and r.delFlag = 0
+          and u.delFlag = 0
+        order by m.parentId, m.orderNum
+    </select>
+
 </mapper>

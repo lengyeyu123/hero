@@ -15,7 +15,7 @@ import lombok.Getter;
 public enum ResultStatus {
 
     // -----------成功-----------
-    OK(0, "成功"),
+    OK(200, "成功"),
 
     // -----------COMMON_ 通用错误码 5000-----------
     COMMON_SERVER_ERROR(5000, "服务器内部错误"),

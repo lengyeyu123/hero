@@ -2,6 +2,7 @@ package com.han.hero.project.controller;
 
 import com.han.hero.common.constants.ClaimsConstants;
 import com.han.hero.common.enums.BusinessType;
+import com.han.hero.common.enums.MenuType;
 import com.han.hero.common.enums.ResultStatus;
 import com.han.hero.common.exception.ServiceException;
 import com.han.hero.common.util.JwtUtil;
@@ -13,10 +14,13 @@ import com.han.hero.framework.security.SecurityUtil;
 import com.han.hero.project.domain.Menu;
 import com.han.hero.project.domain.Role;
 import com.han.hero.project.domain.User;
+import com.han.hero.project.service.MenuService;
 import com.han.hero.project.service.RoleService;
 import com.han.hero.project.service.UserService;
 import com.han.hero.project.vo.req.LoginReqVo;
 import com.han.hero.project.vo.resp.LoginRespVo;
+import com.han.hero.project.vo.resp.RouteMeta;
+import com.han.hero.project.vo.resp.RouterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
@@ -25,10 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -47,6 +48,9 @@ public class AuthController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private MenuService menuService;
+
     @PostMapping("/login")
     public R<LoginRespVo> login(@RequestBody @Validated LoginReqVo vo) {
         User user = userService.selectByUserName(vo.getUserName());
@@ -63,7 +67,7 @@ public class AuthController {
         String refreshToken = JwtUtil.generateJwt(tokenProperties.getRtConfig(), claims);
         return R.ok(
                 new LoginRespVo()
-                        .setAccessToken(accessToken)
+                        .setToken(accessToken)
                         .setRefreshToken(refreshToken)
         );
     }
@@ -77,19 +81,20 @@ public class AuthController {
         LoginUser loginUser = SecurityUtil.getLoginUser();
         User user = loginUser.getUser();
         Map<String, Object> map = new HashMap<>();
+        map.put("userId", user.getId());
         map.put("userName", user.getUserName());
         map.put("realName", user.getRealName());
 
         if (user.getId() == 1) {
             // 超级管理员
-            List<Role> list = roleService.all();
-            map.put("roles", list.stream().map(Role::getCode).collect(Collectors.toSet()));
             HashSet<String> perms = new HashSet<>();
+            perms.add("super");
             perms.add("*:*:*");
             map.put("perms", perms);
         } else {
-            map.put("roles", loginUser.getRoles().stream().map(Role::getCode).collect(Collectors.toSet()));
-            map.put("perms", loginUser.getMenus().stream().map(Menu::getPerms).collect(Collectors.toSet()));
+            Set<String> roleCodeSet = loginUser.getRoles().stream().map(Role::getCode).collect(Collectors.toSet());
+            roleCodeSet.addAll(loginUser.getPerms());
+            map.put("perms", roleCodeSet);
         }
         return R.ok(map);
     }
@@ -99,5 +104,53 @@ public class AuthController {
     // @PreAuthorize("hasAuthority('sys:role:list')")
     // @PreAuthorize("hasRole('ROLE_super')")
     // @PreAuthorize("hasRole('super')")
+
+    @PostMapping("/getUserRoutes")
+    public R<?> getUserRoutes() {
+        LoginUser loginUser = SecurityUtil.getLoginUser();
+        List<Menu> menus = menuService.selectMenuTreeByUserId(loginUser.getUser().getId());
+        menuService.treeData(menus, -1);
+        ArrayList<RouterVo> routerVoList = new ArrayList<>();
+        convertToRouter(routerVoList, menus);
+        Map<String, Object> reMap = new HashMap<>();
+        reMap.put("home", "dashboard_analysis");
+        reMap.put("routes", routerVoList);
+
+        return R.ok(reMap);
+    }
+
+    private void convertToRouter(ArrayList<RouterVo> routerVoList, List<Menu> menus) {
+        for (Menu menu : menus) {
+            RouterVo routerVo = createRouterVo(menu);
+
+            List<Menu> children = menu.getChildren();
+            if (children != null && !children.isEmpty()) {
+                List<RouterVo> childRouterList = new ArrayList<>();
+                for (Menu child : children) {
+                    childRouterList.add(createRouterVo(child));
+                }
+                routerVo.setChildren(childRouterList);
+                routerVoList.add(routerVo);
+                convertToRouter(routerVoList, children);
+            } else if (menu.getParentId() == -1) {
+                routerVoList.add(routerVo);
+            }
+
+        }
+    }
+
+    private RouterVo createRouterVo(Menu menu) {
+        RouterVo routerVo = new RouterVo();
+        routerVo.setName(menu.getCode());
+        routerVo.setPath(menu.getPath());
+        routerVo.setComponent(menu.getComponent());
+        RouteMeta meta = new RouteMeta();
+        meta.setKeepAlive(menu.getType() == MenuType.C);
+        meta.setTitle(menu.getName());
+        meta.setIcon(menu.getIcon());
+        meta.setRequiresAuth(true);
+        routerVo.setMeta(meta);
+        return routerVo;
+    }
 
 }

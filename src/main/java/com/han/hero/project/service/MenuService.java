@@ -84,11 +84,11 @@ public class MenuService {
         return list;
     }
 
-    private void treeData(List<Menu> list, Integer parentId) {
+    public void treeData(List<Menu> list, Integer parentId) {
         List<Menu> topMenuList = list.stream()
                 .filter(menu -> Objects.equals(menu.getParentId(), parentId))
                 .sorted(Comparator.comparingInt(Menu::getOrderNum))
-                .collect(Collectors.toList());
+                .toList();
         for (Menu topMenu : topMenuList) {
             List<Menu> childMenuList = list.stream()
                     .filter(menu -> Objects.equals(menu.getParentId(), topMenu.getId()))
@@ -105,5 +105,16 @@ public class MenuService {
                 }
             }
         }
+    }
+
+    public List<Menu> selectMenuTreeByUserId(Integer id) {
+        List<Menu> menus = null;
+        if (id == 1) {
+            // 超管所有的菜单
+            menus = menuMapper.selectMenuTreeAll();
+        } else {
+            menus = menuMapper.selectMenuTreeByUserId(id);
+        }
+        return menus;
     }
 }
