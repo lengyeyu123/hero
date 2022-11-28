@@ -2,9 +2,8 @@ package com.han.hero.project.vo.req;
 
 import com.han.hero.common.enums.DelFlagEnums;
 import com.han.hero.common.enums.MenuType;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
-import javax.validation.constraints.NotNull;
 
 @Data
 public class MenuUpdateReqVo {

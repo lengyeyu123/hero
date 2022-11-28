@@ -3,9 +3,10 @@ package com.han.hero.framework.security;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,9 +15,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
+@Configuration
 @Slf4j
 // 启用方法级别的权限认证
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
 
     @Autowired
@@ -70,7 +72,7 @@ public class SecurityConfiguration {
      * authenticated       |   用户登录后可访问
      */
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthFilter authFilter) throws Exception {
 
         http
                 // CSRF禁用 不使用session
@@ -81,10 +83,9 @@ public class SecurityConfiguration {
                 // 认证失败 鉴权失败处理类
                 .exceptionHandling().authenticationEntryPoint(jwtAuthError).accessDeniedHandler(jwtAuthError).and()
                 // 过滤请求
-                .authorizeRequests()
+                .authorizeHttpRequests()
                 // 允许访问
-                .antMatchers("/auth/login").permitAll()
-                // .antMatchers("/register").permitAll()
+                .requestMatchers("/auth/login").permitAll()
                 // 除上面外的所有请求全部需要 认证 鉴权
                 .anyRequest().authenticated()
                 .and()
@@ -94,8 +95,9 @@ public class SecurityConfiguration {
                 .formLogin().disable();
         // TODO 添加Logout filter
         // 添加JWt filter
-        http.addFilterBefore(authFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
         // 认证用户时 用户信息加载配置 注入 springAuthUserService
         return http.userDetailsService(userDetailService).build();
     }
+
 }

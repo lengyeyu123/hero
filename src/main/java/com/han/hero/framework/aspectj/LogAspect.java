@@ -1,10 +1,10 @@
 package com.han.hero.framework.aspectj;
 
-import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.han.hero.common.constants.DateConstants;
 import com.han.hero.common.enums.OperStatus;
 import com.han.hero.common.util.JsonUtil;
 import com.han.hero.common.util.ServletUtil;
@@ -14,6 +14,8 @@ import com.han.hero.framework.manager.factory.AsyncFactory;
 import com.han.hero.framework.security.LoginUser;
 import com.han.hero.framework.security.SecurityUtil;
 import com.han.hero.project.domain.OperLog;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -27,8 +29,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Map;
@@ -68,11 +68,11 @@ public class LogAspect {
     protected void handleLog(JoinPoint joinPoint, Log controllerLog, final Exception e, Object jsonResult) {
         try {
             LoginUser loginUser = SecurityUtil.getLoginUser();
-
             // ======数据库日志======
             OperLog operLog = new OperLog();
             operLog.setStatus(OperStatus.Normal);
-            operLog.setOperIp(ServletUtil.getClientIP(ServletUtil.getRequest()));
+            // TODO 获取ip地址
+            operLog.setOperIp("");
             operLog.setOperUrl(ServletUtil.getRequest().getRequestURI());
             if (loginUser != null) {
                 operLog.setOperName(loginUser.getUsername());
@@ -106,7 +106,7 @@ public class LogAspect {
      * @param logg    日志
      * @param operLog 操作日志
      */
-    private void getControllerMethodDescription(JoinPoint joinPoint, Log logg, OperLog operLog, Object jsonResult) throws Exception {
+    private void getControllerMethodDescription(JoinPoint joinPoint, Log logg, OperLog operLog, Object jsonResult) {
         // 设置action动作
         operLog.setBusinessType(logg.businessType());
         // 设置标题
@@ -126,9 +126,8 @@ public class LogAspect {
      * 获取请求的参数，放到log中
      *
      * @param operLog 操作日志
-     * @throws Exception 异常
      */
-    private void setRequestValue(JoinPoint joinPoint, OperLog operLog) throws Exception {
+    private void setRequestValue(JoinPoint joinPoint, OperLog operLog) {
         String requestMethod = operLog.getRequestMethod();
         if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
             String params = argsArrayToString(joinPoint.getArgs());
@@ -146,7 +145,7 @@ public class LogAspect {
     private String argsArrayToString(Object[] paramsArray) {
         ObjectMapper objectMapper = new ObjectMapper();
         // 时间格式 时区
-        objectMapper.setDateFormat(new SimpleDateFormat(DatePattern.NORM_DATETIME_PATTERN));
+        objectMapper.setDateFormat(new SimpleDateFormat(DateConstants.yyyyMMddHHmmss));
         objectMapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
 
         SimpleBeanPropertyFilter fieldFilter = SimpleBeanPropertyFilter.serializeAllExcept(EXCLUDE_PROPERTIES);

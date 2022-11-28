@@ -98,7 +98,7 @@ public class RedisUtil {
         ScanOptions options = ScanOptions.scanOptions().match(pattern).build();
         RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
         RedisConnection rc = Objects.requireNonNull(factory).getConnection();
-        Cursor<byte[]> cursor = rc.scan(options);
+        Cursor<byte[]> cursor = rc.keyCommands().scan(options);
         List<String> result = new ArrayList<>();
         while (cursor.hasNext()) {
             result.add(new String(cursor.next()));
@@ -123,7 +123,7 @@ public class RedisUtil {
         ScanOptions options = ScanOptions.scanOptions().match(patternKey).build();
         RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
         RedisConnection rc = Objects.requireNonNull(factory).getConnection();
-        Cursor<byte[]> cursor = rc.scan(options);
+        Cursor<byte[]> cursor = rc.keyCommands().scan(options);
         List<String> result = new ArrayList<>(size);
 
         int tmpIndex = 0;
@@ -532,7 +532,7 @@ public class RedisUtil {
      *
      * @param key   键
      * @param start 开始
-     * @param end   结束 0 到 -1代表所有值
+     * @param end   结束 0 到 -1 代表所有值
      * @return /
      */
     public List<Object> lGet(String key, long start, long end) {

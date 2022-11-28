@@ -1,10 +1,12 @@
 package com.han.hero.project.domain;
 
-import cn.hutool.core.date.DatePattern;
-import cn.hutool.core.date.DateUtil;
+import com.han.hero.common.constants.DateConstants;
 import com.han.hero.common.enums.OpenStatus;
 import com.han.hero.framework.web.BaseDomain;
 import lombok.Data;
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Date;
 
@@ -29,17 +31,18 @@ public class Semester extends BaseDomain {
     private OpenStatus openState;
 
 
+    @SneakyThrows
     public static Semester getCurSemester() {
         Semester semester = new Semester();
         Date date = new Date();
-        int year = DateUtil.year(date);
-        int month = DateUtil.month(date);
+        Integer year = Integer.parseInt(DateFormatUtils.format(date, "yyyy"));
+        int month = Integer.parseInt(DateFormatUtils.format(date, "MM"));
         if (month < 9) {
-            semester.setStartDate(DateUtil.parse(year + "-02-01", DatePattern.NORM_DATE_FORMAT));
-            semester.setEndDate(DateUtil.parse(year + "-08-31", DatePattern.NORM_DATE_FORMAT));
+            semester.setStartDate(DateUtils.parseDate(year + "-02-01", DateConstants.yyyyMMdd));
+            semester.setEndDate(DateUtils.parseDate(year + "-08-31", DateConstants.yyyyMMdd));
         } else {
-            semester.setStartDate(DateUtil.parse(year + "-09-01", DatePattern.NORM_DATE_FORMAT));
-            semester.setEndDate(DateUtil.parse(year + 1 + "-01-31", DatePattern.NORM_DATE_FORMAT));
+            semester.setStartDate(DateUtils.parseDate(year + "-09-01", DateConstants.yyyyMMdd));
+            semester.setEndDate(DateUtils.parseDate(year + 1 + "-01-31", DateConstants.yyyyMMdd));
         }
         return semester;
     }

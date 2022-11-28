@@ -1,8 +1,8 @@
 package com.han.hero.common.util;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 
-import javax.servlet.http.HttpServletResponse;
 
 public class ResponseWriterUtil {
 

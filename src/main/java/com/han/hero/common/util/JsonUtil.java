@@ -1,8 +1,8 @@
 package com.han.hero.common.util;
 
-import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.han.hero.common.constants.DateConstants;
 import lombok.SneakyThrows;
 
 import java.text.SimpleDateFormat;
@@ -14,7 +14,7 @@ public class JsonUtil {
 
     static {
         // 时间格式 时区
-        objectMapper.setDateFormat(new SimpleDateFormat(DatePattern.NORM_DATETIME_PATTERN));
+        objectMapper.setDateFormat(new SimpleDateFormat(DateConstants.yyyyMMddHHmmss));
         objectMapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
     }
 

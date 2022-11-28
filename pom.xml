@@ -12,21 +12,21 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.5</version>
+        <version>3.0.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
-        <mybatis.spring.boot.starter.version>2.2.2</mybatis.spring.boot.starter.version>
+        <mybatis.spring.boot.starter.version>3.0.0</mybatis.spring.boot.starter.version>
         <pagehelper.spring.boot.starter.version>1.4.5</pagehelper.spring.boot.starter.version>
         <commons.io.version>2.11.0</commons.io.version>
         <commons.fileupload.version>1.4</commons.fileupload.version>
         <lombok.version>1.18.24</lombok.version>
-        <hutool.version>5.8.9</hutool.version>
+        <hutool.version>5.8.10</hutool.version>
         <jsoup.version>1.15.3</jsoup.version>
         <weixin.version>4.4.4.B</weixin.version>
         <jjwt.version>0.9.1</jjwt.version>
@@ -182,11 +182,11 @@
         <!--        </dependency>-->
 
         <!-- hutool工具 -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${hutool.version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>cn.hutool</groupId>-->
+        <!--            <artifactId>hutool-all</artifactId>-->
+        <!--            <version>${hutool.version}</version>-->
+        <!--        </dependency>-->
 
         <!-- poi -->
         <dependency>
@@ -222,14 +222,26 @@
         <!--        </dependency>-->
 
         <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.4.0-b180830.0359</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-        </dependency>
 
     </dependencies>
 

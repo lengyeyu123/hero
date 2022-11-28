@@ -1,8 +1,9 @@
 package com.han.hero.framework.config.properties;
 
-import cn.hutool.core.io.FileUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+
+import java.io.File;
 
 @Component
 @ConfigurationProperties(prefix = "hero")
@@ -49,11 +50,12 @@ public class HeroProperties {
     }
 
     public String getUploadFilePathPrefix() {
-        return FileUtil.isWindows() ? uploadFilePathWinPrefix : uploadFilePathLinuxPrefix;
+        String separator = File.separator;
+        return File.separator.equals("\\") ? uploadFilePathWinPrefix : uploadFilePathLinuxPrefix;
     }
 
     public String getDownloadFilePathPrefix() {
-        return FileUtil.isWindows() ? downloadFilePathWinPrefix : downloadFilePathLinuxPrefix;
+        return File.separator.equals("\\") ? downloadFilePathWinPrefix : downloadFilePathLinuxPrefix;
     }
 
 }

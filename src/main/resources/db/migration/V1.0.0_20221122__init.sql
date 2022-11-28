@@ -35,7 +35,7 @@ CREATE TABLE `sys_dict_type`
     `delFlag`    tinyint                                                       NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 1
+  AUTO_INCREMENT = 100
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci
   ROW_FORMAT = DYNAMIC;
@@ -64,7 +64,7 @@ CREATE TABLE `sys_dict_data`
     `delFlag`      tinyint                                                       NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 1
+  AUTO_INCREMENT = 100
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci
   ROW_FORMAT = DYNAMIC;
@@ -123,7 +123,7 @@ CREATE TABLE `sys_role`
     `delFlag`    tinyint                                                       NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 4
+  AUTO_INCREMENT = 100
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci
   ROW_FORMAT = DYNAMIC;
@@ -132,11 +132,11 @@ CREATE TABLE `sys_role`
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` (`id`, `code`, `name`)
-VALUES (1, 'admin', '管理员');
+VALUES (1, 'admin', '院系管理员');
 INSERT INTO `sys_role` (`id`, `code`, `name`)
-VALUES (2, 'test', 'TEST');
+VALUES (2, 'subjectAdmin', '课程负责人');
 INSERT INTO `sys_role` (`id`, `code`, `name`)
-VALUES (3, 'test2', 'TEST2');
+VALUES (3, 'teacher', '阅卷教师');
 
 
 -- ----------------------------
@@ -198,13 +198,13 @@ CREATE TABLE `sys_menu`
 -- ----------------------------
 INSERT INTO `sys_menu` (`id`, `code`, `name`, `path`, `component`, `type`, `icon`, `orderNum`)
 VALUES (1, 'dashboard', '仪表盘', '/dashboard', 'basic', 0, 'mdi:monitor-dashboard', 1);
-INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `perms`, `type`, `icon`,
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `type`, `icon`,
                         `orderNum`)
-VALUES (2, 1, '仪表盘', 'dashboard_analysis', '分析页', '/dashboard/analysis', 'self', 'dashboard:analysis:view', 1,
+VALUES (2, 1, '仪表盘', 'dashboard_analysis', '分析页', '/dashboard/analysis', 'self', 1,
         'icon-park-outline:analysis', 1);
-INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `perms`, `type`, `icon`,
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `type`, `icon`,
                         `orderNum`)
-VALUES (3, 1, '仪表盘', 'dashboard_workbench', '工作台', '/dashboard/workbench', 'self', 'dashboard:workbench:view', 1,
+VALUES (3, 1, '仪表盘', 'dashboard_workbench', '工作台', '/dashboard/workbench', 'self', 1,
         'icon-park-outline:workbench', 2);
 
 INSERT INTO `sys_menu` (`id`, `code`, `name`, `path`, `component`, `type`, `orderNum`)
