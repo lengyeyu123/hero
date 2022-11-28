@@ -12,19 +12,19 @@ public class ServiceException extends RuntimeException {
     private final ResultStatus status;
 
     /**
-     * 异常真实  详细错误信息
+     * 给前台的提示消息
      */
-    private final String defaultMsg;
+    private final String msg;
 
     public ServiceException(ResultStatus status) {
         this.status = status;
-        this.defaultMsg = status.getMsg();
+        this.msg = status.getMsg();
     }
 
-    public ServiceException(ResultStatus status, String defaultMsg) {
+
+    public ServiceException(ResultStatus status, String msg) {
         this.status = status;
-        this.defaultMsg = defaultMsg;
+        this.msg = msg;
     }
-
 
 }

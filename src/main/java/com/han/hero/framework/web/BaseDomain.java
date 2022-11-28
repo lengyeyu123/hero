@@ -1,6 +1,6 @@
 package com.han.hero.framework.web;
 
-import com.han.hero.common.enums.DelFlagEnums;
+import com.han.hero.common.enums.DelFlag;
 import lombok.Data;
 
 import java.util.Date;
@@ -37,6 +37,6 @@ public class BaseDomain {
     /**
      * 状态 0禁用 1正常
      */
-    private DelFlagEnums delFlag;
+    private DelFlag delFlag;
 
 }

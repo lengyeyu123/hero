@@ -27,6 +27,10 @@ public enum ResultStatus {
 
     COMMON_DATA_NOT_EXIST(5003, "数据不存在"),
 
+    COMMON_PARAMS_NULL(5004, "参数异常"),
+
+    COMMON_DATA_NOT_UNIQUE(5005, "数据不唯一"),
+
     // -----------AUTH_ 登录认证权限 6000-----------
     AUTH_TOKEN_EXPIRED(6000, "令牌过期"),
 

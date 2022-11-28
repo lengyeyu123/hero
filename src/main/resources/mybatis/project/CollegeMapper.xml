@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.han.hero.project.mapper.CollegeMapper">
+    <insert id="add">
+        insert into t_college (code, name, adminUserId, createBy, remark)
+        values (#{code}, #{name}, #{adminUserId}, #{createBy}, #{remark})
+    </insert>
+    <update id="update">
+        update t_college set
+        <if test="code != null and code != ''">
+            code = #{code}
+        </if>
+        <if test="name != null and name != ''">
+            name = #{name}
+        </if>
+        <if test="adminUserId != null">
+            adminUserId = #{adminUserId}
+        </if>
+        updateBy = #{updateBy}
+        <if test="remark != null and remark != ''">
+            remark = #{remark}
+        </if>
+        <if test="delFlag != null">
+            delFlag = #{delFlag}
+        </if>
+        where id = #{id}
+    </update>
+
+    <select id="list" resultType="com.han.hero.project.domain.College">
+        select id, code, name, adminUserId, remark from t_college
+        <where>
+            delFlag = 0
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="adminUserId != null">
+                and adminUserId = #{adminUserId}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark like concat('%', #{remark}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

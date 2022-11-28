@@ -1,6 +1,6 @@
 package com.han.hero.project.vo.req;
 
-import com.han.hero.common.enums.DelFlagEnums;
+import com.han.hero.common.enums.DelFlag;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -15,6 +15,6 @@ public class DictTypeAddReqVo {
 
     private String remark;
 
-    private DelFlagEnums delFlag;
+    private DelFlag delFlag;
 
 }

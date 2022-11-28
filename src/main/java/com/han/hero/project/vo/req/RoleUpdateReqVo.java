@@ -1,6 +1,6 @@
 package com.han.hero.project.vo.req;
 
-import com.han.hero.common.enums.DelFlagEnums;
+import com.han.hero.common.enums.DelFlag;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -14,7 +14,7 @@ public class RoleUpdateReqVo {
 
     private Integer orderNum;
 
-    private DelFlagEnums delFlag;
+    private DelFlag delFlag;
 
     private String remark;
 

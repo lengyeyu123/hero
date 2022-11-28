@@ -1,6 +1,6 @@
 package com.han.hero.project.vo.req;
 
-import com.han.hero.common.enums.DelFlagEnums;
+import com.han.hero.common.enums.DelFlag;
 import lombok.Data;
 
 @Data
@@ -14,6 +14,6 @@ public class DictTypeUpdateReqVo {
 
     private String remark;
 
-    private DelFlagEnums delFlag;
+    private DelFlag delFlag;
 
 }

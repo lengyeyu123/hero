@@ -27,11 +27,11 @@ CREATE TABLE `sys_dict_type`
     `id`         bigint                                                        NOT NULL AUTO_INCREMENT,
     `name`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `type`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `createBy`   int                                                           NULL     DEFAULT -1,
-    `updateBy`   int                                                           NULL     DEFAULT -1,
+    `createBy`   bigint                                                        NOT NULL DEFAULT -1,
+    `updateBy`   bigint                                                        NOT NULL DEFAULT -1,
     `createTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updateTime` datetime                                                      NULL     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT '',
+    `updateTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `delFlag`    tinyint                                                       NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
@@ -51,16 +51,16 @@ DROP TABLE IF EXISTS `sys_dict_data`;
 CREATE TABLE `sys_dict_data`
 (
     `id`           bigint                                                        NOT NULL AUTO_INCREMENT,
-    `orderNum`     int                                                           NULL     DEFAULT -1,
+    `orderNum`     int                                                           NOT NULL DEFAULT -1,
     `label`        varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `val`          varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `type`         varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `defaultState` int                                                           NULL     DEFAULT -1,
-    `createBy`     int                                                           NULL     DEFAULT -1,
-    `updateBy`     int                                                           NULL     DEFAULT -1,
+    `defaultState` int                                                           NOT NULL DEFAULT -1,
+    `createBy`     bigint                                                        NOT NULL DEFAULT -1,
+    `updateBy`     bigint                                                        NOT NULL DEFAULT -1,
     `createTime`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updateTime`   datetime                                                      NULL     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `remark`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT '',
+    `updateTime`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `remark`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `delFlag`      tinyint                                                       NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
@@ -81,13 +81,13 @@ CREATE TABLE `sys_user`
 (
     `id`         bigint                                                        NOT NULL AUTO_INCREMENT,
     `userName`   varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `realName`   varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT '',
+    `realName`   varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `password`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `createBy`   int                                                           NULL     DEFAULT -1,
-    `updateBy`   int                                                           NULL     DEFAULT -1,
+    `createBy`   bigint                                                        NOT NULL DEFAULT -1,
+    `updateBy`   bigint                                                        NOT NULL DEFAULT -1,
     `createTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updateTime` datetime                                                      NULL     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT '',
+    `updateTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `delFlag`    tinyint                                                       NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
@@ -114,12 +114,12 @@ CREATE TABLE `sys_role`
     `id`         bigint                                                        NOT NULL AUTO_INCREMENT,
     `code`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
     `name`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
-    `orderNum`   int                                                           NULL     DEFAULT -1,
-    `createBy`   int                                                           NULL     DEFAULT -1,
-    `updateBy`   int                                                           NULL     DEFAULT -1,
+    `orderNum`   int                                                           NOT NULL DEFAULT -1,
+    `createBy`   bigint                                                        NOT NULL DEFAULT -1,
+    `updateBy`   bigint                                                        NOT NULL DEFAULT -1,
     `createTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updateTime` datetime                                                      NULL     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT '',
+    `updateTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `delFlag`    tinyint                                                       NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
@@ -170,21 +170,21 @@ DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu`
 (
     `id`         bigint                                                        NOT NULL AUTO_INCREMENT,
-    `code`       varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT '',
+    `code`       varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `name`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
-    `parentId`   int                                                           NULL     DEFAULT -1,
-    `parentName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT '',
-    `orderNum`   int                                                           NULL     DEFAULT -1,
-    `path`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT '',
-    `component`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT '',
+    `parentId`   int                                                           NOT NULL DEFAULT -1,
+    `parentName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '',
+    `orderNum`   int                                                           NOT NULL DEFAULT -1,
+    `path`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '',
+    `component`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '',
     `type`       tinyint                                                       NOT NULL,
-    `perms`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT '',
-    `icon`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT '',
-    `createBy`   int                                                           NULL     DEFAULT -1,
-    `updateBy`   int                                                           NULL     DEFAULT -1,
+    `perms`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '',
+    `icon`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '',
+    `createBy`   bigint                                                        NOT NULL DEFAULT -1,
+    `updateBy`   bigint                                                        NOT NULL DEFAULT -1,
     `createTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updateTime` datetime                                                      NULL     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT '',
+    `updateTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `delFlag`    tinyint                                                       NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
@@ -198,23 +198,50 @@ CREATE TABLE `sys_menu`
 -- ----------------------------
 INSERT INTO `sys_menu` (`id`, `code`, `name`, `path`, `component`, `type`, `icon`, `orderNum`)
 VALUES (1, 'dashboard', '仪表盘', '/dashboard', 'basic', 0, 'mdi:monitor-dashboard', 1);
-INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `type`, `icon`,
-                        `orderNum`)
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `type`, `icon`, `orderNum`)
 VALUES (2, 1, '仪表盘', 'dashboard_analysis', '分析页', '/dashboard/analysis', 'self', 1,
         'icon-park-outline:analysis', 1);
-INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `type`, `icon`,
-                        `orderNum`)
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `type`, `icon`, `orderNum`)
 VALUES (3, 1, '仪表盘', 'dashboard_workbench', '工作台', '/dashboard/workbench', 'self', 1,
         'icon-park-outline:workbench', 2);
 
 INSERT INTO `sys_menu` (`id`, `code`, `name`, `path`, `component`, `type`, `orderNum`)
 VALUES (4, 'baseInfo', '基础信息', '/baseInfo', 'basic', 0, 2);
-INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `type`, `orderNum`)
-VALUES (5, 4, '基础信息', 'baseInfo_college', '院系管理', '/baseInfo/college', 'self', 1, 1);
-INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `type`, `orderNum`)
-VALUES (6, 4, '基础信息', 'baseInfo_major', '专业管理', '/baseInfo/major', 'self', 1, 2);
-INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `type`, `orderNum`)
-VALUES (7, 4, '基础信息', 'baseInfo_teacher', '教师管理', '/baseInfo/teacher', 'self', 1, 3);
+
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `type`, `orderNum`,
+                        `perms`, `icon`)
+VALUES (5, 4, '基础信息', 'baseInfo_college', '院系管理', '/baseInfo/college', 'self', 1, 1, 'baseInfo:college:list',
+        'icon-park-outline:workbench');
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `type`, `perms`)
+values (6, 4, '基础信息', 'baseInfo_collage-add', '院系新增', 2, 'baseInfo:college:add');
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `type`, `perms`)
+values (7, 4, '基础信息', 'baseInfo_collage-update', '院系修改', 2, 'baseInfo:college:update');
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `type`, `perms`)
+values (8, 4, '基础信息', 'baseInfo_collage-del', '院系删除', 2, 'baseInfo:college:del');
+
+
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `type`, `orderNum`,
+                        `perms`, `icon`)
+VALUES (9, 4, '基础信息', 'baseInfo_major', '专业管理', '/baseInfo/major', 'self', 1, 2, 'baseInfo:major:list',
+        'icon-park-outline:workbench');
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `type`, `perms`)
+values (10, 4, '基础信息', 'baseInfo_major-add', '专业新增', 2, 'baseInfo:major:add');
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `type`, `perms`)
+values (11, 4, '基础信息', 'baseInfo_major-update', '专业修改', 2, 'baseInfo:major:update');
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `type`, `perms`)
+values (12, 4, '基础信息', 'baseInfo_major-del', '专业删除', 2, 'baseInfo:major:del');
+
+
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `path`, `component`, `type`, `orderNum`,
+                        `perms`, `icon`)
+VALUES (13, 4, '基础信息', 'baseInfo_teacher', '教师管理', '/baseInfo/teacher', 'self', 1, 3, 'baseInfo:teacher:list',
+        'icon-park-outline:workbench');
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `type`, `perms`)
+values (14, 4, '基础信息', 'baseInfo_teacher-add', '教书新增', 2, 'baseInfo:teacher:add');
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `type`, `perms`)
+values (15, 4, '基础信息', 'baseInfo_teacher-update', '教师修改', 2, 'baseInfo:teacher:update');
+INSERT INTO `sys_menu` (`id`, `parentId`, `parentName`, `code`, `name`, `type`, `perms`)
+values (16, 4, '基础信息', 'baseInfo_teacher-del', '教师删除', 2, 'baseInfo:teacher:del');
 
 
 -- ----------------------------
@@ -305,11 +332,11 @@ CREATE TABLE `t_semester`
     `startDate`  date                                                          NOT NULL,
     `endDate`    date                                                          NOT NULL,
     `openState`  tinyint                                                       NOT NULL DEFAULT 1,
-    `createBy`   int                                                           NULL     DEFAULT -1,
-    `updateBy`   int                                                           NULL     DEFAULT -1,
+    `createBy`   bigint                                                        NOT NULL DEFAULT -1,
+    `updateBy`   bigint                                                        NOT NULL DEFAULT -1,
     `createTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updateTime` datetime                                                      NULL     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT '',
+    `updateTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `delFlag`    tinyint                                                       NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
@@ -323,6 +350,86 @@ CREATE TABLE `t_semester`
 -- ----------------------------
 INSERT INTO `t_semester` (`id`, `startDate`, `endDate`)
 VALUES (1, '2022-09-01', '2023-01-31');
+
+
+-- ----------------------------
+-- Table structure for t_college
+-- ----------------------------
+DROP TABLE IF EXISTS `t_college`;
+CREATE TABLE `t_college`
+(
+    `id`          bigint                                                        NOT NULL AUTO_INCREMENT,
+    `code`        varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `name`        varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `adminUserId` bigint                                                        NOT NULL COMMENT '院系管理员用户id',
+    `createBy`    bigint                                                        NOT NULL DEFAULT -1,
+    `updateBy`    bigint                                                        NOT NULL DEFAULT -1,
+    `createTime`  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updateTime`  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `remark`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+    `delFlag`     tinyint                                                       NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci
+  ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_college
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_major
+-- ----------------------------
+DROP TABLE IF EXISTS `t_major`;
+CREATE TABLE `t_major`
+(
+    `id`         bigint                                                        NOT NULL AUTO_INCREMENT,
+    `code`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `name`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `collegeId`  bigint                                                        NOT NULL COMMENT '所属院系',
+    `createBy`   bigint                                                        NOT NULL DEFAULT -1,
+    `updateBy`   bigint                                                        NOT NULL DEFAULT -1,
+    `createTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updateTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+    `delFlag`    tinyint                                                       NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci
+  ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_major
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_subject
+-- ----------------------------
+DROP TABLE IF EXISTS `t_subject`;
+CREATE TABLE `t_subject`
+(
+    `id`         bigint                                                        NOT NULL AUTO_INCREMENT,
+    `code`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `name`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `majorId`    bigint                                                        NOT NULL COMMENT '所属专业',
+    `semesterId` bigint                                                        NOT NULL COMMENT '所属学年学期',
+    `createBy`   bigint                                                        NOT NULL DEFAULT -1,
+    `updateBy`   bigint                                                        NOT NULL DEFAULT -1,
+    `createTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updateTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `remark`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+    `delFlag`    tinyint                                                       NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci
+  ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_subject
+-- ----------------------------
 
 SET
     FOREIGN_KEY_CHECKS = 1;

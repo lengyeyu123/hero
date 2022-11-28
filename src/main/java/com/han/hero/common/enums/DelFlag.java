@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Objects;
 
-public enum DelFlagEnums implements BaseEnum {
+public enum DelFlag implements BaseEnum {
 
     NORMAL(0, "未删除"),
 
@@ -27,14 +27,14 @@ public enum DelFlagEnums implements BaseEnum {
         return msg;
     }
 
-    DelFlagEnums(Integer code, String msg) {
+    DelFlag(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static DelFlagEnums getByCode(Integer code) {
-        for (DelFlagEnums value : DelFlagEnums.values()) {
+    public static DelFlag getByCode(Integer code) {
+        for (DelFlag value : DelFlag.values()) {
             if (Objects.equals(value.code, code)) {
                 return value;
             }
