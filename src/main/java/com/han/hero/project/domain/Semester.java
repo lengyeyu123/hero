@@ -10,6 +10,9 @@ import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Date;
 
+/**
+ * 学年学期
+ */
 @Data
 public class Semester extends BaseDomain {
 
@@ -26,7 +29,7 @@ public class Semester extends BaseDomain {
     private Date endDate;
 
     /**
-     * 是否开启
+     * 是否开启 默认开启
      */
     private OpenStatus openState;
 
@@ -38,9 +41,11 @@ public class Semester extends BaseDomain {
         Integer year = Integer.parseInt(DateFormatUtils.format(date, "yyyy"));
         int month = Integer.parseInt(DateFormatUtils.format(date, "MM"));
         if (month < 9) {
+            // 当年的2月1日到当年的8月31日为当前的第一学期
             semester.setStartDate(DateUtils.parseDate(year + "-02-01", DateConstants.yyyyMMdd));
             semester.setEndDate(DateUtils.parseDate(year + "-08-31", DateConstants.yyyyMMdd));
         } else {
+            // 当年的9月1日到来年的1月31日为当前的第一学期
             semester.setStartDate(DateUtils.parseDate(year + "-09-01", DateConstants.yyyyMMdd));
             semester.setEndDate(DateUtils.parseDate(year + 1 + "-01-31", DateConstants.yyyyMMdd));
         }

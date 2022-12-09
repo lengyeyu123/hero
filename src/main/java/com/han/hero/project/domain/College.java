@@ -3,6 +3,9 @@ package com.han.hero.project.domain;
 import com.han.hero.framework.web.BaseDomain;
 import lombok.Data;
 
+/**
+ * 院系
+ */
 @Data
 public class College extends BaseDomain {
 
